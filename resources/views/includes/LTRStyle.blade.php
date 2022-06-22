@@ -75,7 +75,7 @@
     href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu-modern.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/fonts/simple-line-icons/style.css') }}">
- this for login page
+{{-- this for login page--}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/login-register.css') }}">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/users.css') }}">
