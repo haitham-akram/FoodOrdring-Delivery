@@ -52,9 +52,8 @@ class LoginController extends Controller
         if (auth()->attempt(array('email' => $request['email'], 'password' => $request['password']))) {
             if (!empty(auth()->user()->user_id)) {
                 $id = auth()->user()->user_id;
-            }else{
-                $this->logout($request);
             }
+            dd($id);
             $admin = Admin::where('AdminID', '=', $id)->first();
             $restaurantManager = Restaurantmanager::where('RestManagerID', '=', $id)->first();
             $deliveryOfficeManager = Deliveryofficemanager::where('DeliManagerID', '=', $id)->first();
