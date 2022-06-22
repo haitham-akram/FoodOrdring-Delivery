@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                                        <form class="form-horizontal" method="POST" action="{{ url('login') }}">
                                             @csrf
                                             @if (Session::has('error'))
                                                 <div class="help-block font-small-3 text-danger mb-2">
