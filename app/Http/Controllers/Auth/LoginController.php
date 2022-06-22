@@ -44,12 +44,12 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
-        $input = $request->all();
+//        $input = $request->all();
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+        if (auth()->attempt(array('email' => $request['email'], 'password' => $request['password']))) {
             if (!empty(auth()->user()->user_id)) {
                 $id = auth()->user()->user_id;
             }else{
