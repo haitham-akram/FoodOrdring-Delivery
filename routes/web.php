@@ -30,7 +30,7 @@ Route::group([
     // Admin Routes
     Auth::routes();
 
-    Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'check']], function () {
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () { //, 'check'
         //index route for Admin
         Route::get('/index', [AdminController::class, 'index'])->name('admin_index');
         //Restaurant Manager Routes
