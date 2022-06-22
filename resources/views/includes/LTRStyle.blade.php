@@ -38,7 +38,7 @@
 {{-- for toastr--}}
 <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/extensions/toastr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/plugins/extensions/toastr.css') }}">
- maybe we will need it soon
+{{-- maybe we will need it soon--}}
 <link rel="stylesheet" type="text/css"
     href="{{ secure_asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" type="text/css"
