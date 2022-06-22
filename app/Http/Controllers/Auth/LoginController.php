@@ -55,7 +55,7 @@ class LoginController extends Controller
             }
 
             $admin = Admin::where('AdminID', '=', $id)->first();
-            dd($admin);
+
             $restaurantManager = Restaurantmanager::where('RestManagerID', '=', $id)->first();
             $deliveryOfficeManager = Deliveryofficemanager::where('DeliManagerID', '=', $id)->first();
 
