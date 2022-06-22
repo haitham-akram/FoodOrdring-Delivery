@@ -50,11 +50,15 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            $id = auth()->user()->user_id;
-
+            if (!empty(auth()->user()->user_id)) {
+                $id = auth()->user()->user_id;
+            }else{
+                $this->logout($request);
+            }
             $admin = Admin::where('AdminID', '=', $id)->first();
             $restaurantManager = Restaurantmanager::where('RestManagerID', '=', $id)->first();
             $deliveryOfficeManager = Deliveryofficemanager::where('DeliManagerID', '=', $id)->first();
+
             if ($admin) {
                 return redirect()->route('admin_index');
             } else if ($restaurantManager) {
