@@ -53,8 +53,9 @@ class LoginController extends Controller
             if (!empty(auth()->user()->user_id)) {
                 $id = auth()->user()->user_id;
             }
-            dd($id);
+
             $admin = Admin::where('AdminID', '=', $id)->first();
+            dd($admin);
             $restaurantManager = Restaurantmanager::where('RestManagerID', '=', $id)->first();
             $deliveryOfficeManager = Deliveryofficemanager::where('DeliManagerID', '=', $id)->first();
 
