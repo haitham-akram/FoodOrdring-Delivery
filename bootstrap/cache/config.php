@@ -693,7 +693,7 @@
     'cookie' => 'atlub_ealaa_rahatik_session',
     'path' => '/',
     'domain' => NULL,
-    'secure' => NULL,
+    'secure' => false,
     'http_only' => true,
     'same_site' => 'lax',
   ),
