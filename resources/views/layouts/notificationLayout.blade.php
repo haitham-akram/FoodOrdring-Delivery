@@ -30,6 +30,20 @@
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
 
+        {{--for production--}}
+        <!-- BEGIN VENDOR CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/vendors.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
+        <!-- END VENDOR CSS-->
+        <!-- BEGIN MODERN CSS-->
+        <link rel="stylesheet" type="text/css" href="{{secure_asset('app-assets/css/app.css')}}">
+        <!-- END MODERN CSS-->
+        <!-- BEGIN Page Level CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/core/menu/menu-types/vertical-menu-modern.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/core/colors/palette-gradient.css')}}">
+        <!-- END Page Level CSS-->
+        <!-- BEGIN Custom CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('assets/css/style.css')}}">
     @else
         <!-- BEGIN VENDOR CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/vendors.css')}}">
@@ -45,6 +59,22 @@
         <!-- END Page Level CSS-->
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style-rtl.css')}}">
+        <!-- END Custom CSS-->
+        {{--for production--}}
+        <!-- BEGIN VENDOR CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/vendors.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
+        <!-- END VENDOR CSS-->
+        <!-- BEGIN MODERN CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/custom-rtl.css')}}">
+        <!-- END MODERN CSS-->
+        <!-- BEGIN Page Level CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu-modern.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/core/colors/palette-gradient.css')}}">
+        <!-- END Page Level CSS-->
+        <!-- BEGIN Custom CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('assets/css/style-rtl.css')}}">
         <!-- END Custom CSS-->
     @endif
 
@@ -261,21 +291,38 @@
 {{-- End Footer --}}
 
 <!-- BEGIN VENDOR JS-->
-<script src="{{asset('app-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
+{{--<script src="{{asset('app-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>--}}
+{{--<!-- BEGIN VENDOR JS-->--}}
+{{--<!-- BEGIN PAGE VENDOR JS-->--}}
+{{--<script src="{{asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}" type="text/javascript"></script>--}}
+{{--<!-- END PAGE VENDOR JS-->--}}
+{{--<!-- BEGIN MODERN JS-->--}}
+{{--<script src="{{asset('app-assets/js/core/app-menu.js')}}" type="text/javascript"></script>--}}
+{{--<script src="{{asset('app-assets/js/core/app.js')}}" type="text/javascript"></script>--}}
+{{--<script src="{{asset('app-assets/js/scripts/customizer.js')}}" type="text/javascript"></script>--}}
+{{--<!-- END MODERN JS-->--}}
+{{--<!-- BEGIN PAGE LEVEL JS-->--}}
+{{--<script src="{{asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>--}}
+{{-- for toastr --}}
+{{--<script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>--}}
+{{--<script src="{{ asset('app-assets/js/scripts/extensions/toastr.js') }}" type="text/javascript"></script>--}}
+{{--for production--}}
+<!-- BEGIN VENDOR JS-->
+<script src="{{secure_asset('app-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
 <!-- BEGIN VENDOR JS-->
 <!-- BEGIN PAGE VENDOR JS-->
-<script src="{{asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}" type="text/javascript"></script>
+<script src="{{secure_asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}" type="text/javascript"></script>
 <!-- END PAGE VENDOR JS-->
 <!-- BEGIN MODERN JS-->
-<script src="{{asset('app-assets/js/core/app-menu.js')}}" type="text/javascript"></script>
-<script src="{{asset('app-assets/js/core/app.js')}}" type="text/javascript"></script>
-<script src="{{asset('app-assets/js/scripts/customizer.js')}}" type="text/javascript"></script>
+<script src="{{secure_asset('app-assets/js/core/app-menu.js')}}" type="text/javascript"></script>
+<script src="{{secure_asset('app-assets/js/core/app.js')}}" type="text/javascript"></script>
+<script src="{{secure_asset('app-assets/js/scripts/customizer.js')}}" type="text/javascript"></script>
 <!-- END MODERN JS-->
 <!-- BEGIN PAGE LEVEL JS-->
-<script src="{{asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
+<script src="{{secure_asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
 {{-- for toastr --}}
-<script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('app-assets/js/scripts/extensions/toastr.js') }}" type="text/javascript"></script>
+<script src="{{ secure_asset('app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>
+<script src="{{ secure_asset('app-assets/js/scripts/extensions/toastr.js') }}" type="text/javascript"></script>
 @yield('search js')
 </body>
 

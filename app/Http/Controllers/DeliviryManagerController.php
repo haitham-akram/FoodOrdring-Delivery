@@ -197,7 +197,7 @@ class DeliviryManagerController extends Controller
         if (!$deliveryManager) {
             return redirect()->back()->with(['error_title' => __('admins.error_title'), 'delete_msg_delivery' => __('admins.not_found_msg_delivery_manager')]);
         }
-        $deliveryOffices = Deliveryoffice::where('ManagerOfDeliveryOfficeID', '=', $id);
+        $deliveryOffices = Deliveryoffice::where('OwnerID', '=', $id);
         if ($deliveryOffices) {
             $deliveryOffices->update([
                 'OwnerID'=> null
