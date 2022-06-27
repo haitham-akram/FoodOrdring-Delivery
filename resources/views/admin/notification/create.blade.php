@@ -1,4 +1,4 @@
-@extends('layouts.adminLayout')
+@extends('layouts.notificationLayout')
 @section('content')
     <div class="app-content content">
         <div class="content-wrapper">
@@ -29,28 +29,53 @@
                                     <h3 class="form-section"><i class="la la-bell font-large-1"></i>
                                         {{ __('admins.notification-content') }}
                                     </h3>
-                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <a class="heading-elements-toggle"><i
+                                            class="la la-ellipsis-v font-medium-3"></i></a>
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form">
+                                        <form class="form" method="post" action="{{route('admin_store_notification')}}">
+                                            @csrf
                                             <div class="form-body">
                                                 <div class="row pl-1 pr-1">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 collapse show">
                                                         {{-- Receiver ID Field --}}
                                                         <div class="form-group">
-                                                            <label for="ID">{{ __('admins.Receiver-id') }}</label>
-                                                            <input type="text" id="Receiver-id" class="form-control"
-                                                                placeholder="{{ __('admins.Receiver-id') }}"
-                                                                name="receiver_id">
+                                                            <label for="header">{{ __('admins.Receiver-id') }}</label>
+
+
+                                                            <select class="select2 form-control" multiple="multiple"
+                                                                    id="ReceiverID" name="ReceiverID[]">
+                                                                <optgroup label="{{__('admins.Restaurant-Managers')}}">
+                                                                    @foreach($RestaurantManagers as $RestaurantManager)
+                                                                        <option
+                                                                            value="{{$RestaurantManager->RestManagerID}}">{{$RestaurantManager->FirstName}} {{$RestaurantManager->LastName}}</option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                                <optgroup label="{{__('admins.Delivery-Managers')}}">
+                                                                    @foreach($DeliveryManagers as $DeliveryManager)
+                                                                        <option
+                                                                            value="{{$DeliveryManager->DeliManagerID}}">{{$DeliveryManager->FirstName}} {{$DeliveryManager->LastName}}</option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                            </select>
+                                                            @error('ReceiverID')
+                                                            <small class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
+
+
                                                     <div class="col-md-6">
                                                         {{-- Title field --}}
                                                         <div class="form-group">
                                                             <label for="header">{{ __('admins.header') }}</label>
-                                                            <input type="text" id="header" class="form-control"
-                                                                placeholder="{{ __('admins.header') }}" name="header">
+                                                            <input type="text" id="Header" class="form-control"
+                                                                   placeholder="{{ __('admins.header') }}"
+                                                                   name="Header">
+                                                            @error('Header')
+                                                            <small class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -60,8 +85,12 @@
                                                         {{-- Description Field --}}
                                                         <fieldset class="form-group">
                                                             <label>{{ __('admins.description') }}</label>
-                                                            <textarea class="form-control" id="description" rows="3" name="description"
-                                                                placeholder="{{ __('admins.description') }}"></textarea>
+                                                            <textarea style="resize: none" class="form-control"
+                                                                      id="Description" rows="3" name="Description"
+                                                                      placeholder="{{ __('admins.description') }}"></textarea>
+                                                            @error('Description')
+                                                            <small class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -71,15 +100,21 @@
                                                         <fieldset class="form-group">
                                                             <label
                                                                 for="notification_type">{{ __('admins.notification-type') }}</label>
-                                                            <select class="custom-select" id="customSelect">
+                                                            <select class="custom-select" id="customSelect"
+                                                                    name="TypeOfNotification">
                                                                 <option selected="" disabled>
                                                                     {{ __('admins.notification-type') }}
                                                                 </option>
-                                                                <option value="Informing">{{ __('admins.Informing') }}
+                                                                <option value="Alert">{{ __('admins.Informing') }}
                                                                 </option>
-                                                                <option value="Worning">{{ __('admins.Worning') }}
+                                                                <option value="Emergence">{{ __('admins.Warning') }}
+                                                                </option>
+                                                                <option value="Message">{{ __('admins.Message') }}
                                                                 </option>
                                                             </select>
+                                                            @error('TypeOfNotification')
+                                                            <small class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -106,6 +141,54 @@
             </div>
         </div>
     </div>
+    {{--    </div>--}}
     </div>
-    </div>
+
+@endsection
+@section('search js')
+
+    @if (Session::has('create_msg_notification'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('create_msg_notification') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('create_msg_notification') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+    {{-- this script for toastr alert error --}}
+    @if (Session::has('not_found_msg_notification'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.error('{{ Session::get('not_found_msg_notification') }}', '{{ Session::get('error_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.error('{{ Session::get('not_found_msg_notification') }}', '{{ Session::get('error_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+
 @endsection

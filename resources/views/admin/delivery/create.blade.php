@@ -12,7 +12,7 @@
                                         href="{{ route('admin_index') }}">{{ __('admins.home') }}</a>
                                 </li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('admin_add_delivery') }}">{{ __('admins.add-new-delivery') }}</a>
+                                        href="{{ route('admin_add_delivery',$delivery->DeliveryOfficeID) }}">{{ __('admins.add-new-delivery') }}</a>
                                 </li>
                             </ol>
                         </div>
@@ -33,24 +33,20 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form">
+                                        <form class="form" method="post" action="{{ route('admin_store_delivery',$delivery->DeliveryOfficeID)}}" enctype="multipart/form-data">
+                                            @csrf
                                             <div class="form-body">
                                                 <div class="row pl-1 pr-1">
-                                                    <div class="col-md-6">
-                                                        {{-- ID Field --}}
-                                                        <div class="form-group">
-                                                            <label for="ID">{{ __('admins.id') }}</label>
-                                                            <input type="text" id="ID" class="form-control"
-                                                                placeholder="{{ __('admins.id') }}" name="id">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         {{-- delivery Name Field --}}
                                                         <div class="form-group">
                                                             <label for="name">{{ __('admins.delivery-name') }}</label>
-                                                            <input type="text" id="name" class="form-control"
+                                                            <input type="text" id="NameOfDeliveryOffice" class="form-control"
                                                                 placeholder="{{ __('admins.delivery-name') }}"
-                                                                name="name">
+                                                                name="NameOfDeliveryOffice" value="{{$delivery->NameOfDeliveryOffice}}">
+                                                            @error('NameOfDeliveryOffice')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -61,9 +57,12 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="street-name">{{ __('admins.street-name') }}</label>
-                                                            <input type="text" id="street-name" class="form-control"
+                                                            <input type="text" id="StreetName" class="form-control"
                                                                 placeholder="{{ __('admins.street-name') }}"
-                                                                name="street_name">
+                                                                name="StreetName">
+                                                            @error('StreetName')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -73,7 +72,10 @@
                                                                 for="Governorate">{{ __('admins.Governorate') }}</label>
                                                             <input type="text" id="Governorate" class="form-control"
                                                                 placeholder="{{ __('admins.Governorate') }}"
-                                                                name="governorate">
+                                                                name="Governorate">
+                                                            @error('Governorate')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -86,7 +88,10 @@
                                                                 for="Neighborhood">{{ __('admins.Neighborhood') }}</label>
                                                             <input type="text" id="Neighborhood" class="form-control"
                                                                 placeholder="{{ __('admins.Neighborhood') }}"
-                                                                name="neighborhood">
+                                                                name="Neighborhood">
+                                                            @error('Neighborhood')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -94,9 +99,12 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="Navigational-mark">{{ __('admins.Navigational-mark') }}</label>
-                                                            <input type="text" id="Navigational-mark" class="form-control"
+                                                            <input type="text" id="NavigationalMark" class="form-control"
                                                                 placeholder="{{ __('admins.Navigational-mark') }}"
-                                                                name="navigational_mark">
+                                                                name="NavigationalMark">
+                                                            @error('NavigationalMark')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,9 +115,12 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="opening-time">{{ __('admins.opening-time') }}</label>
-                                                            <input type="time" id="opening-time" class="form-control"
+                                                            <input type="time" id="OpiningTime" class="form-control"
                                                                 placeholder="{{ __('admins.opening-time') }}"
-                                                                name="opening_time" value="09:00:00">
+                                                                name="OpiningTime" value="09:00:00">
+                                                            @error('NameOfDeliveryOffice')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -117,24 +128,48 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="closing-time">{{ __('admins.closing-time') }}</label>
-                                                            <input type="time" id="closing-time" class="form-control"
+                                                            <input type="time" id="ClosingTime" class="form-control"
                                                                 placeholder="{{ __('admins.closing-time') }}"
-                                                                name="closing_time" value="00:00:00">
+                                                                name="ClosingTime" value="00:00:00">
+                                                            @error('ClosingTime')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row pl-1 pr-1">
+                                                    <div class="col-md-6">
+                                                        {{-- Available Status Field --}}
+                                                        <div class="form-group">
+                                                            <label for="Available-Status">{{ __('admins.Available-status') }}</label>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" name="AvailableStatus"
+                                                                        id="AvailableStatus">
+                                                                    <option  value="Open" selected>{{ __('admins.Open') }}</option>
+                                                                    <option  value="Close">{{ __('admins.Close') }}</option>
+                                                                    <option  value="Inmaintenance">{{ __('admins.Inmaintenance') }}</option>
+                                                                </select>
+                                                            </fieldset>
+                                                            @error('AvailableStatus')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
 
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         {{-- logo Field --}}
                                                         <label for="closing-time">{{ __('admins.logo') }}</label>
                                                         <fieldset class="form-group">
                                                             <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="logo"
-                                                                    name="logo">
+                                                                <input type="file" class="custom-file-input" id="Logo"
+                                                                    name="Logo">
                                                                 <label class="custom-file-label"
-                                                                    for="inputGroupFile01">{{ __('admins.choose-logo') }}</label>
+                                                                    for="Logo">{{ __('admins.choose-logo') }}</label>
+                                                                @error('Logo')
+                                                                <small  class="form-text text-danger">{{$message}}</small>
+                                                                @enderror
                                                             </div>
                                                         </fieldset>
                                                     </div>
@@ -161,7 +196,6 @@
                 <!-- //  Form section end -->
             </div>
         </div>
-    </div>
     </div>
     </div>
 @endsection

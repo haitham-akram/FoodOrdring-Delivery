@@ -33,33 +33,30 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form">
+                                        <form class="form" action="{{route('admin_store_delivery_manager')}}" method="post">
+                                            @csrf
                                             <div class="form-body">
-                                                <div class="row pl-1 pr-1">
-                                                    <div class="col-md-12">
-                                                        {{-- ID Field --}}
-                                                        <div class="form-group">
-                                                            <label for="ID">{{ __('admins.id') }}</label>
-                                                            <input type="text" id="ID" class="form-control"
-                                                                placeholder="{{ __('admins.id') }}" name="id">
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="row pl-1 pr-1">
                                                     <div class="col-md-6">
                                                         {{-- First Name Field --}}
                                                         <div class="form-group">
                                                             <label for="fname">{{ __('admins.fname') }}</label>
-                                                            <input type="text" id="fname" class="form-control"
-                                                                placeholder="{{ __('admins.fname') }}" name="fname">
+                                                            <input type="text" id="FirstName" class="form-control"
+                                                                placeholder="{{ __('admins.fname') }}" name="FirstName">
+                                                            @error('FirstName')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- Last Name Field --}}
                                                         <div class="form-group">
                                                             <label for="lname">{{ __('admins.lname') }}</label>
-                                                            <input type="text" id="lname" class="form-control"
-                                                                placeholder="{{ __('admins.lname') }}" name="lname">
+                                                            <input type="text" id="LastName" class="form-control"
+                                                                placeholder="{{ __('admins.lname') }}" name="LastName">
+                                                            @error('LastName')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -68,19 +65,34 @@
                                                         {{-- Email Field --}}
                                                         <div class="form-group">
                                                             <label for="email">{{ __('admins.email') }}</label>
-                                                            <input type="email" id="email" class="form-control"
-                                                                placeholder="{{ __('admins.email') }}" name="email">
+                                                            <input type="email" id="Email" class="form-control"
+                                                                placeholder="{{ __('admins.email') }}" name="Email">
+                                                            @error('Email')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row pl-1 pr-1">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         {{-- Password Field --}}
                                                         <div class="form-group">
                                                             <label for="password">{{ __('admins.password') }}</label>
-                                                            <input type="password" id="password" class="form-control"
+                                                            <input type="password" id="Password" class="form-control"
                                                                 placeholder="{{ __('admins.password') }}"
-                                                                name="password">
+                                                                name="Password">
+                                                            @error('Password')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{--confirm Password Field --}}
+                                                        <div class="form-group">
+                                                            <label for="password">{{ __('admins.confirm-password') }}</label>
+                                                            <input type="password" id="Password" class="form-control"
+                                                                   placeholder="{{ __('admins.confirm-password') }}"
+                                                                   name="Password_confirmation">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -90,28 +102,37 @@
                                                         {{-- phone number 1 Field --}}
                                                         <div class="form-group">
                                                             <label for="phone1">{{ __('admins.phone1') }}</label>
-                                                            <input type="text" id="phone1" class="form-control"
-                                                                placeholder="{{ __('admins.phone1') }}" name="phone1">
+                                                            <input type="text" id="PhoneNumber1" class="form-control"
+                                                                   placeholder="{{ __('admins.phone1') }}" name="PhoneNumber1">
+                                                            @error('PhoneNumber1')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- phone number 2 Field --}}
                                                         <div class="form-group">
                                                             <label for="phone2">{{ __('admins.phone2') }}</label>
-                                                            <input type="text" id="phone2" class="form-control"
-                                                                placeholder="{{ __('admins.phone2') }}" name="phone2">
+                                                            <input type="text" id="PhoneNumber2" class="form-control"
+                                                                placeholder="{{ __('admins.phone2') }}" name="PhoneNumber2">
+                                                            @error('PhoneNumber2')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row pl-1 pr-1">
                                                     <div class="col-md-12">
-                                                        {{-- Restaurant Owner Field --}}
+                                                        {{-- delivery Owner Field --}}
                                                         <div class="form-group">
                                                             <label
                                                                 for="owend-rest">{{ __('admins.deliviry-owner') }}</label>
-                                                            <input type="text" id="owend-rest" class="form-control"
+                                                            <input type="text" id="NameOfDeliveryOffice" class="form-control"
                                                                 placeholder="{{ __('admins.deliviry-owner') }}"
-                                                                name="deliviry_owner">
+                                                                name="NameOfDeliveryOffice">
+                                                            @error('NameOfDeliveryOffice')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -138,5 +159,48 @@
         </div>
     </div>
     </div>
-    </div>
+@endsection
+@section('search js')
+    @if (Session::has('create_msg_delivery'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('create_msg_delivery') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('create_msg_delivery') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+    @if (Session::has('create_msg_Manager_with_ExistingDelivery'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('create_msg_Manager_with_ExistingDelivery') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('create_msg_Manager_with_ExistingDelivery') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

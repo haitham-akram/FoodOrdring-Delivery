@@ -138,6 +138,7 @@ return [
     'res_max_password_messages' => 'Maximum password is 30 characters',
     'res_min_password_messages' => 'Minimum password is 8 characters',
     'res_required_phone_messages' => 'Phone number is required',
+    'res_conf_password_messages'=>'Password is not compatible',
     'res_max_phone_messages' => 'Maximum 10 numbers',
     'res_min_phone_messages' => 'Minimum is 10 numbers',
     'res_max_phone2_messages' => 'Maximum 10 numbers',

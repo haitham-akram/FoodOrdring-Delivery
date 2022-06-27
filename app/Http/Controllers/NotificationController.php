@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\NotificationRequest;
 use App\Models\Adminnotification;
+use App\Models\Deliveryofficemanager;
+use App\Models\Restaurantmanager;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -10,7 +14,7 @@ class NotificationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -21,22 +25,38 @@ class NotificationController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        return view('admin.notification.create');
+        $RestaurantManagers = RestaurantManager::select('RestManagerID','FirstName','LastName')->get();
+        $DeliveryManagers = Deliveryofficemanager::select('DeliManagerID','FirstName','LastName')->get();
+
+        return view('admin.notification.create')->with('RestaurantManagers',$RestaurantManagers)->with('DeliveryManagers',$DeliveryManagers);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(NotificationRequest $request)
     {
-        //
+
+
+        $ReceiverID = json_encode($request->ReceiverID);
+//        dd(  $request->all(),$ReceiverID );
+        Adminnotification::create([
+//           'NotificationID'=>1000,
+            'ReceiverID'=>$ReceiverID,
+            'Header'=> $request->Header,
+            'Description'=>$request->Description,
+            'TypeOfNotification'=>$request->TypeOfNotification,
+            'LogDate'=>Carbon::now(),
+        ]);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'), 'create_msg_notification' => __('admins.create_msg_notification')]);
+
     }
 
     /**
@@ -44,13 +64,14 @@ class NotificationController extends Controller
      *
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search_Notification(Request $request)
     {
         $notifications = Adminnotification::all();
         if ($request->keyword != '') {
             $notifications = Adminnotification::where('Header', 'LIKE', '%' . $request->keyword . '%')
+                ->orWhere('TypeOfNotification', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Description', 'LIKE', '%' . $request->keyword . '%')
                 ->get();
         }
@@ -63,11 +84,20 @@ class NotificationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {
-        return view('admin.notification.edit');
+        $RestaurantManagers = RestaurantManager::select('RestManagerID','FirstName','LastName')->get();
+        $DeliveryManagers = Deliveryofficemanager::select('DeliManagerID','FirstName','LastName')->get();
+        $Notification = Adminnotification::find($id);
+        $selected_ids = json_decode($Notification->ReceiverID,true);
+        $Notification->ReceiverID = $selected_ids;
+        return view('admin.notification.edit')
+            ->with('Notification',$Notification)
+            ->with('RestaurantManagers',$RestaurantManagers)
+            ->with('DeliveryManagers',$DeliveryManagers);
+
     }
 
     /**
@@ -75,11 +105,24 @@ class NotificationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(NotificationRequest $request, $id)
     {
-        //
+
+        $notification = Adminnotification::find($id)->first();
+        if(!$notification){
+            return redirect()->back()->with(['error_title' => __('admins.error_title'), ' not_found_msg_notification' => __('admins.not_found_msg_notification')]);
+        }
+
+        Adminnotification::update([
+            'ReceiverID'=>$request->ReceiverID,
+            'Header'=>$request->Header,
+            'Description'=>$request->Description,
+            'TypeOfNotification'=>$request->TypeOfNotification,
+            'LogDate'=>Carbon::now(),
+        ]);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'), 'update_msg_notification' => __('admins.update_msg_notification')]);
     }
 
     /**

@@ -10,7 +10,7 @@ class Deliveryoffice extends Model
     use HasFactory;
     protected $table = 'deliveryoffice';
     protected $fillable = [
-        'DeliveryOfficeID', 'NameOfDeliveryOffice',
+        'DeliveryOfficeID', 'NameOfDeliveryOffice','StreetName',
         'Governorate', 'Neighborhood', 'NavigationalMark', 'ManagerOfDeliveryOfficeID', 'Logo', 'OpiningTime', 'OwnerID', 'ClosingTime', 'AvailableStatus', 'CustomerFeedBackID'
     ];
     public function deliveryofficemanager()
@@ -19,4 +19,5 @@ class Deliveryoffice extends Model
     }
     protected $primaryKey = 'DeliveryOfficeID';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

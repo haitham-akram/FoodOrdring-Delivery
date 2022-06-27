@@ -70,6 +70,7 @@ return [
     'lname' => 'Last Name',
     'id' => 'ID',
     'password' => 'Password',
+    'confirm-password'=>'Confirm Password',
     'phone1' => 'Phone Number 1',
     'phone2' => 'Phone Number 2',
     'restaurant-owner' => 'Restaurant Owner',
@@ -80,22 +81,31 @@ return [
     'actions' => 'Actions',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'category'=>'Restaurant Category',
+    'create_msg_Manager_with_ExistingRestaurant'=>'A new restaurant manager has been added and the restaurant has been successfully restored.',
     //Edit restaurant manager page
     'edit-Restaurant-Manager' => 'Edit Restaurant Manager Info',
-    // Deliviry index page
+    //delete
+    'delete_msg_restaurantManager'=>'Restaurant Manager Deleted Successfully',
+    // Delivery index page
     'all-Deliviry-Manager' => 'All Delivery Manager',
     'deliviry-managers-add' => 'Add Delivery Manager',
     'deliviry-owner' => 'Delivery Office Owner',
     'deleviry-search' => 'Search For Deleviry Office',
 
-    'not_found_msg_delivery' => 'Delivery Office Manager Not Found',
-    'delete_msg_delivery' => 'Delivery Office Manager Deleted Successfully',
+    'not_found_msg_delivery_manager' => 'Delivery Office Manager Not Found',
+    'delete_msg_delivery_manager' => 'Delivery Office Manager Deleted Successfully',
     // add Deliviry page
     'Add-deliviry-manager' => 'Add New Delivery Manager',
     'deliviry-managers-info' => 'Delivery Office Manager Info',
     'deliviry_managers_add' => 'Add Delivery Manager',
+    'create_msg_delivery' => 'Delivery Office Manager & Delivery Office Added Successfully',
+    'create_msg_Manager_with_ExistingDelivery' => 'Delivery Office Manager Has been added and the delivery office has been retrieved successfully',
     // Edit Deliviry page
     'Edit-deliviry-manager' => 'Edit Delivery Office Manager Info',
+    'update_msg_deliveryManager'=>'Delivery Office Manager Updated Successfully',
+    'update_msg_delivery'=>'Delivery Office Updated Successfully',
+
     //Customer index page
     'All-Customers' => 'All Customers',
     'Search-customer' => 'Search For Customer',
@@ -118,8 +128,16 @@ return [
     'restaurant-info' => 'Restaurant Info',
     'add-new-restaurant' => 'Add New Restaurant',
     'choose-logo' => 'Choose Logo',
+    'Inmaintenance'=>'In Maintenance',
+    'Open'=>'Open',
+    'Close'=>'Close',
+    'create_msg_restaurantManager'=>'Restaurant Manager & Restaurant Added Successfully',
     //edit restaurant
     'edit-restaurant' => 'Edit Restaurant Info',
+    'update_msg_restaurantManager'=>'Restaurant Manager Updated Successfully',
+    'update_msg_restaurant'=>'Restaurant Updated Successfully',
+    //delete
+
     //delivery office index page
     'All-delivery' => 'All Delivery Offices',
     'delivery-name' => 'Delivery Office Name',
@@ -144,14 +162,18 @@ return [
     'notification-content' => 'Notification Content',
     'choose-type' => 'Choose Type',
     'Informing' => 'Informing',
-    'Worning' => 'Worning',
+    'Warning' => 'warning',
+    'Message'=>'Message',
     'send-notification' => 'Send Notification',
     'edit-notification-content' => 'Edit Notification Content',
     //notifications
     'New' => 'New',
     'No Data' => 'No Data Found.',
     'not_found_msg_notification' => 'Notification Not Found',
+    'create_msg_notification'=>'Notification Added Successfully',
+    'update_msg_notification'=>'Notification Updated Successfully',
     'delete_msg_notification' => 'Notification Deleted Successfully',
+
     //Admin request
     //log-in managers(admin,resturant manager, delivery manager)
     'log_required_email_messages' => 'Email is required',
@@ -163,6 +185,7 @@ return [
     'admin_Header_messages' => 'Select the title of the notice',
     'admin_Description_messages' => 'Attach a description to the notice',
     'admin_TypeOfNotification_messages' => 'Select the type of notification',
+
 
 
 

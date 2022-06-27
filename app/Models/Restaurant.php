@@ -31,4 +31,5 @@ class Restaurant extends Model
     }
     protected $primaryKey = 'RestaurantID';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

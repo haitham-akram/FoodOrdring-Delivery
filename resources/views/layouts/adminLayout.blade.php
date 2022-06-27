@@ -54,7 +54,6 @@
 
                     <ul class="nav navbar-nav mr-auto float-left">
                     </ul>
-
                     <ul class="nav navbar-nav float-left">
                         {{-- start profile dropdown --}}
                         <li class="dropdown dropdown-user nav-item">
@@ -158,7 +157,7 @@
                     <ul class="menu-content">
                         <li class="@if (Route::currentRouteName() == 'admin_customer_manager_list') active @endif"><a class="menu-item"
                                 href="{{ route('admin_customer_manager_list') }}"
-                                data-i18n="nav.customer.list"">{{ __('admins.Customers-list') }}</a>
+                                data-i18n="nav.customer.list">{{ __('admins.Customers-list') }}</a>
                         </li>
                     </ul>
                 </li>

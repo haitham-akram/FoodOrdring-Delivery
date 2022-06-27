@@ -24,8 +24,8 @@ class AdminController extends Controller
     public function index()
     {
         $customers = Customeraccount::orderBy('created_at', 'desc')->take(10)->get();
-        $restaurants_count = Restaurant::count();
-        $delevirys_count = Deliveryoffice::count();
+        $restaurants_count = Restaurant::where('OwnerID','!=',null)->count();
+        $delevirys_count = Deliveryoffice::where('OwnerID','!=',null)->count();
         $notifications_count = Adminnotification::count();
         $customers_count = Customeraccount::count();
         return view('admin.index')

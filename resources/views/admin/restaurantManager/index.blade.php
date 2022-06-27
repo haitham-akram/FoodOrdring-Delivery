@@ -127,7 +127,7 @@
                     res.RestaurantManagers[i].Email + `</a>  </td>
                     <td class = "text-center"> ` + res.RestaurantManagers[i].PhoneNumber1 + ` , ` +
                     res.RestaurantManagers[i].PhoneNumber2 + ` </td>
-                    <td class = "text-center">-</td>
+                    <td class = "text-center">` + res.RestaurantManagers[i].RestaurantName + `</td>
                     <td class = "text-center">
                         <span class="dropdown">
                             <button id="SearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>

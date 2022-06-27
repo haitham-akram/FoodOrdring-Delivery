@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\EditResManagersRequest;
+use App\Http\Requests\Resturant\ResturaMrequest;
 use App\Models\Restaurant;
 use App\Models\Restaurantmanager;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class RestaurantManagerController extends Controller
 {
@@ -27,13 +32,17 @@ class RestaurantManagerController extends Controller
      */
     public function search_Restaurant_Manager(Request $request)
     {
-        $RestaurantManagers = Restaurantmanager::all();
+
+        $RestaurantManagers = RestaurantManager::join('restaurants','restaurantmanager.RestManagerID','=','restaurants.ownerID')
+            ->get(['restaurantmanager.*','restaurants.RestaurantName']);
+
         if ($request->keyword != '') {
             $RestaurantManagers = Restaurantmanager::where('FirstName', 'LIKE', '%' . $request->keyword . '%')
                 ->orwhere('LastName', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Email', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('PhoneNumber1', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('PhoneNumber2', 'LIKE', '%' . $request->keyword . '%')
+                ->orWhere('RestaurantName', 'LIKE', '%' . $request->keyword . '%')
                 ->get();
         }
         return response()->json([
@@ -67,9 +76,57 @@ class RestaurantManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ResturaMrequest $request)
     {
-        //
+        $RestaurantManagerGeneratedID = 'RM';
+        for($i = 0; $i < 8; $i++) {
+            $RestaurantManagerGeneratedID .= mt_rand(0, 9);
+        }
+        $password = Hash::make($request->Password);
+        $RestaurantGeneratedID = 'R';
+        for($i = 0; $i < 9; $i++) {
+            $RestaurantGeneratedID.= mt_rand(0, 9);
+        }
+        //create Restaurant Manager
+       Restaurantmanager::create([
+           'RestManagerID'=>$RestaurantManagerGeneratedID,
+           'FirstName'=>$request->FirstName,
+           'LastName'=>$request->LastName,
+           'Email'=>$request->Email,
+           'PhoneNumber1'=>$request->PhoneNumber1,
+           'PhoneNumber2'=>$request->PhoneNumber2,
+           'Password'=>$password,
+       ]);
+        //create user
+        User::create([
+            'name'=>$request->FirstName.' '.$request->LastName,
+            'email'=>$request->Email,
+            'password'=>$password,
+            'user_id'=>$RestaurantManagerGeneratedID,
+        ]);
+        //this in case if Restaurant manager deleted and need to create new one with same Restaurant
+        $Restaurant = Restaurant::where('RestaurantName','=',$request->RestaurantName)
+            ->where('OwnerID',null)
+            ->first();
+        if(!$Restaurant){ // in this case will create new Delivery office with new manager
+            //create Restaurant
+            Restaurant::create([
+                'RestaurantID'=>$RestaurantGeneratedID,
+                'RestaurantName'=>$request->RestaurantName,
+                'OwnerID'=>$RestaurantManagerGeneratedID,
+            ]);
+            return redirect()->route('admin_add_resaturant',['id'=>$RestaurantGeneratedID]);
+        }else{
+            $Restaurant->update([
+                'OwnerID'=>$RestaurantManagerGeneratedID,
+            ]);
+            return redirect()->back()->with(['success_title' => __('admins.success_title'),
+                'create_msg_Manager_with_ExistingRestaurant' => __('admins.create_msg_Manager_with_ExistingRestaurant')]);
+        }
+
+
+
+
     }
 
     /**
@@ -86,12 +143,15 @@ class RestaurantManagerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        return view('admin.restaurantManager.edit');
+
+        $Restaurantmanager = RestaurantManager::find($id)->join('restaurants','restaurantmanager.RestManagerID','=','restaurants.ownerID')
+            ->first(['restaurantmanager.*','restaurants.RestaurantName']);
+        return view('admin.restaurantManager.edit')->with('Restaurantmanager',$Restaurantmanager);
     }
     /**
      * Show the form for editing the specified resource for restaurantManager.
@@ -107,13 +167,25 @@ class RestaurantManagerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param EditResManagersRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditResManagersRequest $request, $id)
     {
-        //
+        $Restaurantmanager = RestaurantManager::find($id);
+        $Restaurantmanager->update([
+            'FirstName'=>$request->FirstName,
+            'LastName'=>$request->LastName,
+            'Email'=>$request->Email,
+            'PhoneNumber1'=>$request->PhoneNumber1,
+            'PhoneNumber2'=>$request->PhoneNumber2,
+        ]);
+        $user= User::where('user_id','=',$id)->first();
+        $user->update(['email'=>$request->Email]);
+        $Restaurant=Restaurant::where('OwnerID','=',$id);
+        $Restaurant->update(['RestaurantName'=>$request->RestaurantName]);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'), 'update_msg_restaurantManager' => __('admins.update_msg_restaurantManager')]);
     }
 
     /**
@@ -129,10 +201,14 @@ class RestaurantManagerController extends Controller
         if (!$restaurantManager) {
             return redirect()->back()->with(['error_title' => __('admins.error_title'), ' not_found_msg_restaurantManager' => __('admins.not_found_msg_restaurantManager')]);
         }
-        $restaurant = Restaurant::where('ManagerRestaurantID', '=', $id);
+        $restaurant = Restaurant::where('OwnerID', '=', $id);
         if ($restaurant) {
-            $restaurant->delete();
+            $restaurant->update([
+                'OwnerID'=> null
+            ]);
         }
+        $user = User::where('user_id','=',$restaurantManager->RestManagerID);
+        $user->delete();
         $restaurantManager->delete();
         return redirect()->back()->with(['success_title' => __('admins.success_title'), 'delete_msg_restaurantManager' => __('admins.delete_msg_restaurantManager')]);
     }

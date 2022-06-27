@@ -27,7 +27,7 @@ class NotificationRequest extends FormRequest
             'ReceiverID'=>'required',
             'Header'=>'required',
             'Description'=>'required',
-            'TypeOfNotification'=>'required||max:10||min:10',
+            'TypeOfNotification'=>'required',
                 ];
     }
     public function messages()

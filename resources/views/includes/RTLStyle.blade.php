@@ -39,7 +39,8 @@
 {{-- for toastr --}}
 <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/extensions/toastr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/plugins/extensions/toastr.css') }}">
-
+{{--this is for selector--}}
+<link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
 {{-- maybe we will need it soon --}}
 <link rel="stylesheet" type="text/css"
     href="{{ secure_asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
@@ -97,3 +98,5 @@
     href="{{ asset('app-assets/vendors/css/tables/extensions/rowReorder.dataTables.min.css') }}">
 <link rel="stylesheet" type="text/css"
     href="{{ asset('app-assets/vendors/css/tables/extensions/responsive.dataTables.min.css') }}">
+
+

@@ -70,10 +70,14 @@ return [
     'lname' => 'اسم العائلة',
     'id' => 'الرقم التعريفي',
     'password' => 'كلمة المرور',
+    'confirm-password'=>'تأكيد كلمة المرور',
     'phone1' => 'رقم الهاتف الاول',
     'phone2' => 'رقم الهاتف الثاني',
     'restaurant-owner' => 'صاحب مطعم',
     'cancel' => 'إلغاء',
+    'category'=>'تصنيف المطعم',
+    'create_msg_Manager_with_ExistingRestaurant'=>'تم إضافة مدير مطعم جديد واسترجاع المطعم بنجاح',
+
     //Restaurant Managers List page
     'all-Restaurant-Manager' => 'كل مدراء المطاعم',
     'Search' => 'بحث عن مدير ',
@@ -85,6 +89,8 @@ return [
     'not_found_msg_restaurantManager' => 'مدير المطعم غير موجود',
     //Edit restaurant manager page
     'edit-Restaurant-Manager' => 'تعديل بيانات مدير مطعم',
+
+    //delete
     // Deliviry index page
     'all-Deliviry-Manager' => 'كل مدراء مكاتب التوصيل',
     'deliviry-managers-add' => 'إضافة مدير مكتب توصيل',
@@ -96,8 +102,14 @@ return [
     'Add-deliviry-manager' => 'إضافة مدير مكتب توصيل جديد',
     'deliviry-managers-info' => 'معلومات مدير مكتب التوصيل',
     'deliviry_managers_add' => 'إضافة مدير مكتب توصيل',
+    'create_msg_delivery' => 'تم إضافة مدير مكتب توصيل و مكتب التوصيل بنجاح',
+    'create_msg_Manager_with_ExistingDelivery' => 'تم إضافة مدير مكتب توصيل و استرجاع مكتب التوصيل بنجاح',
+
     // Edit Deliviry page
     'Edit-deliviry-manager' => 'تعديل بيانات مدير مكتب توصيل',
+    'update_msg_deliveryManager'=>'تم تعديل مدير مكتب توصيل بنجاح',
+    'update_msg_delivery'=>'تم تعديل  مكتب توصيل بنجاح',
+
     //Customer index page
     'All-Customers' => 'كل المستخدمين',
     'Search-customer' => 'بحث عن مستخدم',
@@ -108,7 +120,7 @@ return [
     'Search-restaurant' => 'بحث عن مطعم',
     'restaurant-name' => 'اسم المطعم',
     'street-name' => 'اسم الشارع',
-    'Navigational-mark' => 'علامة ملاحية',
+    'Navigational-mark' => 'منطقة مميزة',
     'rate' => 'التقيم',
     'logo' => 'الشعار',
     'opening-time' => 'وقت العمل',
@@ -120,8 +132,14 @@ return [
     'restaurant-info' => 'معلومات المطعم',
     'add-new-restaurant' => 'إضافة مطعم جديد',
     'choose-logo' => 'اختر الشعار',
+    'Inmaintenance'=>'في الصيانة',
+    'Open'=>'مفتوح',
+    'Close'=>'مغلق',
+    'create_msg_restaurantManager'=>'تم انشاء مدير المطعم و المطعم بنجاح',
     //edit restaurant
     'edit-restaurant' => 'تعديل بيانات مطعم ',
+    'update_msg_restaurantManager'=>'تم تعديل مدير المطعم بنجاح',
+    'update_msg_restaurant'=>'تم تعديل المطعم بنجاح',
     //deliviry office index page
     'All-delivery' => 'كل مكاتب التوصيل',
     'delivery-name' => 'اسم مكتب التوصيل',
@@ -146,7 +164,8 @@ return [
     'notification-content' => 'محتوى الاشعار',
     'choose-type' => 'اختر النوع',
     'Informing' => 'إعلام',
-    'Worning' => 'تحذير',
+    'Warning' => 'تنبيه',
+    'Message'=>'رسالة',
     'send-notification' => 'إرسال إشعار',
     //Edit notification page
     'edit-notification-content' => 'تعديل محتوى الاشعار',
@@ -154,6 +173,8 @@ return [
     'New' => 'جديد',
     'No Data' => 'لا توجد بيانات.',
     'not_found_msg_notification' => 'الاشعار غير موجود',
+    'create_msg_notification'=>'تم إضافة الاشعار بنجاح',
+    'update_msg_notification'=>'تم تعديل الاشعار بنجاح',
     'delete_msg_notification' => 'تم حذف الاشعار بنجاح',
     //Admin request
     //log-in managers(admin,resturant manager, delivery manager)

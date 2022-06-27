@@ -135,6 +135,7 @@ return [
     'res_last_name_messages' => 'الاسم الأخير مطلوب',
     'res_email_messages' => 'البريد الالكتروني مطلوب',
     'res_required_password_messages' => 'كلمة المرور مطلوبة',
+    'res_conf_password_messages'=>'كلمة المرور غير متوافقة',
     'res_max_password_messages' => 'الحد الأقصى لكلمة المرور 30 رمز',
     'res_min_password_messages' => 'الحد الأدنى لكلمة المرور هو 8 رموز',
     'res_required_phone_messages' => 'رقم الهاتف المحمول مطلوب',
@@ -152,4 +153,5 @@ return [
     'res_logo_messages' => 'مطلوب تحميل صورة تعريفية للمطعم',
     'res_opining_time_messages' => 'وقت بداية العمل مطلوب',
     'res_closing_time_messages' => 'وقت نهاية العمل مطلوب',
+
 ];

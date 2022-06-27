@@ -14,7 +14,6 @@
                                 <li class="breadcrumb-item active"><a
                                         href="{{ route('admin_restaurant_list') }}">{{ __('admins.restaurants-list') }}</a>
                                 </li>
-                                </li>
                             </ol>
                         </div>
                     </div>

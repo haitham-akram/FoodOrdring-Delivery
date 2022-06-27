@@ -35,15 +35,19 @@ Route::group([
         Route::get('/index', [AdminController::class, 'index'])->name('admin_index');
         //Restaurant Manager Routes
         Route::get('/add-restaurant-manager', [RestaurantManagerController::class, 'create'])->name('admin_add_res_manager');
+        Route::post('/store-restaurant-manager', [RestaurantManagerController::class, 'store'])->name('admin_store_res_manager');
         Route::get('/restaurant-managers', [RestaurantManagerController::class, 'index'])->name('admin_res_manager_list');
         Route::post('/search-restaurant-managers', [RestaurantManagerController::class, 'search_Restaurant_Manager'])->name('search_Restaurant_Manager');
         Route::get('/edit-restaurant-manager/{id}', [RestaurantManagerController::class, 'edit'])->name('admin_edit_res_manager');
+        Route::post('/update-restaurant-manager/{id}', [RestaurantManagerController::class, 'update'])->name('admin_update_res_manager');
         Route::get('/delete-restaurant-manager/{id}', [RestaurantManagerController::class, 'destroy'])->name('admin_delete_res_manager');
-        //Deleviry Manager Routes
+        //Delivery Manager Routes
         Route::get('/deliviry-managers', [DeliviryManagerController::class, 'index'])->name('admin_deliviry_manager_list');
         Route::post('/search-deliviry-managers', [DeliviryManagerController::class, 'search_Delivery_Manager'])->name('search_Delivery_Manager');
         Route::get('/add-deliviry-manager', [DeliviryManagerController::class, 'create'])->name('admin_add_deliviry_manager');
+        Route::post('/store-delivery-manager', [DeliviryManagerController::class, 'store'])->name('admin_store_delivery_manager');
         Route::get('/edit-delivery-manager/{id}', [DeliviryManagerController::class, 'edit'])->name('admin_edit_deliviry_manager');
+        Route::post('/update-delivery-manager/{id}', [DeliviryManagerController::class, 'update'])->name('admin_update_delivery_manager');
         Route::get('/delete-delivery-manager/{id}', [DeliviryManagerController::class, 'destroy'])->name('admin_delete_deliviry_manager');
         //Customer Routes
         Route::get('/Customers', [CustomerManagerController::class, 'index'])->name('admin_customer_manager_list');
@@ -52,14 +56,18 @@ Route::group([
         //Restaurants Routes
         Route::get('/Restaurants', [RestaurantController::class, 'index'])->name('admin_restaurant_list');
         Route::post('/Search-Restaurants', [RestaurantController::class, 'search_Restaurant'])->name('search_Restaurant');
-        Route::get('/Add-resaturant', [RestaurantController::class, 'create'])->name('admin_add_resaturant');
+        Route::get('/Add-resaturant/{id}', [RestaurantController::class, 'Create'])->name('admin_add_resaturant');
+        Route::post('/store-resaturant/{id}', [RestaurantController::class, 'store'])->name('admin_store_resaturant');
         Route::get('/Edit-resaturant/{id}', [RestaurantController::class, 'edit'])->name('admin_edit_resaturant');
+        Route::post('/Update-resaturant/{id}', [RestaurantController::class, 'update'])->name('admin_update_resaturant');
         Route::get('/Delete-resaturant/{id}', [RestaurantController::class, 'destroy'])->name('admin_delete_resaturant');
         //Delivery Offices Routes
         Route::get('/Delivery-Offices', [DeliveryController::class, 'index'])->name('admin_delivery_list');
         Route::post('/search-deliviry-offices', [DeliveryController::class, 'search_Delivery_Office'])->name('search_Delivery_Office');
-        Route::get('/Add-Delivery-Office', [DeliveryController::class, 'create'])->name('admin_add_delivery');
+        Route::get('/Add-Delivery-Office/{id}', [DeliveryController::class, 'create'])->name('admin_add_delivery');
+        Route::post('/Store-Delivery-Office/{id}', [DeliveryController::class, 'store'])->name('admin_store_delivery');
         Route::get('/Edit-Delivery-Office/{id}', [DeliveryController::class, 'edit'])->name('admin_edit_delivery');
+        Route::post('/Update-Delivery-Office/{id}', [DeliveryController::class, 'update'])->name('admin_update_delivery');
         Route::get('/Delete-Delivery-Office/{id}', [DeliveryController::class, 'destroy'])->name('admin_delete_delivery');
         //Notifications Routes
         Route::get('/Notifications', [NotificationController::class, 'index'])->name('admin_notification_list');

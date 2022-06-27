@@ -126,7 +126,7 @@
                     res.DeliveryOfficeManagers[i].Email + `</a>  </td>
                     <td class = "text-center"> ` + res.DeliveryOfficeManagers[i].PhoneNumber1 + ` , ` +
                     res.DeliveryOfficeManagers[i].PhoneNumber2 + ` </td>
-                    <td class = "text-center">-</td>
+                    <td class = "text-center">` + res.DeliveryOfficeManagers[i].NameOfDeliveryOffice + `</td>
                     <td class = "text-center">
                         <span class="dropdown">
                             <button id="SearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>

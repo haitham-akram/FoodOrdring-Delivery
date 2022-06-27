@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\EditDelManagersRequest;
+use App\Http\Requests\Delivery\DeliveryOMrequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Deliveryoffice;
 use App\Models\Deliveryofficemanager;
+use Illuminate\Support\Facades\Hash;
 
 class DeliviryManagerController extends Controller
 {
@@ -27,13 +31,15 @@ class DeliviryManagerController extends Controller
      */
     public function search_Delivery_Manager(Request $request)
     {
-        $DeliveryOfficeManagers = Deliveryofficemanager::all();
+        $DeliveryOfficeManagers = Deliveryofficemanager::join('deliveryoffice', 'deliveryofficemanager.DeliManagerID','=','deliveryoffice.OwnerID')
+           ->get(['deliveryofficemanager.*','deliveryoffice.NameOfDeliveryOffice']);
         if ($request->keyword != '') {
             $DeliveryOfficeManagers = Deliveryofficemanager::where('FirstName', 'LIKE', '%' . $request->keyword . '%')
                 ->orwhere('LastName', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Email', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('PhoneNumber1', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('PhoneNumber2', 'LIKE', '%' . $request->keyword . '%')
+                ->orWhere('NameOfDeliveryOffice', 'LIKE', '%' . $request->keyword . '%')
                 ->get();
         }
         return response()->json([
@@ -67,9 +73,54 @@ class DeliviryManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DeliveryOMrequest $request)
     {
-        //
+        $DeliveryManagerGeneratedID = 'DOM';
+        for($i = 0; $i < 7; $i++) {
+            $DeliveryManagerGeneratedID .= mt_rand(0, 9);
+        }
+        $password = Hash::make($request->Password);
+        $DeliveryGeneratedID = 'DO';
+        for($i = 0; $i < 8; $i++) {
+            $DeliveryGeneratedID.= mt_rand(0, 9);
+        }
+        //create Delivery Manager
+        Deliveryofficemanager::create([
+            'DeliManagerID'=>$DeliveryManagerGeneratedID,
+            'FirstName'=>$request->FirstName,
+            'LastName'=>$request->LastName,
+            'Email'=>$request->Email,
+            'PhoneNumber1'=>$request->PhoneNumber1,
+            'PhoneNumber2'=>$request->PhoneNumber2,
+            'Password'=>$password,
+        ]);
+        //create user for login
+        User::create([
+            'name'=>$request->FirstName.' '.$request->LastName,
+            'email'=>$request->Email,
+            'password'=>$password,
+            'user_id'=>$DeliveryManagerGeneratedID,
+        ]);
+        //this in case if Delivery manager deleted and need to create new one with same delivery office
+        $Deliveryoffice = Deliveryoffice::where('NameOfDeliveryOffice','=',$request->NameOfDeliveryOffice)
+            ->where('OwnerID',null)
+            ->first();
+        if(!$Deliveryoffice){ // in this case will create new Delivery office with new manager
+            //create Delivery office
+            Deliveryoffice::create([
+                'DeliveryOfficeID'=>$DeliveryGeneratedID,
+                'NameOfDeliveryOffice'=>$request->NameOfDeliveryOffice,
+                'OwnerID'=>$DeliveryManagerGeneratedID,
+            ]);
+            return redirect()->route('admin_add_delivery',['id'=>$DeliveryGeneratedID]);
+        }else{
+            $Deliveryoffice->update([
+                'OwnerID'=>$DeliveryManagerGeneratedID,
+            ]);
+            return redirect()->back()->with(['success_title' => __('admins.success_title'),
+                'create_msg_Manager_with_ExistingDelivery' => __('admins.create_msg_Manager_with_ExistingDelivery')]);
+        }
+
     }
 
     /**
@@ -91,7 +142,10 @@ class DeliviryManagerController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.deliviryManager.edit');
+        $deliveryofficemanager = Deliveryofficemanager::find($id)->join('deliveryoffice', 'deliveryofficemanager.DeliManagerID','=','deliveryoffice.OwnerID')
+            ->first(['deliveryofficemanager.*','deliveryoffice.NameOfDeliveryOffice']);
+
+        return view('admin.deliviryManager.edit')->with('deliveryofficemanager',$deliveryofficemanager);
     }
     /**
      * Show the form for editing the specified resource.
@@ -108,13 +162,27 @@ class DeliviryManagerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param EditDelManagersRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(EditDelManagersRequest $request, $id)
     {
-        //
+
+        $deliveryManager = Deliveryofficemanager::find($id);
+        $deliveryManager->update([
+            'FirstName'=>$request->FirstName,
+            'LastName'=>$request->LastName,
+            'Email'=>$request->Email,
+            'PhoneNumber1'=>$request->PhoneNumber1,
+            'PhoneNumber2'=>$request->PhoneNumber2,
+        ]);
+        $user= User::where('user_id','=',$id)->first();
+        $user->update(['email'=>$request->Email]);
+        $deliveryoffice = Deliveryoffice::where('OwnerID','=',$id);
+
+        $deliveryoffice->update(['NameOfDeliveryOffice'=> $request->NameOfDeliveryOffice]);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'), 'update_msg_deliveryManager' => __('admins.update_msg_deliveryManager')]);
     }
 
     /**
@@ -131,8 +199,12 @@ class DeliviryManagerController extends Controller
         }
         $deliveryOffices = Deliveryoffice::where('ManagerOfDeliveryOfficeID', '=', $id);
         if ($deliveryOffices) {
-            $deliveryOffices->delete();
+            $deliveryOffices->update([
+                'OwnerID'=> null
+            ]);
         }
+        $user = User::where('user_id','=',$deliveryManager->DeliManagerID);
+        $user->delete();
         $deliveryManager->delete();
         return redirect()->back()->with(['success_title' => __('admins.success_title'), 'delete_msg_delivery' => __('admins.delete_msg_delivery_manager')]);
     }

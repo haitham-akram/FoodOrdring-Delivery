@@ -24,7 +24,6 @@ class Offerrequest extends FormRequest
     public function rules()
     {
         return [
-            'RestaurantID'=>'required',
             'DateOfStart'=>'required',
             'DateOfEnd'=>'required',
             'MealID'=>'required',
@@ -35,7 +34,6 @@ class Offerrequest extends FormRequest
     public function messages()
     {
         return [
-    'RestaurantID.required'=>__('resturantManager.offer_resid_messages'),
     'DateOfStart.required'=>__('resturantManager.date_of_start_messages'),
     'DateOfEnd.required'=>__('resturantManager.date_of_end_messages'),
     'MealID.required'=>__('resturantManager.offer_mealid_messages'),

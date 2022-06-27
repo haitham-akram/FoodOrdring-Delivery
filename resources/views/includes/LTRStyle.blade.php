@@ -58,6 +58,8 @@
 {{--<!-- BEGIN VENDOR CSS-->--}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/vendors.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/fonts/meteocons/style.css') }}">
+
+
 <link rel="stylesheet" type="text/css"
     href="{{ asset('app-assets/vendors/css/charts/chartist-plugin-tooltip.css') }}">
 
@@ -78,20 +80,22 @@
 {{-- this for login page--}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/login-register.css') }}">
 
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/users.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-ecommerce.css') }}">
+{{--<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/users.css') }}">--}}
+{{--<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-ecommerce.css') }}">--}}
 {{--<!-- END Page Level CSS-->--}}
-{{--<!-- BEGIN Custom CSS-->--}}
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 {{-- for toastr --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/toastr.css') }}">
-
-{{--<!-- END Custom CSS-->--}}
 {{-- maybe we will need it soon --}}
-<link rel="stylesheet" type="text/css"
-    href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" type="text/css"
-    href="{{ asset('app-assets/vendors/css/tables/extensions/rowReorder.dataTables.min.css') }}">
-<link rel="stylesheet" type="text/css"
-    href="{{ asset('app-assets/vendors/css/tables/extensions/responsive.dataTables.min.css') }}">
+{{--<link rel="stylesheet" type="text/css"--}}
+{{--    href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">--}}
+{{--<link rel="stylesheet" type="text/css"--}}
+{{--    href="{{ asset('app-assets/vendors/css/tables/extensions/rowReorder.dataTables.min.css') }}">--}}
+{{--<link rel="stylesheet" type="text/css"--}}
+{{--    href="{{ asset('app-assets/vendors/css/tables/extensions/responsive.dataTables.min.css') }}">--}}
+
+
+
+
+
+
