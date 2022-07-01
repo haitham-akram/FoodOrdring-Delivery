@@ -29,8 +29,8 @@ class ResturaMrequest extends FormRequest
             'Email'=>'required||email',
             'Password'=>'required|confirmed|min:8||max:30',
             'Password_confirmation'=>'required||min:8||max:30',
-            'PhoneNumber1'=>'required||min:10||max:10',
-            'PhoneNumber2'=>'nullable|min:10||max:10',
+            'PhoneNumber1'=>'required|integer|min:0560000000||max:0599999999',
+            'PhoneNumber2'=>'nullable|integer|min:0560000000||max:0599999999',
             'RestaurantName'=>'required',
         ];
     }
@@ -49,8 +49,10 @@ class ResturaMrequest extends FormRequest
             'Password_confirmation.max'=>__('restaurantManager.res_max_password_messages'),
             'Password_confirmation.min'=>__('restaurantManager.res_min_password_messages'),
             'PhoneNumber1.required'=>__('restaurantManager.res_required_phone_messages'),
+            'PhoneNumber1.integer'=>__('restaurantManager.res_integer_messages'),
+            'PhoneNumber2.integer'=>__('restaurantManager.res_integer_messages'),
             'PhoneNumber1.max'=>__('restaurantManager.res_max_phone_messages'),
-            'PhoneNumber1_min'=>__('restaurantManager.res_min_phone_messages'),
+            'PhoneNumber1.min'=>__('restaurantManager.res_min_phone_messages'),
             'PhoneNumber2.max'=>__('restaurantManager.res_max_phone2_messages'),
             'PhoneNumber2.min'=>__('restaurantManager.res_min_phone2_messages'),
             'RestaurantName.required'=>__('restaurantManager.resturant_name_messages')

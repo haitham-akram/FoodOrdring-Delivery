@@ -13,7 +13,6 @@
                                 <li class="breadcrumb-item active"><a
                                         href="{{ route('RM_Meals') }}">{{ __('restaurantManager.meals-list') }}</a>
                                 </li>
-                                </li>
                             </ol>
                         </div>
                     </div>
@@ -46,23 +45,11 @@
                                         <div class="col-md-2 pb-1">
                                             <form class="form" action="#">
                                                 <div class="position-relative">
-                                                    <input type="search" id="search-meal" class="form-control"
+                                                    <input type="text" id="search" class="form-control"
                                                         placeholder="{{ __('restaurantManager.search-meal') }}">
                                                     <div class="form-control-position">
                                                         <i class="la la-search text-size-base text-muted"></i>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!-- Choosing Category Options -->
-                                        <div class="col-md-2 pb-1">
-                                            <form class="form" action="#">
-                                                <div class="position-relative">
-                                                    <select class="select2 form-control block" id="responsive_single">
-                                                        <option selected disabled value="">
-                                                            {{ __('restaurantManager.choose-category') }}</option>
-                                                        <option value="sh">shwarma</option>
-                                                    </select>
                                                 </div>
                                             </form>
                                         </div>
@@ -77,15 +64,14 @@
                                                     <th class="text-center">{{ __('restaurantManager.meal-id') }}
                                                     </th>
                                                     <th class="text-center">
+                                                        {{ __('restaurantManager.logo') }}</th>
+                                                    <th class="text-center">
                                                         {{ __('restaurantManager.meal-name') }}</th>
-
-                                                    <th class="text-center">{{ __('restaurantManager.meun-id') }}
+                                                    <th class="text-center">{{ __('restaurantManager.category-name') }}
                                                     </th>
                                                     <th class="text-center">
                                                         {{ __('restaurantManager.price') }}</th>
                                                     <th class="text-center">{{ __('restaurantManager.offer') }}
-
-                                                    </th>
                                                     </th>
                                                     <th class="text-center">
                                                         {{ __('restaurantManager.estimate-finish-time') }}</th>
@@ -100,58 +86,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        meal-id
-                                                    </td>
-                                                    <td class="text-center">
-                                                        meal-name
-                                                    </td>
-                                                    <td class="text-center">
-                                                        meun-id
-                                                    </td>
-                                                    <td class="text-center">
-                                                        price
-                                                    </td>
-                                                    <td class="text-center">
-                                                        offer
-                                                    </td>
-
-                                                    <td class="text-center">
-                                                        estimate-finish-time
-                                                    </td>
-                                                    <td class="text-center">
-                                                        ability-to-order
-                                                    </td>
-                                                    <td class="text-center">
-                                                        ingredients
-                                                    </td>
-                                                    <td class="text-center">
-                                                        description
-                                                    </td>
-                                                    <td class="text-center">
-                                                        rate
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span class="dropdown">
-                                                            <button id="SearchDrop2" type="button" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="true"
-                                                                class="btn btn-warning dropdown-toggle  dropdown-menu-right "><i
-                                                                    class="ft-settings"></i></button>
-                                                            <span aria-labelledby="SearchDrop2"
-                                                                class="dropdown-menu mt-1 dropdown-menu-left">
-                                                                <a class="dropdown-item primary" data-toggle="modal"
-                                                                    data-target="#edit_form"><i
-                                                                        class="ft-edit-2 primary"></i>
-                                                                    {{ __('admins.edit') }}</a>
-                                                                <a href="#" class="dropdown-item danger"><i
-                                                                        class="ft-trash-2 danger"></i>
-                                                                    {{ __('admins.delete') }}</a>
-                                                            </span>
-                                                        </span>
-                                                    </td>
-
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -167,4 +101,116 @@
             </div>
         </div>
     </div>
+@endsection
+@section('search js')
+    <script>
+        $('#search').on('keyup', function() {
+            search();
+        });
+
+        search();
+
+        // setInterval(function() {
+        //     search(); // this will run after every 1.5 seconds
+        // }, 1500);
+
+        function search() {
+            var keyword = $('#search').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.post('{{ route('search_Meals') }}', {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    keyword: keyword
+                },
+                function(data) {
+                    table_post_row(data);
+                });
+        }
+
+        // table row with ajax
+        function table_post_row(res) {
+            let htmlView = '';
+            if (res.Meals.length <= 0) {
+                htmlView += `<tr>
+                <td class = "text-center" colspan = "12" ><h4>{{ __('admins.No Data') }}</h4></td>
+                    </tr>`;
+            }
+            for (let i = 0; i < res.Meals.length; i++) {
+                var id = res.Meals[i].MealID;
+                var EditURL = "{{ route('RM_edit_meal', ':id') }}";
+                EditURL = EditURL.replace(':id', id);
+                var DeleteURL = "{{ route('RM_delete_meal', ':id') }}";
+                DeleteURL = DeleteURL.replace(':id', id);
+                htmlView += `<tr>
+                    <td class = "text-center"> ` + res.Meals[i].MealID + ` </td>
+                    <td class = "text-center"> <img style="width:100px; hight:100px" src="` + res.Meals[i].MealLogo + `" alt="logo"> </td>
+                    <td class = "text-center"> ` + res.Meals[i].MealName + ` </td>
+                    <td class = "text-center"> ` + res.Meals[i].CategoryType + `</td>
+                    <td class = "text-center"> ` + res.Meals[i].Price + ` </td>
+                    <td class = "text-center"> ` + res.Meals[i].Offer + `</td>
+                    <td class = "text-center"> ` + res.Meals[i].EstimateFinishTime + `</td>
+                    <td class = "text-center"> ` + res.Meals[i].AbilityToOrder + `</td>
+                    <td class = "text-center"> ` + res.Meals[i].Ingredients + `</td>
+                    <td class = "text-center"> ` + res.Meals[i].Description + `</td>
+                    <td class = "text-center"> ` + res.Meals[i].Rate + `</td>
+                    <td class = "text-center">
+                        <span class="dropdown">
+                            <button id="SearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+                            <span aria-labelledby="SearchDrop2" class="dropdown-menu mt-1 dropdown-menu-left">
+                            <a href=" ` + EditURL + `" class="dropdown-item primary"><i class="ft-edit-2"></i> {{ __('admins.edit') }} </a>
+                            <a href="` + DeleteURL + `" class="dropdown-item danger"><i class="ft-trash-2 danger"></i> {{ __('admins.delete') }}</a>
+                            </span>
+                        </span>
+                    </td>
+                    </tr>`;
+            }
+            $('tbody').html(htmlView);
+        }
+    </script>
+    @if (Session::has('delete_msg_Meal'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('delete_msg_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('delete_msg_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+    {{-- this script for toastr alert error --}}
+    @if (Session::has('not_found_msg_restaurant'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.error('{{ Session::get('not_found_msg_Meal') }}', '{{ Session::get('error_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.error('{{ Session::get('not_found_msg_Meal') }}', '{{ Session::get('error_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

@@ -8,9 +8,9 @@
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">{{ __('restaurantManager.home') }}</a>
+                                <li class="breadcrumb-item"><a href="{{route('RM_Home')}}">{{ __('restaurantManager.home') }}</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">{{ __('restaurantManager.edit-offer') }}</a>
+                                <li class="breadcrumb-item"><a href="{{route('RM_edit_offer',$offer->OfferID)}}">{{ __('restaurantManager.edit-offer') }}</a>
                                 </li>
                             </ol>
                         </div>
@@ -31,27 +31,44 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form">
+                                        <form class="form" method="post" action="{{route('RM_update_offer',$offer->OfferID)}}">
+                                            @csrf
                                             <div class="form-body">
                                                 <div class="row pl-1 pr-1">
-                                                    <div class="col-md-6">
-                                                        {{-- meal ID Field --}}
-                                                        <div class="form-group">
-                                                            <label
-                                                                for="meal-id">{{ __('restaurantManager.meal-id') }}</label>
-                                                            <input type="text" id="meal-id" class="form-control"
-                                                                placeholder="{{ __('restaurantManager.meal-id') }}"
-                                                                name="meal_id">
-                                                        </div>
-                                                    </div>
                                                     <div class="col-md-6">
                                                         {{-- category id field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="header">{{ __('restaurantManager.category-id') }}</label>
-                                                            <input type="text" id="header" class="form-control"
-                                                                placeholder="{{ __('restaurantManager.category-id') }}"
-                                                                name="category_id">
+                                                                for="header">{{ __('restaurantManager.category-name') }}</label>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" name="CategoryID"
+                                                                        id="CategoryID">
+                                                                    <option value="" disabled selected >{{ __('restaurantManager.category-name') }}</option>
+                                                                    @foreach($categories as $category)
+                                                                        <option value="{{$category->MenuID}}" @if($category->MenuID == $offer->CategoryID) selected @endif> {{$category->CategoryType}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('CategoryID')
+                                                                <small
+                                                                    class="form-text text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        {{-- meal ID Field --}}
+                                                        <div class="form-group">
+                                                            <label for="MealID">{{ __('restaurantManager.meal-name') }}</label>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" name="MealID"
+                                                                        id="MealID">
+                                                                </select>
+                                                                @error('MealID')
+                                                                <small
+                                                                    class="form-text text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </fieldset>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -61,12 +78,16 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="header">{{ __('restaurantManager.date-start') }}</label>
-                                                            <input type="date" id="start_date" class="form-control"
-                                                                name="start_date" data-toggle="tooltip" data-trigger="hover"
-                                                                data-placement="top"
-                                                                data-title="{{ __('restaurantManager.date-start') }}"
-                                                                data-original-title="" title=""
-                                                                aria-describedby="tooltip304834">
+                                                            <input type="datetime-local" id="DateOfStart" class="form-control"
+                                                                   name="DateOfStart" data-toggle="tooltip" data-trigger="hover"
+                                                                   data-placement="top"
+                                                                   data-title="{{ __('restaurantManager.date-start') }}"
+                                                                   data-original-title="" title=""
+                                                                   aria-describedby="tooltip304834" value="{{$offer->DateOfStart}}">
+                                                            @error('DateOfStart')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -74,12 +95,16 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="header">{{ __('restaurantManager.date-end') }}</label>
-                                                            <input type="date" id="start_date" class="form-control"
-                                                                name="end_date" data-toggle="tooltip" data-trigger="hover"
-                                                                data-placement="top"
-                                                                data-title="{{ __('restaurantManager.date-end') }}"
-                                                                data-original-title="" title=""
-                                                                aria-describedby="tooltip304834">
+                                                            <input type="datetime-local" id="DateOfEnd" class="form-control"
+                                                                   name="DateOfEnd" data-toggle="tooltip" data-trigger="hover"
+                                                                   data-placement="top"
+                                                                   data-title="{{ __('restaurantManager.date-end') }}"
+                                                                   data-original-title="" title=""
+                                                                   aria-describedby="tooltip304834" value="{{$offer->DateOfEnd}}">
+                                                            @error('DateOfEnd')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -88,11 +113,15 @@
                                                         {{-- Discount field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="meal-id">{{ __('restaurantManager.discount-precentage') }}</label>
-                                                            <input type="text" id="discount-precentage"
-                                                                class="form-control"
-                                                                placeholder="{{ __('restaurantManager.discount-precentage') }}"
-                                                                name="discount_precentage">
+                                                                for="DiscountPercentage">{{ __('restaurantManager.discount-precentage') }}</label>
+                                                            <input type="text" id="DiscountPercentage"
+                                                                   class="form-control"
+                                                                   placeholder="{{ __('restaurantManager.discount-precentage') }}"
+                                                                   name="DiscountPercentage" value="{{floatval($offer->DiscountPercentage)}}">
+                                                            @error('DiscountPercentage')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,5 +148,43 @@
         </div>
     </div>
     </div>
-    </div>
+@endsection
+
+@section('search js')
+    {{-- get meal by category--}}
+    <script type="text/javascript">
+        $("#CategoryID").ready(function(){
+            console.log("{{ route('RM_get_Meal_edit') }}?CategoryID="+$('#CategoryID').val()+"&MealID={{$offer->MealID}}");
+            $.ajax({
+                url: "{{ route('RM_get_Meal_edit') }}?CategoryID="+$('#CategoryID').val()+"&MealID={{$offer->MealID}}",
+                method: 'GET',
+                success: function(data) {
+                    $('#MealID').html(data.html);
+                }
+            });
+        });
+    </script>
+
+    {{-- create--}}
+    @if (Session::has('update_msg_Offer'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('update_msg_Offer') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('update_msg_Offer') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

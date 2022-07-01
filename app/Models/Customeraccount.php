@@ -25,6 +25,6 @@ class Customeraccount extends Model
     }
     public function orderlists()
     {
-        return $this->hasMany(Orderlist::class, 'OrderListID');
+        return $this->hasMany(Order::class, 'OrderListID');
     }
 }

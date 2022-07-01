@@ -30,26 +30,33 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form class="form">
+                                    <form class="form" action="{{route('RM_Update_Profile',$Restaurantmanager->RestManagerID)}}" method="post">
+                                        @csrf
                                         <div class="form-body">
                                             <div class="row pl-1 pr-1">
                                                 <div class="col-md-6">
                                                     {{-- First Name Field --}}
                                                     <div class="form-group">
                                                         <label
-                                                            for="fname">{{ __('restaurantManager.first-name') }}</label>
-                                                        <input type="text" id="fname" class="form-control"
+                                                            for="FirstName">{{ __('restaurantManager.first-name') }}</label>
+                                                        <input type="text" id="FirstName" class="form-control"
                                                             placeholder="{{ __('restaurantManager.first-name') }}"
-                                                            name="fname">
+                                                               name="FirstName" value="{{$Restaurantmanager->FirstName}}">
+                                                        @error('FirstName')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     {{-- Last Name Field --}}
                                                     <div class="form-group">
-                                                        <label for="lname">{{ __('restaurantManager.last-name') }}</label>
-                                                        <input type="text" id="lname" class="form-control"
+                                                        <label for="LastName">{{ __('restaurantManager.last-name') }}</label>
+                                                        <input type="text" id="LastName" class="form-control"
                                                             placeholder="{{ __('restaurantManager.last-name') }}"
-                                                            name="lname">
+                                                               name="LastName" value="{{$Restaurantmanager->LastName}}">
+                                                        @error('LastName')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -58,9 +65,12 @@
                                                     {{-- Email Field --}}
                                                     <div class="form-group">
                                                         <label for="email">{{ __('restaurantManager.email') }}</label>
-                                                        <input type="email" id="email" class="form-control"
+                                                        <input type="email" id="Email" class="form-control"
                                                             placeholder="{{ __('restaurantManager.email') }}"
-                                                            name="email">
+                                                               name="Email" value="{{$Restaurantmanager->Email}}">
+                                                        @error('Email')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,9 +80,12 @@
                                                     <div class="form-group">
                                                         <label
                                                             for="password">{{ __('restaurantManager.password') }}</label>
-                                                        <input type="password" id="password" class="form-control"
+                                                        <input type="password" id="Password" class="form-control"
                                                             placeholder="{{ __('restaurantManager.password') }}"
-                                                            name="password">
+                                                            name="Password">
+                                                        @error('Password')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -80,9 +93,12 @@
                                                     <div class="form-group">
                                                         <label
                                                             for="confirm-password">{{ __('restaurantManager.confirm-password') }}</label>
-                                                        <input type="password" id="email" class="form-control"
+                                                        <input type="Password" id="Password_confirmation" class="form-control"
                                                             placeholder="{{ __('restaurantManager.confirm-password') }}"
-                                                            name="confirm_password">
+                                                            name="Password_confirmation">
+                                                        @error('Password_confirmation')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,19 +108,40 @@
                                                     <div class="form-group">
                                                         <label
                                                             for="phone1">{{ __('restaurantManager.Phone-Number-1') }}</label>
-                                                        <input type="text" id="phone1" class="form-control"
+                                                        <input type="text" id="PhoneNumber1" class="form-control"
                                                             placeholder="{{ __('restaurantManager.Phone-Number-1') }}"
-                                                            name="phone1">
+                                                            name="PhoneNumber1" value="{{(int)$Restaurantmanager->PhoneNumber1}}">
+                                                        @error('PhoneNumber1')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     {{-- phone number 2 Field --}}
                                                     <div class="form-group">
                                                         <label
-                                                            for="phone2">{{ __('restaurantManager.Phone-Number-2') }}</label>
-                                                        <input type="text" id="phone2" class="form-control"
+                                                            for="PhoneNumber2">{{ __('restaurantManager.Phone-Number-2') }}</label>
+                                                        <input type="text" id="PhoneNumber2" class="form-control"
                                                             placeholder="{{ __('restaurantManager.Phone-Number-2') }}"
-                                                            name="phone2">
+                                                               name="PhoneNumber2" value="{{(int)$Restaurantmanager->PhoneNumber2}}">
+                                                        @error('PhoneNumber2')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row pl-1 pr-1">
+                                                <div class="col-md-12">
+                                                    {{-- Restaurant Owner Field --}}
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="owend-rest">{{ __('admins.restaurant-owner') }}</label>
+                                                        <input type="text" id="RestaurantName" class="form-control"
+                                                               placeholder="{{ __('admins.restaurant-owner') }}"
+                                                               name="RestaurantName" value="{{$Restaurantmanager->RestaurantName}}">
+                                                        @error('RestaurantName')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,4 +166,27 @@
             </div>
         </div>
     </div>
+@endsection
+@section('search js')
+    @if (Session::has('update_msg_profile'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('update_msg_profile') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('update_msg_profile') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

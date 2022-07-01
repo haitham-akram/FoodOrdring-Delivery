@@ -11,7 +11,7 @@
                                 <li class="breadcrumb-item"><a
                                         href="{{ route('DM_Home') }}">{{ __('delivery.home') }}</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">{{ __('delivery.Edit-profile') }}</a>
+                                <li class="breadcrumb-item"><a href="{{route('DM_Edit_Profile',$deliveryManager->DeliManagerID)}}">{{ __('delivery.Edit-profile') }}</a>
                                 </li>
                             </ol>
                         </div>
@@ -30,33 +30,56 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form class="form">
+                                    <form class="form" method="post" action="{{route('DM_Update_Profile',$deliveryManager->DeliManagerID)}}">
+                                        @csrf
                                         <div class="form-body">
                                             <div class="row pl-1 pr-1">
                                                 <div class="col-md-6">
                                                     {{-- First Name Field --}}
                                                     <div class="form-group">
-                                                        <label for="fname">{{ __('delivery.first-name') }}</label>
-                                                        <input type="text" id="fname" class="form-control"
-                                                            placeholder="{{ __('delivery.first-name') }}" name="fname">
+                                                        <label for="FirstName">{{ __('delivery.first-name') }}</label>
+                                                        <input type="text" id="FirstName" class="form-control"
+                                                            placeholder="{{ __('delivery.first-name') }}" name="FirstName" value="{{$deliveryManager->FirstName}}">
+                                                        @error('FirstName')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     {{-- Last Name Field --}}
                                                     <div class="form-group">
-                                                        <label for="lname">{{ __('delivery.last-name') }}</label>
-                                                        <input type="text" id="lname" class="form-control"
-                                                            placeholder="{{ __('delivery.last-name') }}" name="lname">
+                                                        <label for="LastName">{{ __('delivery.last-name') }}</label>
+                                                        <input type="text" id="LastName" class="form-control"
+                                                            placeholder="{{ __('delivery.last-name') }}" name="LastName" value="{{$deliveryManager->LastName}}">
+                                                        @error('LastName')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row pl-1 pr-1">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     {{-- Email Field --}}
                                                     <div class="form-group">
                                                         <label for="email">{{ __('delivery.email') }}</label>
-                                                        <input type="email" id="email" class="form-control"
-                                                            placeholder="{{ __('delivery.email') }}" name="email">
+                                                        <input type="email" id="Email" class="form-control"
+                                                            placeholder="{{ __('delivery.email') }}" name="Email" value="{{$deliveryManager->Email}}">
+                                                        @error('Email')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{-- Delivery Office Owner Field --}}
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="NameOfDeliveryOffice">{{ __('admins.restaurant-owner') }}</label>
+                                                        <input type="text" id="NameOfDeliveryOffice" class="form-control"
+                                                               placeholder="{{ __('admins.restaurant-owner') }}"
+                                                               name="NameOfDeliveryOffice" value="{{$deliveryManager->NameOfDeliveryOffice}}">
+                                                        @error('NameOfDeliveryOffice')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -64,19 +87,25 @@
                                                 <div class="col-md-6">
                                                     {{-- Password Field --}}
                                                     <div class="form-group">
-                                                        <label for="password">{{ __('delivery.password') }}</label>
-                                                        <input type="password" id="password" class="form-control"
-                                                            placeholder="{{ __('delivery.password') }}" name="password">
+                                                        <label for="Password">{{ __('delivery.password') }}</label>
+                                                        <input type="password" id="Password" class="form-control"
+                                                            placeholder="{{ __('delivery.password') }}" name="Password">
+                                                        @error('Password')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     {{-- Confirm Password Field --}}
                                                     <div class="form-group">
                                                         <label
-                                                            for="Confirm Password">{{ __('delivery.Confirm-Password') }}</label>
-                                                        <input type="password" id="email" class="form-control"
+                                                            for="Password_confirmation">{{ __('delivery.Confirm-Password') }}</label>
+                                                        <input type="password" id="Password_confirmation" class="form-control"
                                                             placeholder="{{ __('delivery.Confirm-Password') }}"
-                                                            name="confirm_password">
+                                                            name="Password_confirmation">
+                                                        @error('Password_confirmation')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,19 +113,25 @@
                                                 <div class="col-md-6">
                                                     {{-- phone number 1 Field --}}
                                                     <div class="form-group">
-                                                        <label for="phone1">{{ __('delivery.Phone-Number-1') }}</label>
-                                                        <input type="text" id="phone1" class="form-control"
+                                                        <label for="PhoneNumber1">{{ __('delivery.Phone-Number-1') }}</label>
+                                                        <input type="text" id="PhoneNumber1" class="form-control"
                                                             placeholder="{{ __('delivery.Phone-Number-1') }}"
-                                                            name="phone1">
+                                                            name="PhoneNumber1" value="{{ (int)$deliveryManager->PhoneNumber1}}">
+                                                        @error('PhoneNumber1')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     {{-- phone number 2 Field --}}
                                                     <div class="form-group">
-                                                        <label for="phone2">{{ __('delivery.Phone-Number-2') }}</label>
-                                                        <input type="text" id="phone2" class="form-control"
+                                                        <label for="PhoneNumber2">{{ __('delivery.Phone-Number-2') }}</label>
+                                                        <input type="text" id="PhoneNumber2" class="form-control"
                                                             placeholder="{{ __('delivery.Phone-Number-2') }}"
-                                                            name="phone2">
+                                                            name="PhoneNumber2" value="{{ (int)$deliveryManager->PhoneNumber2}}">
+                                                        @error('PhoneNumber2')
+                                                        <small  class="form-text text-danger">{{$message}}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,4 +156,27 @@
             </div>
         </div>
     </div>
+@endsection
+@section('search js')
+    @if (Session::has('update_msg_profile'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('update_msg_profile') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('update_msg_profile') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

@@ -90,9 +90,12 @@
                                                         {{--confirm Password Field --}}
                                                         <div class="form-group">
                                                             <label for="password">{{ __('admins.confirm-password') }}</label>
-                                                            <input type="password" id="Password" class="form-control"
+                                                            <input type="password" id="Password_confirmation" class="form-control"
                                                                    placeholder="{{ __('admins.confirm-password') }}"
                                                                    name="Password_confirmation">
+                                                            @error('Password_confirmation')
+                                                            <small  class="form-text text-danger">{{$message}}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>

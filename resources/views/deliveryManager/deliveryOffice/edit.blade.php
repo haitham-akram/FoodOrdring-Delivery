@@ -11,7 +11,7 @@
                                 <li class="breadcrumb-item"><a
                                         href="{{ route('DM_Home') }}">{{ __('delivery.home') }}</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">{{ __('delivery.edit-delivery') }}</a>
+                                <li class="breadcrumb-item"><a href="{{route('DM_Edit',$deliveryOffice->DeliveryOfficeID)}}">{{ __('delivery.edit-delivery') }}</a>
                                 </li>
                             </ol>
                         </div>
@@ -32,16 +32,20 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form">
+                                        <form class="form" method="post" action="{{route('DM_Update',$deliveryOffice->DeliveryOfficeID)}}" enctype="multipart/form-data">
+                                            @csrf
                                             <div class="form-body">
                                                 <div class="row pl-1 pr-1">
                                                     <div class="col-md-12">
                                                         {{-- resaturant Name Field --}}
                                                         <div class="form-group">
                                                             <label for="name">{{ __('delivery.Delivery-Name') }}</label>
-                                                            <input type="text" id="name" class="form-control"
+                                                            <input type="text" id="NameOfDeliveryOffice" class="form-control"
                                                                 placeholder="{{ __('admins.delivery-name') }}"
-                                                                name="name">
+                                                                name="NameOfDeliveryOffice" value="{{$deliveryOffice->NameOfDeliveryOffice}}">
+                                                            @error('NameOfDeliveryOffice')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -52,9 +56,12 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="street-name">{{ __('delivery.street-name') }}</label>
-                                                            <input type="text" id="street-name" class="form-control"
+                                                            <input type="text" id="StreetName" class="form-control"
                                                                 placeholder="{{ __('delivery.street-name') }}"
-                                                                name="street_name">
+                                                                name="StreetName" value="{{$deliveryOffice->StreetName}}">
+                                                            @error('StreetName')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -64,7 +71,10 @@
                                                                 for="Governorate">{{ __('delivery.Governorate') }}</label>
                                                             <input type="text" id="Governorate" class="form-control"
                                                                 placeholder="{{ __('delivery.Governorate') }}"
-                                                                name="governorate">
+                                                                name="Governorate" value="{{$deliveryOffice->Governorate}}">
+                                                            @error('Governorate')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -77,17 +87,23 @@
                                                                 for="Neighborhood">{{ __('delivery.Neighborhood') }}</label>
                                                             <input type="text" id="Neighborhood" class="form-control"
                                                                 placeholder="{{ __('delivery.Neighborhood') }}"
-                                                                name="neighborhood">
+                                                                name="Neighborhood" value="{{$deliveryOffice->Neighborhood}}">
+                                                            @error('Neighborhood')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- Navigational-mark Field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="Navigational-mark">{{ __('delivery.Navigational-mark') }}</label>
-                                                            <input type="text" id="Navigational-mark" class="form-control"
+                                                                for="NavigationalMark">{{ __('delivery.Navigational-mark') }}</label>
+                                                            <input type="text" id="NavigationalMark" class="form-control"
                                                                 placeholder="{{ __('delivery.Navigational-mark') }}"
-                                                                name="navigational_mark">
+                                                                name="NavigationalMark" value="{{$deliveryOffice->NavigationalMark}}">
+                                                            @error('NavigationalMark')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,40 +113,72 @@
                                                         {{-- opening time Field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="opening-time">{{ __('delivery.opening-time') }}</label>
-                                                            <input type="time" id="opening-time" class="form-control"
+                                                                for="OpiningTime">{{ __('delivery.opening-time') }}</label>
+                                                            <input type="time" id="OpiningTime" class="form-control"
                                                                 placeholder="{{ __('delivery.opening-time') }}"
-                                                                name="opening_time" value="09:00:00">
+                                                                name="OpiningTime" value="{{$deliveryOffice->OpiningTime}}">
+                                                            @error('OpiningTime')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- closing time Field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="closing-time">{{ __('delivery.closing-time') }}</label>
-                                                            <input type="time" id="closing-time" class="form-control"
+                                                                for="ClosingTime">{{ __('delivery.closing-time') }}</label>
+                                                            <input type="time" id="ClosingTime" class="form-control"
                                                                 placeholder="{{ __('delivery.closing-time') }}"
-                                                                name="closing_time" value="00:00:00">
+                                                                name="ClosingTime" value="{{$deliveryOffice->ClosingTime}}">
+                                                            @error('ClosingTime')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row pl-1 pr-1">
 
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
+                                                        {{-- Available Status Field --}}
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="Available-Status">{{ __('admins.Available-status') }}</label>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" name="AvailableStatus"
+                                                                        id="AvailableStatus">
+                                                                    <option value="Open" @if($deliveryOffice->AvailableStatus =='Open') selected @endif>
+                                                                        {{ __('admins.Open') }}</option>
+                                                                    <option value="Close" @if($deliveryOffice->AvailableStatus =='Close') selected @endif>
+                                                                        {{ __('admins.Close') }}
+                                                                    </option>
+                                                                    <option value="Inmaintenance" @if($deliveryOffice->AvailableStatus =='Inmaintenance') selected @endif>
+                                                                        {{ __('admins.Inmaintenance') }}</option>
+                                                                </select>
+                                                            </fieldset>
+                                                            @error('AvailableStatus')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
                                                         {{-- logo Field --}}
                                                         <label for="closing-time">{{ __('delivery.logo') }}</label>
                                                         <fieldset class="form-group">
                                                             <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="logo"
-                                                                    name="logo">
+                                                                <input type="file" class="custom-file-input" id="Logo"
+                                                                    name="Logo" accept="image/*">
                                                                 <label class="custom-file-label"
                                                                     for="inputGroupFile01">{{ __('delivery.choose-logo') }}</label>
                                                             </div>
+                                                            @error('Logo')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </fieldset>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             {{-- edit and Cancel button --}}
                                             <div class="form-actions center">
@@ -154,5 +202,28 @@
         </div>
     </div>
     </div>
-    </div>
+@endsection
+@section('search js')
+    @if (Session::has('update_msg_delivery'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('update_msg_delivery') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('update_msg_delivery') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+
 @endsection

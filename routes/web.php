@@ -83,19 +83,35 @@ Route::group([
         // Restaurant Manager Dashboard  Routes
         Route::get('/Home', [RestaurantController::class, 'RM_index'])->name('RM_Home');
         Route::get('/Edit-Restaurant/{id}', [RestaurantController::class, 'RM_edit'])->name('RM_Edit');
+        Route::post('/Update-Restaurant/{id}', [RestaurantController::class, 'RM_update'])->name('RM_Update');
         // Restaurant Manager Profile Routes
         Route::get('/Profile', [RestaurantManagerController::class, 'RM_Profile'])->name('RM_Profile');
         Route::get('/Edit-Profile/{id}', [RestaurantManagerController::class, 'RM_Edit_Profile'])->name('RM_Edit_Profile');
+        Route::post('/update-Profile/{id}', [RestaurantManagerController::class, 'RM_Update_Profile'])->name('RM_Update_Profile');
         // Category Route
         Route::get('/Categories', [CategoryController::class, 'index'])->name('RM_Categories');
+        Route::post('/Category-search', [CategoryController::class, 'category_search'])->name('RM_Category_Search');
+        Route::post('/Store-category', [CategoryController::class, 'store'])->name('RM_store_category');
+        Route::post('/Update-category/{id}', [CategoryController::class, 'update'])->name('RM_update_category');
+        Route::get('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('RM_delete_category');
         // Meals Routes
         Route::get('/Meals', [MealController::class, 'index'])->name('RM_Meals');
+        Route::post('/search_Meals', [MealController::class, 'search_Meals'])->name('search_Meals');
         Route::get('/Add-Meal', [MealController::class, 'create'])->name('RM_create_meal');
+        Route::post('/Store-Meal', [MealController::class, 'store'])->name('RM_store_meal');
         Route::get('/Edit-Meal/{id}', [MealController::class, 'edit'])->name('RM_edit_meal');
+        Route::post('/Update-Meal/{id}', [MealController::class, 'update'])->name('RM_update_meal');
+        Route::get('/delete-Meal/{id}', [MealController::class, 'destroy'])->name('RM_delete_meal');
         //Offers Routes
         Route::get('/Offers', [OfferController::class, 'index'])->name('RM_offers');
+        Route::post('/search', [OfferController::class, 'search_Offer'])->name('RM_search_Offer');
         Route::get('/Add-Offer', [OfferController::class, 'create'])->name('RM_add_offer');
+        Route::post('/Store-Offer', [OfferController::class, 'store'])->name('RM_store_offer');
+        Route::get('/Get-meals-by-category', [OfferController::class, 'getMealsByCategory'])->name('RM_get_Meal');//this for ajax in add offer page.
+        Route::get('/Get-meals-by-category-edit', [OfferController::class, 'getMealsByCategoryEdit'])->name('RM_get_Meal_edit');//this for ajax in edit offer page.
         Route::get('/Edit-Offer/{id}', [OfferController::class, 'edit'])->name('RM_edit_offer');
+        Route::post('/Edit-Offer/{id}', [OfferController::class, 'update'])->name('RM_update_offer');
+        Route::get('/Delete-Offer/{id}', [OfferController::class, 'destroy'])->name('RM_delete_offer');
         //Restaurant Orders Routes
         Route::get('/Restaurant-Orders', [RMOrderController::class, 'index'])->name('RM_orders');
         Route::get('/Restaurant-Orders-History', [RMOrderController::class, 'history'])->name('RM_orders_history');
@@ -105,32 +121,13 @@ Route::group([
         // Delivery Manager Dashboard  Routes
         Route::get('/Home', [DeliveryController::class, 'DM_index'])->name('DM_Home');
         Route::get('/Edit-DeliveryOffice/{id}', [DeliveryController::class, 'DM_edit'])->name('DM_Edit');
+        Route::post('/Update-DeliveryOffice/{id}', [DeliveryController::class, 'DM_update'])->name('DM_Update');
         // Delivery Manager Profile Routes
         Route::get('/Profile', [DeliviryManagerController::class, 'DM_Profile'])->name('DM_Profile');
         Route::get('/Edit-Profile/{id}', [DeliviryManagerController::class, 'DM_Edit_Profile'])->name('DM_Edit_Profile');
+        Route::post('/Update-Profile/{id}', [DeliviryManagerController::class, 'DM_Update_Profile'])->name('DM_Update_Profile');
         // Delivery-Orders Routes
         Route::get('/Delivery-Orders', [DMOrderController::class, 'index'])->name('DM_orders');
         Route::get('/Delivery-Orders-History', [DMOrderController::class, 'history'])->name('DM_orders_history');
     });
-    // Route::get('/login', function () {
-    //     return view('auth.login');
-    // })->name('login');
-    Route::get('/Recover-Password', function () {
-        return view('auth.recoverPassword');
-    })->name('recover_password');
-
-    Route::get('/', function () {
-        return redirect()->route('login');
-    });
 });
-
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//
-//Auth::routes();
-//
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

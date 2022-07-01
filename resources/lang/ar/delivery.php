@@ -17,7 +17,7 @@ return [
     'delivery-info' => 'معلومات مكتب التوصيل',
     'Delivery-Name' => 'اسم المكتب التوصيل',
     'street-name' => 'اسم الشارع',
-    'Navigational-mark' => 'علامة ملاحية',
+    'Navigational-mark' => 'منطقة مميزة',
     'Governorate' => 'المحافظة',
     'Neighborhood' => 'حي',
     'logo' => 'الشعار',
@@ -26,6 +26,7 @@ return [
     'cancel' => 'إلغاء',
     'edit' => 'تعديل',
     'choose-logo' => 'اختيار الشعار',
+    'update_msg_delivery'=>'تم تعديل معلومات المكتب بنجاح',
     //profile
     'deliviry-managers-info' => 'معلومات الشخصية',
     'first-name' => 'الاسم الأول',
@@ -34,6 +35,7 @@ return [
     'email' => 'البريد الإلكتروني',
     'Phone-Number-1' => 'رقم الهاتف الاول',
     'Phone-Number-2' => 'رقم الهاتف الثاني',
+    'update_msg_profile'=>'تم تعديل معلومات الشخصية بنجاح',
     //edit profile page
     'Edit-profile' => 'تعديل معلومات الملف الشخصي',
     'password' => 'كلمة المرور',
@@ -58,6 +60,8 @@ return [
     'delivery_last_name_messages' => 'الاسم الأخير مطلوب',
     'delivery_email_messages' => 'البريد الالكتروني مطلوب',
     'delivery_required_password_messages' => 'كلمة المرور مطلوبة',
+    'delivery_required_password_confirmation_messages' => 'تأكيد كلمة المرور مطلوب',
+    'delivery_conf_password_messages'=>'كلمة المرور غير متوافقة',
     'delivery_max_password_messages' => 'الحد الأقصى لكلمة المرور هي 30 رمز',
     'delivery_min_password_messages' => 'الحد الأدنى لكلمة المرور هو 8 رموز',
     'delivery_required_phone_messages' => 'رقم الهاتف الأول مطلوب',
@@ -65,6 +69,7 @@ return [
     'delivery_min_phone_messages' => 'الحد المطلوب 10 أرقام',
     'delivery_max_phone2_messages' => 'الحد المطلوب 10 أرقام',
     'delivery_min_phone2_messages' => 'الحدد المطلوب 10 أرقام',
+    'delivery_integer_messages' => 'رقم الهاتف المحمول يجب ان يكون رقما',
     //Delivery Office request
     'message_for_name' => 'اسم المكتب مطلوب',
     'message_for_Governorate' => 'اسم المحافظة مطلوب',

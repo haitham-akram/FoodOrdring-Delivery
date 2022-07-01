@@ -43,7 +43,7 @@
                                     <div class="row p-1">
                                         <form action="#">
                                             <div class="position-relative">
-                                                <input type="search" id="search" class="form-control"
+                                                <input type="text" id="search" class="form-control"
                                                     placeholder="{{ __('admins.Search') }}">
                                                 <div class="form-control-position">
                                                     <i class="la la-search text-size-base text-muted"></i>

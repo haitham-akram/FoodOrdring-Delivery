@@ -15,5 +15,5 @@ class Offer extends Model
     return $this->belongsTo(Restaurant::class,'RestaurantID');
 }
 protected $primaryKey = 'OfferID';
-
+    public $timestamps = false;
 }

@@ -30,7 +30,7 @@ class Categoryrequest extends FormRequest
     public function messages()
     {
         return [
-    'CategoryName.required'=>__('resturantManager.res_category_name_messages')
+    'CategoryName.required'=>__('restaurantManager.res_category_name_messages')
         ];
     }
 }

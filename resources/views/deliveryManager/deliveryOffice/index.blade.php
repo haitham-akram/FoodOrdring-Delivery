@@ -65,7 +65,7 @@
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
                                         <li><a class="btn btn-sm btn-warning box-shadow-2 round btn-min-width pull-right"
-                                                href="{{ route('DM_Edit', 1) }}"
+                                                href="{{ route('DM_Edit', $deliveryOffice->DeliveryOfficeID) }}"
                                                 target="_blank">{{ __('delivery.edit-info') }}</a></li>
                                     </ul>
                                 </div>
@@ -77,17 +77,16 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     {{-- Delivery office logo --}}
-                                                    <img src="" alt="">
-                                                    <img class="image"
-                                                        src="{{ asset('app-assets/images/portrait/small/avatar-s-22.png') }}"
-                                                        alt="restaurant logo">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    {{-- Delivery Office Name --}}
-                                                    <h5 for="Delivery Office Name"> {{ __('delivery.Delivery-Name') }}
-                                                    </h5>
+
+                                                    <img class="image mb-2"
+                                                        src="{{$deliveryOffice->Logo}}"
+                                                        style="min-height: 100px;min-width: 100px; width: 150px; height: 150px "
+                                                        alt="Delivery office logo">
+                                                    <div class="form-group">
+                                                        {{-- Delivery Office Name --}}
+                                                        <h5 for="Delivery Office Name"> {{ __('delivery.Delivery-Name') }}: {{$deliveryOffice->NameOfDeliveryOffice}}
+                                                        </h5>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -97,13 +96,13 @@
                                         <div class="col-md-6">
                                             {{-- street --}}
                                             <div class="form-group">
-                                                <h5 for="street">{{ __('delivery.street-name') }}</h5>
+                                                <h5 for="street">{{ __('delivery.street-name') }}: {{$deliveryOffice->StreetName}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- Governorate --}}
                                             <div class="form-group">
-                                                <h5 for="Governorate">{{ __('delivery.Governorate') }}</h5>
+                                                <h5 for="Governorate">{{ __('delivery.Governorate') }}: {{$deliveryOffice->Governorate}}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -112,33 +111,50 @@
                                         <div class="col-md-6">
                                             {{-- Neighborhood --}}
                                             <div class="form-group">
-                                                <h5 for="Neighborhood">{{ __('delivery.Neighborhood') }}</h5>
+                                                <h5 for="Neighborhood">{{ __('delivery.Neighborhood') }}: {{$deliveryOffice->Neighborhood}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- Navigational-mark --}}
                                             <div class="form-group">
                                                 <h5 for="Navigational-mark">
-                                                    {{ __('delivery.Navigational-mark') }}</h5>
+                                                    {{ __('delivery.Navigational-mark') }}: {{$deliveryOffice->NavigationalMark}}</h5>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row p-1">
+                                    <div class="row pt-1 pl-1 pr-1 ">
                                         <div class="col-md-6">
                                             {{-- opening-time --}}
                                             <div class="form-group">
-                                                <label for="opening-time">{{ __('delivery.opening-time') }}</label>
+                                                <label for="opening-time">{{ __('delivery.opening-time') }}: {{$deliveryOffice->OpiningTime}}</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- closing-time --}}
                                             <div class="form-group">
-                                                <h5 for="closing-time">{{ __('delivery.closing-time') }}</h5>
+                                                <h5 for="closing-time">{{ __('delivery.closing-time') }}: {{$deliveryOffice->ClosingTime}}</h5>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <hr>
+                                    <div class="row p-2">
+                                        <div class="col-md-6">
+                                            {{-- Available Status --}}
+                                            <div class="form-group">
+                                                <h5 for="Available-status">
+                                                    {{ __('admins.Available-status') }}
+                                                    @if($deliveryOffice->AvailableStatus =='Open')
+                                                        : {{ __('admins.Open') }}
+                                                    @elseif($deliveryOffice->AvailableStatus =='Close')
+                                                        : {{ __('admins.Close') }}
+                                                    @elseif($deliveryOffice->AvailableStatus =='Inmaintenance')
+                                                        : {{ __('admins.Inmaintenance') }}
+                                                    @endif
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

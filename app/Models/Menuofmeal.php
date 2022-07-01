@@ -20,4 +20,5 @@ class Menuofmeal extends Model
     }
     protected $primaryKey = 'MenuID';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

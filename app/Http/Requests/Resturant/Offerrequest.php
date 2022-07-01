@@ -28,17 +28,20 @@ class Offerrequest extends FormRequest
             'DateOfEnd'=>'required',
             'MealID'=>'required',
             'CategoryID'=>'required',
-            'DiscountPercentage'=>'required'
+            'DiscountPercentage'=>'required|numeric||min:1||max:99'
         ];
     }
     public function messages()
     {
         return [
-    'DateOfStart.required'=>__('resturantManager.date_of_start_messages'),
-    'DateOfEnd.required'=>__('resturantManager.date_of_end_messages'),
-    'MealID.required'=>__('resturantManager.offer_mealid_messages'),
-    'CategoryID.required'=>__('resturantManager.offer_catid_messages'),
-    'DiscountPercentage.required'=>__('resturantManager.discountperentage_messages'),
+    'DateOfStart.required'=>__('restaurantManager.date_of_start_messages'),
+    'DateOfEnd.required'=>__('restaurantManager.date_of_end_messages'),
+    'MealID.required'=>__('restaurantManager.offer_mealid_messages'),
+    'CategoryID.required'=>__('restaurantManager.offer_catid_messages'),
+    'DiscountPercentage.required'=>__('restaurantManager.discountperentage_messages'),
+    'DiscountPercentage.numeric'=>__('restaurantManager.offer_numeric_messages'),
+    'DiscountPercentage.min'=>__('restaurantManager.offer_min_messages'),
+    'DiscountPercentage.max'=>__('restaurantManager.offer_max_messages'),
 
         ];
     }

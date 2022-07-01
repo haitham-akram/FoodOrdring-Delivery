@@ -11,7 +11,7 @@
                                 <li class="breadcrumb-item"><a
                                         href="{{ route('DM_Home') }}">{{ __('delivery.home') }}</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">{{ __('delivery.Delivery-profile') }}</a>
+                                <li class="breadcrumb-item"><a href="{{ route('DM_Profile') }}">{{ __('delivery.Delivery-profile') }}</a>
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
                                         <li><a class="btn btn-sm btn-warning box-shadow-2 round btn-min-width pull-right"
-                                                href="{{ route('DM_Edit_Profile', 1) }}"
+                                                href="{{ route('DM_Edit_Profile', $deliveryManager->DeliManagerID) }}"
                                                 target="_blank">{{ __('delivery.Edit-profile') }}</a></li>
                                     </ul>
                                 </div>
@@ -42,13 +42,13 @@
                                         <div class="col-md-6">
                                             {{-- first-name --}}
                                             <div class="form-group">
-                                                <h5 for="fullname">{{ __('delivery.first-name') }}</h5>
+                                                <h5 for="fullname">{{ __('delivery.first-name') }}: {{$deliveryManager->FirstName}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- last-name --}}
                                             <div class="form-group">
-                                                <h5 for="office">{{ __('delivery.last-name') }}</h5>
+                                                <h5 for="office">{{ __('delivery.last-name') }}:{{$deliveryManager->LastName}}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -57,13 +57,13 @@
                                         <div class="col-md-6">
                                             {{-- Deliviry Office --}}
                                             <div class="form-group">
-                                                <h5 for="office">{{ __('delivery.Deliviry-Office-Owner') }}</h5>
+                                                <h5 for="office">{{ __('delivery.Deliviry-Office-Owner') }}: {{$deliveryManager->NameOfDeliveryOffice}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- Email --}}
                                             <div class="form-group">
-                                                <h5 for="email">{{ __('delivery.email') }}</h5>
+                                                <h5 for="email">{{ __('delivery.email') }}: {{$deliveryManager->Email}}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -72,13 +72,13 @@
                                         <div class="col-md-6">
                                             {{-- Phone Number 1 --}}
                                             <div class="form-group">
-                                                <label for="opening-time">{{ __('delivery.Phone-Number-1') }}</label>
+                                                <label for="opening-time">{{ __('delivery.Phone-Number-1') }}: {{$deliveryManager->PhoneNumber1}}</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- Phone Number 2 --}}
                                             <div class="form-group">
-                                                <h5 for="closing-time">{{ __('delivery.Phone-Number-2') }}</h5>
+                                                <h5 for="closing-time">{{ __('delivery.Phone-Number-2') }}: {{$deliveryManager->PhoneNumber2}}</h5>
                                             </div>
                                         </div>
                                     </div>

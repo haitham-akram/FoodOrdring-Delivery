@@ -13,7 +13,6 @@
                                 <li class="breadcrumb-item active"><a
                                         href="{{ route('RM_Categories') }}">{{ __('restaurantManager.categories-list') }}</a>
                                 </li>
-                                </li>
                             </ol>
                         </div>
                     </div>
@@ -50,28 +49,47 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form action="#" method="POST">
+                                                <form action="{{route('RM_store_category')}}" method="POST">
+                                                    @csrf
                                                     <div class="modal-body">
                                                         <h5><i class="la la-arrow-right"></i>
                                                             {{ __('restaurantManager.add-form-header') }}</h5>
                                                         <hr>
-                                                        <label> {{ __('restaurantManager.category-id') }} </label>
-                                                        <div class="form-group">
-                                                            <input type="text"
-                                                                placeholder="{{ __('restaurantManager.category-id') }}"
-                                                                name="CategorytypeID" class="form-control">
-                                                        </div>
                                                         <label>{{ __('restaurantManager.category-name') }} </label>
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                placeholder="{{ __('restaurantManager.category-name') }}"
-                                                                name="CategoryName" class="form-control">
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" name="CategoryName"
+                                                                        id="CategoryName">
+                                                                    <option value="" disabled selected >{{ __('restaurantManager.category-name') }}</option>
+                                                                    <option value="السلطات">
+                                                                        {{ __('restaurantManager.Salads') }}</option>
+                                                                    <option value="الحلويات"  >
+                                                                        {{ __('restaurantManager.Sweets') }}
+                                                                    </option>
+                                                                    <option value="البيتزا">
+                                                                        {{ __('restaurantManager.Pizza') }}</option>
+                                                                    <option value="الشاورما">
+                                                                        {{ __('restaurantManager.Shawarma') }}</option>
+                                                                    <option value="الوجبات">
+                                                                        {{ __('restaurantManager.meals') }}</option>
+                                                                    <option value="الساندوتشات">
+                                                                        {{ __('restaurantManager.Sandwiches') }}</option>
+                                                                    <option value="المشروبات">
+                                                                        {{ __('restaurantManager.Drinks') }}</option>
+                                                                    <option value="المقبلات">
+                                                                        {{ __('restaurantManager.Appetizers') }}</option>
+                                                                </select>
+                                                            </fieldset>
                                                         </div>
+                                                        @error('CategoryName')
+                                                        <small
+                                                            class="form-text text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn grey btn-outline-secondary"
                                                             data-dismiss="modal">{{ __('restaurantManager.close') }}</button>
-                                                        <button type="button"
+                                                        <button type="submit"
                                                             class="btn btn-outline-warning">{{ __('restaurantManager.add') }}
                                                         </button>
                                                     </div>
@@ -84,18 +102,7 @@
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <!-- search -->
-                                    <div class="row p-1">
-                                        <form action="#">
-                                            <div class="position-relative">
-                                                <input type="search" id="search-category" class="form-control"
-                                                    placeholder="{{ __('restaurantManager.Search-category') }}">
-                                                <div class="form-control-position">
-                                                    <i class="la la-search text-size-base text-muted"></i>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+
                                     <!-- start table List  -->
                                     <div class="table-responsive">
                                         <table id=""
@@ -110,12 +117,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @foreach($categories as $category)
                                                 <tr>
                                                     <td class="text-center">
-                                                        1
+                                                        {{$category->MenuID}}
                                                     </td>
                                                     <td class="text-center">
-                                                        name
+                                                        {{$category->CategoryType}}
                                                     </td>
                                                     <td class="text-center">
                                                         <span class="dropdown">
@@ -129,63 +137,63 @@
                                                                     data-target="#edit_form"><i
                                                                         class="ft-edit-2 primary"></i>
                                                                     {{ __('admins.edit') }}</a>
-                                                                <a href="#" class="dropdown-item danger"><i
-                                                                        class="ft-trash-2 danger"></i>
+                                                                <a href="{{route('RM_delete_category',$category->MenuID)}}" class="dropdown-item danger">
+                                                                    <i class="ft-trash-2 danger"></i>
                                                                     {{ __('admins.delete') }}</a>
                                                             </span>
                                                         </span>
                                                     </td>
-                                                    {{-- start Edit modal --}}
-                                                    <div class="modal fade text-left" id="edit_form" tabindex="-1"
-                                                        role="dialog" aria-labelledby="myModalLabel12" aria-hidden="true"
-                                                        data-backdrop="false" outsidedata-backdrop="false">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-primary white">
-                                                                    <h4 class="modal-title white" id="myModalLabel12">
-                                                                        {{ __('restaurantManager.edit-category') }}
-                                                                    </h4>
-                                                                    <button type="button" class="close"
+                                                </tr>
+                                                <div class="modal fade text-left" id="edit_form" tabindex="-1"
+                                                     role="dialog" aria-labelledby="myModalLabel12" aria-hidden="true"
+                                                     data-backdrop="false" outsidedata-backdrop="false">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-primary white">
+                                                                <h4 class="modal-title white" id="myModalLabel12">
+                                                                    {{ __('restaurantManager.edit-category') }}
+                                                                </h4>
+                                                                <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <form action="#" method="POST">
-                                                                    <div class="modal-body">
-                                                                        <h5><i class="la la-arrow-right"></i>
-                                                                            {{ __('restaurantManager.edit-form-header') }}
-                                                                        </h5>
-                                                                        <hr>
-                                                                        <label> {{ __('restaurantManager.category-id') }}
-                                                                        </label>
-                                                                        <div class="form-group">
-                                                                            <input type="text"
-                                                                                placeholder="{{ __('restaurantManager.category-id') }}"
-                                                                                name="CategorytypeID"
-                                                                                class="form-control">
-                                                                        </div>
-                                                                        <label>{{ __('restaurantManager.category-name') }}
-                                                                        </label>
-                                                                        <div class="form-group">
-                                                                            <input type="text"
-                                                                                placeholder="{{ __('restaurantManager.category-name') }}"
-                                                                                name="CategoryName" class="form-control">
-                                                                        </div>
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="{{route('RM_update_category',$category->MenuID)}}" method="POST">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <h5><i class="la la-arrow-right"></i>
+                                                                        {{ __('restaurantManager.edit-form-header') }}
+                                                                    </h5>
+                                                                    <hr>
+                                                                    <label>{{ __('restaurantManager.category-name') }}</label>
+                                                                    <div class="form-group">
+                                                                        <fieldset class="form-group">
+                                                                            <select class="form-control" name="CategoryName" id="CategoryName">
+                                                                                <option value="السلطات" @if($category->CategoryType =='السلطات')selected @endif >{{ __('restaurantManager.Salads') }}</option>
+                                                                                <option value="الحلويات" @if($category->CategoryType =='الحلويات')selected @endif>{{ __('restaurantManager.Sweets') }}</option>
+                                                                                <option value="البيتزا"@if($category->CategoryType =='البيتزا')selected @endif >{{ __('restaurantManager.Pizza') }}</option>
+                                                                                <option value="الشاورما" @if($category->CategoryType =='الشاورما')selected @endif>{{ __('restaurantManager.Shawarma') }}</option>
+                                                                                <option value="الوجبات" @if($category->CategoryType =='الوجبات')selected @endif>{{ __('restaurantManager.meals') }}</option>
+                                                                                <option value="الساندوتشات" @if($category->CategoryType =='الساندوتشات')selected @endif>{{ __('restaurantManager.Sandwiches') }}</option>
+                                                                                <option value="المشروبات"@if($category->CategoryType =='المشروبات')selected @endif >{{ __('restaurantManager.Drinks') }}</option>
+                                                                                <option value="المقبلات" @if($category->CategoryType =='المقبلات')selected @endif>{{ __('restaurantManager.Appetizers') }}</option>
+                                                                            </select>
+                                                                        </fieldset>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
                                                                             class="btn grey btn-outline-secondary"
                                                                             data-dismiss="modal">{{ __('restaurantManager.close') }}</button>
-                                                                        <button type="button"
+                                                                    <button type="submit"
                                                                             class="btn btn-outline-primary">{{ __('restaurantManager.edit') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
+                                                                    </button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    {{-- end Edit modal --}}
-                                                </tr>
+                                                </div>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -201,4 +209,94 @@
             </div>
         </div>
     </div>
+@endsection
+@section('search js')
+{{--    create--}}
+    @if (Session::has('create_msg_Category_Meal'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('create_msg_Category_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('create_msg_Category_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+{{--    update--}}
+    @if (Session::has('update_msg_Category_Meal'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('update_msg_Category_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('update_msg_Category_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+{{--    not found--}}
+    @if (Session::has('not_found_msg_Category'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.error('{{ Session::get('not_found_msg_Category') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.error('{{ Session::get('not_found_msg_Category') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+{{--    delete--}}
+    @if (Session::has('delete_msg_Category'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('delete_msg_Category') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('delete_msg_Category') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

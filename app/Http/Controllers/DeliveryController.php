@@ -8,6 +8,24 @@ use App\Models\Deliveryoffice;
 
 class DeliveryController extends Controller
 {
+    private function call_uploaded_photo($request)
+    {
+        $file = $request->file('Logo');
+//        code for uploading photos in imgur
+        $file_path = $file->getPathName();
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', 'https://api.imgur.com/3/image', [
+            'headers' => [
+                'authorization' => 'Client-ID ' . 'd05f17a6dec5c4a',
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => [
+                'image' => base64_encode(file_get_contents($request->file('Logo')->path($file_path)))
+            ],
+        ]);
+        return $data['Logo'] = data_get(response()->json(json_decode(($response->getBody()->getContents())))->getData(), 'data.link');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +40,7 @@ class DeliveryController extends Controller
      *
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search_Delivery_Office(Request $request)
     {
@@ -49,14 +67,17 @@ class DeliveryController extends Controller
      */
     public function DM_index()
     {
-        return view('deliveryManager.deliveryOffice.index');
+        //TODO add count of current and done orders
+        $DeliveryManagerID=auth()->user()->user_id;
+        $deliveryOffice = Deliveryoffice::where('OwnerID','=',$DeliveryManagerID)->first();
+        return view('deliveryManager.deliveryOffice.index')->with('deliveryOffice',$deliveryOffice);
     }
 
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create(string $id)
     {
@@ -69,24 +90,10 @@ class DeliveryController extends Controller
      *
      * @param DeliveryOrequest $request
      * @param string $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(DeliveryOrequest $request,string $id)
     {
-        $file = $request->file('Logo');
-//        code for uploading photos in imgur
-        $file_path = $file->getPathName();
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'https://api.imgur.com/3/image', [
-            'headers' => [
-                'authorization' => 'Client-ID ' . 'd05f17a6dec5c4a',
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => [
-                'image' => base64_encode(file_get_contents($request->file('Logo')->path($file_path)))
-            ],
-        ]);
-        $data['Logo'] = data_get(response()->json(json_decode(($response->getBody()->getContents())))->getData(), 'data.link');
         $Deliveryoffice= Deliveryoffice::find($id);
         $Deliveryoffice->update([
             'NameOfDeliveryOffice'=>$request->NameOfDeliveryOffice,
@@ -97,21 +104,10 @@ class DeliveryController extends Controller
             'OpiningTime'=>$request->OpiningTime,
             'ClosingTime'=>$request->ClosingTime,
             'AvailableStatus'=>$request->AvailableStatus,
-            'Logo'=>$data['Logo']
+            'Logo'=>$this->call_uploaded_photo($request),
         ]);
         return redirect()->route('admin_add_deliviry_manager')->with(['success_title' => __('admins.success_title'),
             'create_msg_delivery' => __('admins.create_msg_delivery')]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -128,13 +124,15 @@ class DeliveryController extends Controller
     /**
      * Show the form for editing the specified resource for Delivery Manager.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function DM_edit($id)
+    public function DM_edit(string $id)
     {
-        return view('deliveryManager.deliveryOffice.edit');
+        $delivery = Deliveryoffice::find($id);
+        return view('deliveryManager.deliveryOffice.edit')->with('deliveryOffice',$delivery);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -146,21 +144,6 @@ class DeliveryController extends Controller
      */
     public function update(DeliveryOrequest $request,string $id)
     {
-
-        $file = $request->file('Logo');
-        //code for uploading photos in imgur
-        $file_path = $file->getPathName();
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'https://api.imgur.com/3/image', [
-            'headers' => [
-                'authorization' => 'Client-ID ' . 'd05f17a6dec5c4a',
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => [
-                'image' => base64_encode(file_get_contents($request->file('Logo')->path($file_path)))
-            ],
-        ]);
-        $data['Logo'] = data_get(response()->json(json_decode(($response->getBody()->getContents())))->getData(), 'data.link');
         $Deliveryoffice= Deliveryoffice::find($id);
         $Deliveryoffice->update([
             'NameOfDeliveryOffice'=>$request->NameOfDeliveryOffice,
@@ -171,12 +154,25 @@ class DeliveryController extends Controller
             'OpiningTime'=>$request->OpiningTime,
             'ClosingTime'=>$request->ClosingTime,
             'AvailableStatus'=>$request->AvailableStatus,
-            'Logo'=>$data['Logo']
+            'Logo'=>$this->call_uploaded_photo($request)
         ]);
         return redirect()->back()->with(['success_title' => __('admins.success_title'),
             'update_msg_delivery' => __('admins.update_msg_delivery')]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param DeliveryOrequest $request
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function DM_update(DeliveryOrequest $request,string $id){
+        $this->update($request,$id);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'),
+            'update_msg_delivery' => __('delivery.update_msg_delivery')]);
+    }
     /**
      * Remove the specified resource from storage.
      *

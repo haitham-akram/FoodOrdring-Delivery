@@ -32,7 +32,8 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form">
+                                        <form class="form" action="{{route('RM_update_meal',$meal->MealID)}}" method="post" enctype="multipart/form-data">
+                                            @csrf
                                             <div class="form-body">
                                                 <div class="row pl-1 pr-1">
                                                     <div class="col-md-6">
@@ -40,19 +41,34 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="name">{{ __('restaurantManager.meal-name') }}</label>
-                                                            <input type="text" id="name" class="form-control"
+                                                            <input type="text" id="MealName" class="form-control"
                                                                 placeholder="{{ __('restaurantManager.meal-name') }}"
-                                                                name="name">
+                                                                   name="MealName" value="{{$meal->MealName}}">
+                                                            @error('MealName')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- menu id Field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="meun_id">{{ __('restaurantManager.meun-id') }}</label>
-                                                            <input type="text" id="meun_id" class="form-control"
-                                                                placeholder="{{ __('restaurantManager.meun-id') }}"
-                                                                name="meun_id">
+                                                                for="MenuID">{{ __('restaurantManager.category-name') }}</label>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" name="MenuID" id="MenuID">
+                                                                    <option disabled selected value="">
+                                                                        {{ __('restaurantManager.category-name') }}</option>
+                                                                    @foreach ($menus as $menu)
+                                                                        <option value="{{ $menu->MenuID }}" @if($meal->MenuID == $menu->MenuID) selected @endif>
+                                                                            {{ $menu->CategoryType }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('MenuID')
+                                                                <small
+                                                                    class="form-text text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </fieldset>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -61,20 +77,28 @@
                                                     <div class="col-md-6">
                                                         {{-- price Field --}}
                                                         <div class="form-group">
-                                                            <label for="price">{{ __('restaurantManager.price') }}</label>
-                                                            <input type="text" id="price" class="form-control"
+                                                            <label for="Price">{{ __('restaurantManager.price') }}</label>
+                                                            <input type="text" id="Price" class="form-control"
                                                                 placeholder="{{ __('restaurantManager.price') }}"
-                                                                name="price">
+                                                                   name="Price" value="{{floatval( $meal->Price ) }}">
+                                                            @error('Price')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        {{-- Offer ID  Field --}}
+                                                        {{-- Offer Field --}}
                                                         <div class="form-group">
                                                             <label
-                                                                for="offer">{{ __('restaurantManager.offer') }}</label>
-                                                            <input type="text" id="offer" class="form-control"
+                                                                for="Offer">{{ __('restaurantManager.offer') }}</label>
+                                                            <input type="text" id="Offer" class="form-control"
                                                                 placeholder="{{ __('restaurantManager.offer') }}"
-                                                                name="offer">
+                                                                name="Offer" value="{{$meal->Offer}}">
+                                                            @error('Offer')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -85,20 +109,30 @@
                                                         <div class="form-group">
                                                             <label
                                                                 for="estimate-finish-time">{{ __('restaurantManager.estimate-finish-time') }}</label>
-                                                            <input type="text" id="estimate-finish-time"
+                                                            <input type="text" id="EstimateFinishTime"
                                                                 class="form-control"
                                                                 placeholder="{{ __('restaurantManager.estimate-finish-time') }}"
-                                                                name="estimate-finish-time">
+                                                                   name="EstimateFinishTime" value="{{$meal->EstimateFinishTime}}">
+                                                            @error('EstimateFinishTime')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- ability-to-order Field --}}
                                                         <div class="form-group">
-                                                            <label
-                                                                for="ability-to-order">{{ __('restaurantManager.ability-to-order') }}</label>
-                                                            <input type="text" id="ability-to-order" class="form-control"
-                                                                placeholder="{{ __('restaurantManager.ability-to-order') }}"
-                                                                name="ability-to-order">
+                                                            <label for="AbilityToOrder">{{ __('restaurantManager.ability-to-order') }}</label>
+                                                            <select class="form-control" name="AbilityToOrder" id="AbilityToOrder">
+                                                                <option disabled  value="">{{ __('restaurantManager.ability-to-order') }}</option>
+                                                                <option value="Able" @if($meal->AbilityToOrder == 'Able') selected @endif>{{  __('restaurantManager.Able') }}</option>
+                                                                <option value="Unable"  @if($meal->AbilityToOrder == 'Unable') selected @endif>{{  __('restaurantManager.Unable') }}</option>
+                                                                <option value="ComingSoon"  @if($meal->AbilityToOrder == 'ComingSoon') selected @endif>{{  __('restaurantManager.ComingSoon') }}</option>
+                                                            </select>
+                                                            @error('AbilityToOrder')
+                                                            <small
+                                                                class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -108,44 +142,42 @@
                                                         {{-- ingredients Field --}}
                                                         <fieldset class="form-group">
                                                             <label>{{ __('restaurantManager.ingredients') }}</label>
-                                                            <textarea class="form-control" id="ingredients" rows="3" name="ingredients"
-                                                                placeholder="{{ __('restaurantManager.ingredients') }}"></textarea>
+                                                            <textarea style="resize: none" class="form-control" id="Ingredients" rows="3" name="Ingredients"
+                                                                placeholder="{{ __('restaurantManager.ingredients') }}">{{$meal->Ingredients}}</textarea>
+                                                            @error('Ingredients')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </fieldset>
                                                     </div>
                                                     <div class="col-md-6">
                                                         {{-- Description Field --}}
                                                         <fieldset class="form-group">
                                                             <label>{{ __('restaurantManager.description') }}</label>
-                                                            <textarea class="form-control" id="description" rows="3" name="description"
-                                                                placeholder="{{ __('restaurantManager.description') }}"></textarea>
+                                                            <textarea style="resize: none" class="form-control" id="Description" rows="3" name="Description"
+                                                                placeholder="{{ __('restaurantManager.description') }}">{{$meal->Description}}</textarea>
+                                                            @error('Description')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
                                                         </fieldset>
                                                     </div>
                                                 </div>
-
                                                 <div class="row pl-1 pr-1">
-
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         {{-- pic Field --}}
                                                         <label for="photo">{{ __('restaurantManager.photo') }}</label>
                                                         <fieldset class="form-group">
                                                             <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="photo"
-                                                                    name="photo">
+                                                                <input type="file" class="custom-file-input" id="MealLogo"
+                                                                       name="MealLogo" accept="image/*">
                                                                 <label class="custom-file-label"
-                                                                    for="inputGroupFile01">{{ __('restaurantManager.choose-photo') }}</label>
+                                                                       for="inputGroupFile01">{{ __('restaurantManager.choose-photo') }}</label>
+                                                                @error('MealLogo')
+                                                                <small class="form-text text-danger">{{ $message }}</small>
+                                                                @enderror
                                                             </div>
                                                         </fieldset>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="rate">{{ __('restaurantManager.rate') }}</label>
-                                                            <input type="text" id="rate" class="form-control"
-                                                                placeholder="{{ __('restaurantManager.rate') }}"
-                                                                name="rate">
-                                                        </div>
-                                                    </div>
                                                 </div>
-
                                             </div>
                                             {{-- Edit and Cancel button --}}
                                             <div class="form-actions center">
@@ -169,5 +201,28 @@
         </div>
     </div>
     </div>
-    </div>
+@endsection
+@section('search js')
+    @if (Session::has('update_msg_Meal'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('update_msg_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('update_msg_Meal') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 3000
+                });
+            </script>
+        @endif
+    @endif
+
 @endsection

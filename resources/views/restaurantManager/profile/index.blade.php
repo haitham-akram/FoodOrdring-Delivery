@@ -32,7 +32,7 @@
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
                                         <li><a class="btn btn-sm btn-warning box-shadow-2 round btn-min-width pull-right"
-                                                href="{{ route('RM_Edit_Profile', 1) }}"
+                                                href="{{ route('RM_Edit_Profile', $Restaurantmanager->RestManagerID) }}"
                                                 target="_blank">{{ __('restaurantManager.Edit-profile') }}</a></li>
                                     </ul>
                                 </div>
@@ -43,28 +43,28 @@
                                         <div class="col-md-6">
                                             {{-- first-name --}}
                                             <div class="form-group">
-                                                <h5 for="fullname">{{ __('restaurantManager.first-name') }}</h5>
+                                                <h5 for="fullname">{{ __('restaurantManager.first-name') }}: {{$Restaurantmanager->FirstName}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- last-name --}}
                                             <div class="form-group">
-                                                <h5 for="office">{{ __('restaurantManager.last-name') }}</h5>
+                                                <h5 for="office">{{ __('restaurantManager.last-name') }}: {{$Restaurantmanager->LastName}}</h5>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="row pt-1 pl-3 pr-1">
                                         <div class="col-md-6">
-                                            {{-- Deliviry Office --}}
+                                            {{-- Restaurant Name --}}
                                             <div class="form-group">
-                                                <h5 for="office">{{ __('restaurantManager.restaurant-Owner') }}</h5>
+                                                <h5 for="office">{{ __('restaurantManager.restaurant-Owner') }}: {{$Restaurantmanager->RestaurantName}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- Email --}}
                                             <div class="form-group">
-                                                <h5 for="email">{{ __('restaurantManager.email') }}</h5>
+                                                <h5 for="email">{{ __('restaurantManager.email') }}: {{$Restaurantmanager->Email}}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -74,17 +74,16 @@
                                             {{-- Phone Number 1 --}}
                                             <div class="form-group">
                                                 <label
-                                                    for="opening-time">{{ __('restaurantManager.Phone-Number-1') }}</label>
+                                                    for="opening-time">{{ __('restaurantManager.Phone-Number-1') }}: {{$Restaurantmanager->PhoneNumber1}}</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             {{-- Phone Number 2 --}}
                                             <div class="form-group">
-                                                <h5 for="closing-time">{{ __('restaurantManager.Phone-Number-2') }}</h5>
+                                                <h5 for="closing-time">{{ __('restaurantManager.Phone-Number-2') }}: {{$Restaurantmanager->PhoneNumber2}}</h5>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

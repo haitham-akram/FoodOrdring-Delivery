@@ -26,6 +26,7 @@ return [
     'cancel' => 'Cancel',
     'edit' => 'Edit',
     'choose-logo' => 'Choose Logo',
+    'update_msg_delivery'=>'Office Information Has Been Edited Successfully',
     //profile
     'deliviry-managers-info' => 'Profile Info',
     'first-name' => 'First Name',
@@ -34,6 +35,7 @@ return [
     'email' => 'Email',
     'Phone-Number-1' => 'First Phone Number',
     'Phone-Number-2' => 'Second Phone Number',
+    'update_msg_profile'=>'Your Personal Information Has Been Edited Successfully',
     //edit profile page
     'Edit-profile' => 'Edit Profile Info',
     'password' => 'Password',
@@ -58,13 +60,17 @@ return [
     'delivery_last_name_messages' => 'Last name is required',
     'delivery_email_messages' => 'Email is required',
     'delivery_required_password_messages' => 'Password is required',
+    'delivery_required_password_confirmation_messages' => 'Confirm Password is required',
+    'delivery_conf_password_messages'=>'Password is not compatible',
     'delivery_max_password_messages' => 'Maximum password is 30 characters',
     'delivery_min_password_messages' => 'Minimum password is 8 characters',
     'delivery_required_phone_messages' => 'First phone number is required',
-    'delivery_max_phone_messages' => 'Minimum 10 digits required',
+    'delivery_max_phone_messages' => 'Maximum 10 digits required',
     'delivery_min_phone_messages' => 'Minimum 10 digits required',
-    'delivery_max_phone2_messages' => 'Minimum 10 digits required',
-    'delivery_min_phone2_messages' => 'select required 10 digits',
+    'delivery_max_phone2_messages' => 'Maximum 10 digits required',
+    'delivery_min_phone2_messages' => 'Minimum 10 digits required ',
+    'delivery_integer_messages' => 'Phone Number Should Be Integer',
+
     //Delivery Office request
     'message_for_name' => 'Office name is required',
     'message_for_Governorate' => 'Governorate name is required',

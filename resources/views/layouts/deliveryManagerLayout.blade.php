@@ -261,6 +261,6 @@
     </footer>
     {{-- End Footer --}}
     @include('includes.appJS')
+    @yield('search js')
 </body>
-
 </html>

@@ -11,7 +11,8 @@ class Restaurant extends Model
     protected $table = 'restaurants';
     protected $fillable = [
         'RestaurantID', 'RestaurantName',
-        'Governorate', 'Neighborhood', 'StreetName', 'NavigationalMark', 'Rate', 'CategoriesID', 'Logo', 'OpiningTime', 'OwnerID', 'ClosingTime', 'AvailableStatus', 'CustomerFeedBackID'
+        'Governorate', 'Neighborhood', 'StreetName', 'NavigationalMark', 'Rate', 'CategoriesID', 'Logo', 'OpiningTime',
+        'OwnerID', 'ClosingTime', 'AvailableStatus', 'CustomerFeedBackID','RestId'
     ];
     public function restaurantmanager()
     {

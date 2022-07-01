@@ -28,8 +28,8 @@ class EditDelManagersRequest extends FormRequest
             'LastName'=>'required',
             'Email'=>'required||email',
             'NameOfDeliveryOffice'=>'required',
-            'PhoneNumber1'=>'required||min:10||max:10',
-            'PhoneNumber2'=>'nullable|min:10||max:10',
+            'PhoneNumber1'=>'required|integer|min:0560000000||max:0599999999',
+            'PhoneNumber2'=>'nullable|integer|min:0560000000||max:0599999999',
                 ];
     }
     public function messages()
@@ -45,6 +45,8 @@ class EditDelManagersRequest extends FormRequest
             'PhoneNumber1.min'=>__('delivery.delivery_min_phone_messages'),
             'PhoneNumber2.max'=>__('delivery.delivery_max_phone2_messages'),
             'PhoneNumber2.min'=>__('delivery.delivery_min_phone2_messages'),
+            'PhoneNumber1.integer'=>__('delivery.delivery_integer_messages'),
+            'PhoneNumber2.integer'=>__('delivery.delivery_integer_messages'),
         ];
     }
 }

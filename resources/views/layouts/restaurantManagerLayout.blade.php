@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="keywords" content="admin dashboard">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Restaurant Manager Dashboard</title>
     @if (App::getLocale() == 'en')
         @include('includes.LTRStyle')
@@ -265,7 +266,7 @@
                     </ul>
                 </li>
                 {{-- Customer requests --}}
-                <li class="                     navigation-header">
+                <li class="navigation-header">
                                     <span
                                         data-i18n="nav.category.Customer_orders">{{ __('restaurantManager.Customer-orders') }}</span><i
                                         class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right"
@@ -287,7 +288,6 @@
                                 </li>
                             </ul>
                         </li>
-
                     </ul>
         </div>
     </div>
@@ -307,6 +307,7 @@
     </footer>
     {{-- End Footer --}}
     @include('includes.appJS')
+    @yield('search js')
 </body>
 
 </html>

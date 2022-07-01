@@ -24,13 +24,13 @@ class DeliveryOrequest extends FormRequest
     public function rules()
     {
         return [
-            'Governorate'=>'required',
-            'Neighborhood'=>'required',
-            'StreetName'=>'required',
-            'NavigationalMark'=>'required',
-            'NameOfDeliveryOffice'=>'required',
+            'Governorate'=>'required',//3
+            'Neighborhood'=>'required',//4
+            'StreetName'=>'required',//2
+            'NavigationalMark'=>'required',//5
+            'NameOfDeliveryOffice'=>'required',//1
             'Logo'=>'required',
-            'OpiningTime'=>'required',
+            'OpiningTime'=>'required',//6
             'ClosingTime'=>'required',
         ];
     }

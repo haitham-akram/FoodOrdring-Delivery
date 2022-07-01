@@ -11,7 +11,7 @@ class Meal extends Model
     protected $table = 'meals';
     protected $fillable = [
         'MealID', 'MealName',
-        'MealLogo', 'MenuID', 'Price', 'Offer', 'Ingredients', 'EstimateFinishTime', 'AbilityToOrder', 'Description', 'CustomerFeedBackID', 'Rate', 'CategorytypeID'
+        'MealLogo', 'MenuID', 'Price', 'Offer', 'Ingredients', 'EstimateFinishTime', 'AbilityToOrder', 'Description', 'CustomerFeedBackID', 'Rate', 'CategorytypeID','RestId'
     ];
     public function feedback()
     {
@@ -27,9 +27,7 @@ class Meal extends Model
     }
     protected $primaryKey = 'MealID';
     protected $keyType = 'string';
+    public $timestamps = false;
 
 
-    //     public function restaurantmanager(){
-    //     return $this->belongsTo(Restaurantmanager::class,'RestManagerID');
-    // }
 }

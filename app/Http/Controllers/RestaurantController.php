@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Resturant\Resturantrequest;
 use App\Models\Category;
+use App\Models\Meal;
+use App\Models\Menuofmeal;
+use App\Models\Offer;
 use App\Models\Restaurant;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 
 class RestaurantController extends Controller
 {
@@ -25,7 +28,7 @@ class RestaurantController extends Controller
      *
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search_Restaurant(Request $request)
     {
@@ -49,18 +52,30 @@ class RestaurantController extends Controller
     /**
      * Display a listing of the resource for restaurant manager.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function RM_index()
     {
-        return view('restaurantManager.restaurant.index');
+//       TODO add count of orders
+        $categories= Category::select('CategorytypeID','CategoryName')->get();
+        $id = Auth::user()->user_id;
+        $restaurant = Restaurant::where('OwnerID',$id)->first();
+        $offers_count = Offer::where('RestaurantID',$restaurant->RestaurantID)->count();
+        $meal_count = Meal::where('RestId',$restaurant->RestaurantID)->count();
+        $categories_count = Menuofmeal::where('RestaurantID',$restaurant->RestaurantID)->count();
+        return view('restaurantManager.restaurant.index')
+            ->with( 'restaurant',$restaurant)
+            ->with('offers_count',$offers_count)
+            ->with('categories_count',$categories_count)
+            ->with('categories',$categories)
+            ->with('meal_count',$meal_count);
     }
 
     /**
      * @param
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function Create(string $id)
     {
@@ -76,7 +91,7 @@ class RestaurantController extends Controller
      *
      * @param Resturantrequest $request
      * @param string $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Resturantrequest $request,string $id)
     {
@@ -110,23 +125,11 @@ class RestaurantController extends Controller
         return redirect()->route('admin_add_res_manager')->with(['success_title' => __('admins.success_title'),
             'create_msg_restaurantManager' => __('admins.create_msg_restaurantManager')]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(string $id)
     {
@@ -136,17 +139,20 @@ class RestaurantController extends Controller
             ->with('restaurant',$restaurant)
             ->with('categories',$categories);
     }
+
     /**
      * Show the form for editing the specified resource for restaurant manager.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function RM_edit($id)
-
+    public function RM_edit( string $id)
     {
-
-        return view('restaurantManager.restaurant.edit');
+        $categories= Category::select('CategorytypeID','CategoryName')->get();
+        $restaurant= Restaurant::find($id);
+        return view('restaurantManager.restaurant.edit')
+            ->with('restaurant',$restaurant)
+            ->with('categories',$categories);
     }
 
     /**
@@ -154,7 +160,7 @@ class RestaurantController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Resturantrequest $request,string $id)
     {
@@ -187,14 +193,20 @@ class RestaurantController extends Controller
             'Logo'=>$data['Logo']
         ]);
         return redirect()->back()->with(['success_title' => __('admins.success_title'),
-            'update_msg_restaurant' => __('admins.update_msg_restaurant')]);;
+            'update_msg_restaurant' => __('admins.update_msg_restaurant')]);
+    }
+
+    public function RM_update(Resturantrequest $request, $id){
+        $this->update($request,$id);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'),
+            'update_msg_restaurant' => __('admins.update_msg_restaurant')]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
