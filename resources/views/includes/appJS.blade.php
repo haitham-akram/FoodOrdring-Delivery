@@ -1,9 +1,9 @@
 {{--  <!-- BEGIN VENDOR JS-->--}}
-  <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
+{{--  <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>--}}
 {{--  <!-- BEGIN MODERN JS-->--}}
-  <script src="{{ asset('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('app-assets/js/core/app.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
+{{--  <script src="{{ asset('app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>--}}
+{{--  <script src="{{ asset('app-assets/js/core/app.js') }}" type="text/javascript"></script>--}}
+{{--  <script src="{{ asset('app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>--}}
 {{--  <!-- END MODERN JS-->--}}
 {{--  --}}{{----}}{{-- for toastr --}}
   <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>
