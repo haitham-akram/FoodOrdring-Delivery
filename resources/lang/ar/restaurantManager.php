@@ -99,6 +99,18 @@ return [
     'delivery-offices-available' => 'مكاتب التوصيل المتاحة',
     'choose' => 'اختيار',
     'order-type' => 'نوع الطلب',
+    'state'=>'حالة الطلب',
+    'count'=>'العدد',
+    'take-reservation'=>'أخذ الحجز',
+    'Ongoing-orders-list'=>'الطلبات الجارية',
+    'delivery_name'=>'اسم مكتب التوصيل',
+    'take_order_msg'=>'تم ارسال الطلب الي مكتب التوصيل المحدد',
+    'order_Booked_msg'=>'تم حجز الطلب , لعرض الطلب مرة أخرى , سيكون موجودًا في  تاريخ الطلبات ',
+    //notification popup
+    'notifications'=>'الاشعارات',
+    'close_notifications'=>'إغلاق خانة الاشعارات',
+    'totalNotification'=>'إجمالي الإشعارات',
+
     //order history
     'orders-history' => 'تاريخ الطلبات',
     'order-date' => 'تاريخ الطلب',

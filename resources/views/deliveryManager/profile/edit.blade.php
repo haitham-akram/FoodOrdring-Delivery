@@ -116,7 +116,7 @@
                                                         <label for="PhoneNumber1">{{ __('delivery.Phone-Number-1') }}</label>
                                                         <input type="text" id="PhoneNumber1" class="form-control"
                                                             placeholder="{{ __('delivery.Phone-Number-1') }}"
-                                                            name="PhoneNumber1" value="{{ (int)$deliveryManager->PhoneNumber1}}">
+                                                            name="PhoneNumber1" value="0{{(int)$deliveryManager->PhoneNumber1}}">
                                                         @error('PhoneNumber1')
                                                         <small  class="form-text text-danger">{{$message}}</small>
                                                         @enderror
@@ -128,7 +128,9 @@
                                                         <label for="PhoneNumber2">{{ __('delivery.Phone-Number-2') }}</label>
                                                         <input type="text" id="PhoneNumber2" class="form-control"
                                                             placeholder="{{ __('delivery.Phone-Number-2') }}"
-                                                            name="PhoneNumber2" value="{{ (int)$deliveryManager->PhoneNumber2}}">
+                                                            name="PhoneNumber2" value=" @if( (int)$deliveryManager->PhoneNumber2 != 0)
+                                                                 0{{ (int)$deliveryManager->PhoneNumber2}}
+                                                                @endif">
                                                         @error('PhoneNumber2')
                                                         <small  class="form-text text-danger">{{$message}}</small>
                                                         @enderror

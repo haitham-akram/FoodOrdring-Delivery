@@ -5,8 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="keywords" content="admin dashboard">
-    <title>Delivery Manager</title>
+    <meta name="keywords" content="Delivery Manager dashboard">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('refresh')
+    <title>Delivery Manager Dashboard</title>
     @if (App::getLocale() == 'en')
         @include('includes.LTRStyle')
     @else
@@ -51,14 +53,7 @@
                 <div class="collapse navbar-collapse" id="navbar-mobile">
                     {{-- start search --}}
                     <ul class="nav navbar-nav mr-auto float-left">
-                        <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i
-                                    class="ficon ft-search"></i></a>
-                            <div class="search-input">
-                                <input class="input" type="text" placeholder="Explore Modern...">
-                            </div>
-                        </li>
                     </ul>
-                    {{-- end search --}}
                     <ul class="nav navbar-nav float-right">
                         {{-- start profile dropdown --}}
                         <li class="dropdown dropdown-user nav-item">
@@ -109,94 +104,39 @@
                         <li class="dropdown dropdown-notification nav-item">
                             <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i
                                     class="ficon ft-bell"></i>
-                                <span
-                                    class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
+                                <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{count($user_notifications)}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <h6 class="dropdown-header m-0">
-                                        <span class="grey darken-2">Notifications</span>
+                                        <span class="grey darken-2"> {{__('restaurantManager.notifications')}} </span>
                                     </h6>
-                                    <span class="notification-tag badge badge-default badge-danger float-right m-0">5
-                                        New</span>
+                                    <span class="notification-tag badge badge-default badge-danger float-right m-0"> {{count($user_notifications)}} {{__('restaurantManager.totalNotification')}}</span>
                                 </li>
                                 <li class="scrollable-container media-list w-100">
-                                    <a href="javascript:void(0)">
-                                        <div class="media">
-                                            <div class="media-left align-self-center"><i
-                                                    class="ft-plus-square icon-bg-circle bg-cyan"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">You have new order!</h6>
-                                                <p class="notification-text font-small-3 text-muted">Lorem ipsum dolor
-                                                    sit amet, consectetuer elit.</p>
-                                                <small>
-                                                    <time class="media-meta text-muted"
-                                                        datetime="2015-06-11T18:29:20+08:00">30 minutes ago</time>
-                                                </small>
+                                    @foreach($user_notifications as $user_notification)
+                                        <a href="javascript:void(0)">
+                                            <div class="media">
+                                                @if($user_notification->TypeOfNotification == 'Alert')
+                                                    <div class="media-left align-self-center"><i class="ft-alert-triangle icon-bg-circle bg-yellow bg-darken-3"></i></div>
+                                                @elseif ($user_notification->TypeOfNotification == 'Emergence')
+                                                    <div class="media-left align-self-center"><i class="ft-alert-circle icon-bg-circle bg-red bg-darken-1"></i></div>
+                                                @else
+                                                    <div class="media-left align-self-center"><i class="ft-mail icon-bg-circle bg-cyan "></i></div>
+                                                @endif
+                                                <div class="media-body">
+                                                    <h6 class="media-heading">{{$user_notification->Header}}</h6>
+                                                    <p class="notification-text font-small-3 text-muted">{{$user_notification->Description}}</p>
+                                                    <small>
+                                                        <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">{{$user_notification->LogDate}}</time>
+                                                    </small>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0)">
-                                        <div class="media">
-                                            <div class="media-left align-self-center"><i
-                                                    class="ft-download-cloud icon-bg-circle bg-red bg-darken-1"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading red darken-1">99% Server load</h6>
-                                                <p class="notification-text font-small-3 text-muted">Aliquam tincidunt
-                                                    mauris eu risus.</p>
-                                                <small>
-                                                    <time class="media-meta text-muted"
-                                                        datetime="2015-06-11T18:29:20+08:00">Five hour ago</time>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0)">
-                                        <div class="media">
-                                            <div class="media-left align-self-center"><i
-                                                    class="ft-alert-triangle icon-bg-circle bg-yellow bg-darken-3"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading yellow darken-3">Warning notifixation</h6>
-                                                <p class="notification-text font-small-3 text-muted">Vestibulum auctor
-                                                    dapibus neque.</p>
-                                                <small>
-                                                    <time class="media-meta text-muted"
-                                                        datetime="2015-06-11T18:29:20+08:00">Today</time>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0)">
-                                        <div class="media">
-                                            <div class="media-left align-self-center"><i
-                                                    class="ft-check-circle icon-bg-circle bg-cyan"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">Complete the task</h6>
-                                                <small>
-                                                    <time class="media-meta text-muted"
-                                                        datetime="2015-06-11T18:29:20+08:00">Last week</time>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0)">
-                                        <div class="media">
-                                            <div class="media-left align-self-center"><i
-                                                    class="ft-file icon-bg-circle bg-teal"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">Generate monthly report</h6>
-                                                <small>
-                                                    <time class="media-meta text-muted"
-                                                        datetime="2015-06-11T18:29:20+08:00">Last month</time>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    @endforeach
                                 </li>
                                 <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center"
-                                        href="javascript:void(0)">Read all notifications</a></li>
+                                                                    href="javascript:void(0)"> {{__('restaurantManager.close_notifications')}}</a></li>
                             </ul>
                         </li>
                         {{-- end of dropdown notification --}}

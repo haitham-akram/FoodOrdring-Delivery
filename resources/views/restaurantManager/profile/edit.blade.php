@@ -110,7 +110,7 @@
                                                             for="phone1">{{ __('restaurantManager.Phone-Number-1') }}</label>
                                                         <input type="text" id="PhoneNumber1" class="form-control"
                                                             placeholder="{{ __('restaurantManager.Phone-Number-1') }}"
-                                                            name="PhoneNumber1" value="{{(int)$Restaurantmanager->PhoneNumber1}}">
+                                                            name="PhoneNumber1" value="0{{(int)$Restaurantmanager->PhoneNumber1}}">
                                                         @error('PhoneNumber1')
                                                         <small  class="form-text text-danger">{{$message}}</small>
                                                         @enderror
@@ -123,7 +123,9 @@
                                                             for="PhoneNumber2">{{ __('restaurantManager.Phone-Number-2') }}</label>
                                                         <input type="text" id="PhoneNumber2" class="form-control"
                                                             placeholder="{{ __('restaurantManager.Phone-Number-2') }}"
-                                                               name="PhoneNumber2" value="{{(int)$Restaurantmanager->PhoneNumber2}}">
+                                                               name="PhoneNumber2" value="@if( (int)$Restaurantmanager->PhoneNumber2 != 0)
+                                                                 0{{(int)$Restaurantmanager->PhoneNumber2}}
+                                                                @endif">
                                                         @error('PhoneNumber2')
                                                         <small  class="form-text text-danger">{{$message}}</small>
                                                         @enderror

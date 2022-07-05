@@ -29,8 +29,8 @@ class DeliveryOMrequest extends FormRequest
             'Email'=>'required',
             'Password'=>'required|confirmed|min:8||max:30',
             'Password_confirmation'=>'required||min:8||max:30',
-            'PhoneNumber1'=>'required|integer|min:0560000000||max:0599999999',
-            'PhoneNumber2'=>'nullable|integer|min:0560000000||max:0599999999',
+            'PhoneNumber1'=>'required|numeric|min:0560000000||max:0599999999',
+            'PhoneNumber2'=>'nullable|numeric|min:0560000000||max:0599999999',
             'NameOfDeliveryOffice'=>'required',
         ];
     }
@@ -53,8 +53,8 @@ class DeliveryOMrequest extends FormRequest
             'PhoneNumber1.min'=>__('delivery.delivery_min_phone_messages'),
             'PhoneNumber2.max'=>__('delivery.delivery_max_phone2_messages'),
             'PhoneNumber2.min'=>__('delivery.delivery_min_phone2_messages'),
-            'PhoneNumber1.integer'=>__('delivery.delivery_integer_messages'),
-            'PhoneNumber2.integer'=>__('delivery.delivery_integer_messages'),
+            'PhoneNumber1.numeric'=>__('delivery.delivery_integer_messages'),
+            'PhoneNumber2.numeric'=>__('delivery.delivery_integer_messages'),
             'NameOfDeliveryOffice.required'=>__('delivery.message_for_name'),
         ];
     }

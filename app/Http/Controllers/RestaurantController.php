@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Meal;
 use App\Models\Menuofmeal;
 use App\Models\Offer;
+use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,19 +57,23 @@ class RestaurantController extends Controller
      */
     public function RM_index()
     {
-//       TODO add count of orders
         $categories= Category::select('CategorytypeID','CategoryName')->get();
         $id = Auth::user()->user_id;
         $restaurant = Restaurant::where('OwnerID',$id)->first();
         $offers_count = Offer::where('RestaurantID',$restaurant->RestaurantID)->count();
         $meal_count = Meal::where('RestId',$restaurant->RestaurantID)->count();
         $categories_count = Menuofmeal::where('RestaurantID',$restaurant->RestaurantID)->count();
+        $orders_count = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
+            ->where('orders.Status','=','Not arrived')
+            ->where('ordermeallist.RestaurantID', $restaurant->RestaurantID)->count();
+
         return view('restaurantManager.restaurant.index')
             ->with( 'restaurant',$restaurant)
             ->with('offers_count',$offers_count)
             ->with('categories_count',$categories_count)
             ->with('categories',$categories)
-            ->with('meal_count',$meal_count);
+            ->with('meal_count',$meal_count)
+            ->with('orders_count',$orders_count);
     }
 
     /**

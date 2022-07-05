@@ -82,7 +82,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-left">
-                                            <h3 class="danger">99.89 %</h3>
+                                            <h3 class="danger">{{$orders_count}}</h3>
                                             <h6>{{ __('restaurantManager.orders-number') }}</h6>
                                         </div>
                                         <div>
@@ -90,8 +90,8 @@
                                         </div>
                                     </div>
                                     <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
-                                        <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: 85%"
-                                            aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-gradient-x-danger" role="progressbar" style="width: {{$orders_count}}%"
+                                            aria-valuenow="{{$orders_count}}" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>

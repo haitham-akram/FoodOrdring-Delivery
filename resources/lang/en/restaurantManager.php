@@ -100,10 +100,21 @@ return [
     'delivery-offices-available' => 'Delivery Offices Available',
     'choose' => 'Choose',
     'order-type' => 'Order Type',
+    'state'=>'state',
+    'count'=>'Count',
+    'take-reservation'=>'Take a Reservation',
+    'Ongoing-orders-list'=>'Ongoing Orders',
+    'delivery_name'=>'Delivery Name',
+    'take_order_msg'=>'The order has been sent to the specified delivery office, it will be present in the Ongoing orders list.',
+    'order_Booked_msg'=>'The order has been booked, To view the order again, it will be present in the orders history',
     //order history
     'orders-history' => 'Orders History',
     'order-date' => 'Order Date',
     'search-order' => 'Search For Order',
+    //notification popup
+    'close_notifications'=>'Close Notifications Box',
+    'notifications'=>'Notifications',
+    'totalNotification'=>'Total Notifications',
     //Home page
     'category-number' => 'Number of Current Categories',
     'meal-number' => 'Number of Current Meals',

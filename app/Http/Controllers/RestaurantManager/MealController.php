@@ -65,7 +65,6 @@ class MealController extends Controller
                 ->where('MealName', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('CategoryType', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Price', 'LIKE', '%' . $request->keyword . '%')
-                ->orWhere('Offer', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Ingredients', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Description', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('AbilityToOrder', 'LIKE', '%' . $request->keyword . '%')
@@ -108,7 +107,7 @@ class MealController extends Controller
             'MealName' => $request->MealName,
             'MenuID' => $request->MenuID,
             'Price' => $request->Price,
-            'Offer' => $request->Offer,
+//            'Offer' => $request->Offer,
             'Ingredients' => $request->Ingredients,
             'Description' => $request->Description,
             'EstimateFinishTime' => $request->EstimateFinishTime,
@@ -134,7 +133,6 @@ class MealController extends Controller
         $Meal= Meal::where('MealID','=',$id)
             ->join('menuofmeals','meals.MenuID','=','menuofmeals.MenuID')
             ->first(['meals.*','menuofmeals.CategoryType']);
-//         dd($Meal->toArray());
          $menu = Menuofmeal::where('RestaurantID', $RestaurantID)->get();
         return view('restaurantManager.meal.edit')->with(['meal'=>$Meal , 'menus'=>$menu]);
     }
@@ -153,7 +151,7 @@ class MealController extends Controller
             'MealName' => $request->MealName,
             'MenuID' => $request->MenuID,
             'Price' => $request->Price,
-            'Offer' => $request->Offer,
+//            'Offer' => $request->Offer,
             'Ingredients' => $request->Ingredients,
             'Description' => $request->Description,
             'EstimateFinishTime' => $request->EstimateFinishTime,

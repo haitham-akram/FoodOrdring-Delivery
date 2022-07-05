@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\NotificationRequest;
 use App\Models\Adminnotification;
+use App\Models\Deliveryoffice;
 use App\Models\Deliveryofficemanager;
+use App\Models\Restaurant;
 use App\Models\Restaurantmanager;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +20,6 @@ class NotificationController extends Controller
      */
     public function index()
     {
-
         return view('admin.notification.index');
     }
 
@@ -29,9 +30,10 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        $RestaurantManagers = RestaurantManager::select('RestManagerID','FirstName','LastName')->get();
-        $DeliveryManagers = Deliveryofficemanager::select('DeliManagerID','FirstName','LastName')->get();
-
+        $RestaurantManagers = Restaurant::join('restaurantmanager','restaurants.OwnerID','restaurantmanager.RestManagerID')
+            ->get(['restaurantmanager.RestManagerID','restaurantmanager.FirstName','restaurantmanager.LastName']);
+        $DeliveryManagers = Deliveryoffice::join('deliveryofficemanager','deliveryoffice.OwnerID','deliveryofficemanager.DeliManagerID')
+            ->get(['deliveryofficemanager.DeliManagerID','deliveryofficemanager.FirstName','deliveryofficemanager.LastName']);
         return view('admin.notification.create')->with('RestaurantManagers',$RestaurantManagers)->with('DeliveryManagers',$DeliveryManagers);
     }
 
@@ -43,10 +45,7 @@ class NotificationController extends Controller
      */
     public function store(NotificationRequest $request)
     {
-
-
         $ReceiverID = json_encode($request->ReceiverID);
-//        dd(  $request->all(),$ReceiverID );
         Adminnotification::create([
 //           'NotificationID'=>1000,
             'ReceiverID'=>$ReceiverID,
@@ -97,7 +96,6 @@ class NotificationController extends Controller
             ->with('Notification',$Notification)
             ->with('RestaurantManagers',$RestaurantManagers)
             ->with('DeliveryManagers',$DeliveryManagers);
-
     }
 
     /**

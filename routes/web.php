@@ -114,6 +114,9 @@ Route::group([
         Route::get('/Delete-Offer/{id}', [OfferController::class, 'destroy'])->name('RM_delete_offer');
         //Restaurant Orders Routes
         Route::get('/Restaurant-Orders', [RMOrderController::class, 'index'])->name('RM_orders');
+        Route::post('/take_order/{id}', [RMOrderController::class, 'take_order'])->name('RM_take_order');
+        Route::get('/Current-Restaurant-Orders', [RMOrderController::class, 'current_orders'])->name('RM_current_orders');
+        Route::post('/search-Orders', [RMOrderController::class, 'search_Orders'])->name('RM_search_orders');
         Route::get('/Restaurant-Orders-History', [RMOrderController::class, 'history'])->name('RM_orders_history');
     });
     // Delivery Manager Routes
@@ -128,6 +131,8 @@ Route::group([
         Route::post('/Update-Profile/{id}', [DeliviryManagerController::class, 'DM_Update_Profile'])->name('DM_Update_Profile');
         // Delivery-Orders Routes
         Route::get('/Delivery-Orders', [DMOrderController::class, 'index'])->name('DM_orders');
+        Route::post('/Delivering-Order/{id}', [DMOrderController::class, 'delivering_order'])->name('RM_delivering_order');
         Route::get('/Delivery-Orders-History', [DMOrderController::class, 'history'])->name('DM_orders_history');
+        Route::post('/search-Orders-History', [DMOrderController::class, 'search_orders'])->name('DM_search_orders');
     });
 });

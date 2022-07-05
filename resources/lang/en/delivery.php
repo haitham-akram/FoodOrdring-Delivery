@@ -51,6 +51,9 @@ return [
     'meals-list' => 'Meals List',
     'location' => 'Delivery Location',
     'actions' => 'Actions',
+    'status'=>'Order Status',
+    'delivering_order_msg'=>'The order has been successfully delivered. The delivered order can be reviewed on the order history.',
+    'order_delivering'=>'delivering The Order',
     //order history
     'order-date' => 'Order Date',
     'search-order' => 'Search For Order',

@@ -71,8 +71,8 @@
                                                     </th>
                                                     <th class="text-center">
                                                         {{ __('restaurantManager.price') }}</th>
-                                                    <th class="text-center">{{ __('restaurantManager.offer') }}
-                                                    </th>
+{{--                                                    <th class="text-center">{{ __('restaurantManager.offer') }}--}}
+{{--                                                    </th>--}}
                                                     <th class="text-center">
                                                         {{ __('restaurantManager.estimate-finish-time') }}</th>
                                                     <th class="text-center">
@@ -144,13 +144,13 @@
                 EditURL = EditURL.replace(':id', id);
                 var DeleteURL = "{{ route('RM_delete_meal', ':id') }}";
                 DeleteURL = DeleteURL.replace(':id', id);
+                //<td class = "text-center"> ` + res.Meals[i].Offer + `</td> this col i delete it
                 htmlView += `<tr>
                     <td class = "text-center"> ` + res.Meals[i].MealID + ` </td>
                     <td class = "text-center"> <img style="width:100px; hight:100px" src="` + res.Meals[i].MealLogo + `" alt="logo"> </td>
                     <td class = "text-center"> ` + res.Meals[i].MealName + ` </td>
                     <td class = "text-center"> ` + res.Meals[i].CategoryType + `</td>
                     <td class = "text-center"> ` + res.Meals[i].Price + ` </td>
-                    <td class = "text-center"> ` + res.Meals[i].Offer + `</td>
                     <td class = "text-center"> ` + res.Meals[i].EstimateFinishTime + `</td>
                     <td class = "text-center"> ` + res.Meals[i].AbilityToOrder + `</td>
                     <td class = "text-center"> ` + res.Meals[i].Ingredients + `</td>

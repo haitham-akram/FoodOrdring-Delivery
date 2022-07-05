@@ -51,6 +51,9 @@ return [
     'actions' => 'الاجرائات',
     'meals-list' => 'لائحة الوجبات',
     'location' => 'موقع التسليم',
+    'order_delivering'=>'تسليم الطلب',
+    'status'=>'حالة الطلب',
+    'delivering_order_msg'=>'تم تسليم الطلب بنجاح يمكن مراجعة الطلب الذي تم تسليمه في تاريخ الطلبات ',
     //order history
     'order-date' => 'تاريخ الطلب',
     'search-order' => 'بحث عن طلب',

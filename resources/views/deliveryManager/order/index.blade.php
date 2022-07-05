@@ -1,4 +1,7 @@
 @extends('layouts.deliveryManagerLayout')
+@section('refresh')
+    <meta http-equiv="refresh" content="180;url=" {{route('DM_orders')}}"/>
+@endsection
 @section('content')
     <div class="app-content content">
         <div class="content-wrapper">
@@ -8,11 +11,10 @@
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">{{ __('delivery.home') }}</a>
+                                <li class="breadcrumb-item"><a href="{{route('DM_Home')}}">{{ __('delivery.home') }}</a>
                                 </li>
                                 <li class="breadcrumb-item active"><a
                                         href="{{ route('DM_orders') }}">{{ __('delivery.orders-list') }}</a>
-                                </li>
                                 </li>
                             </ol>
                         </div>
@@ -39,60 +41,89 @@
                                             class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">{{ __('delivery.order-id') }}
-                                                    </th>
-                                                    <th class="text-center">{{ __('delivery.restaurant') }}
-                                                    </th>
-                                                    <th class="text-center">{{ __('delivery.customer-name') }}
-                                                    </th>
-                                                    <th class="text-center">{{ __('delivery.meals-list') }}
-                                                    </th>
-                                                    </th>
-                                                    <th class="text-center">
-                                                        {{ __('delivery.total-price') }}</th>
-                                                    <th class="text-center">{{ __('delivery.location') }}
-                                                    </th>
+                                                    <th class="text-center">{{ __('delivery.order-id') }}</th>
+                                                    <th class="text-center">{{ __('delivery.restaurant') }}</th>
+                                                    <th class="text-center">{{ __('delivery.customer-name') }}</th>
+                                                    <th class="text-center">{{ __('delivery.meals-list') }}</th>
+                                                    <th class="text-center">{{ __('delivery.total-price') }}</th>
+                                                    <th class="text-center">{{ __('delivery.location') }}</th>
+                                                    <th class="text-center">{{ __('delivery.status') }}</th>
                                                     <th class="text-center">{{ __('delivery.actions') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @if($count == 0)
+                                                <tr>
+                                                    <td class = "text-center" colspan = "7" ><h4>{{ __('admins.No Data') }}</h4></td>
+                                                </tr>
+                                            @else
+                                                @foreach($orders as $order)
                                                 <tr>
                                                     <td class="text-center">
-                                                        order-id
+                                                        {{$order->OrderID}}
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        {{$order->RestaurantName}}
                                                     </td>
                                                     <td class="text-center">
-                                                        restaurant
+                                                        {{$order->CustomerName}}
                                                     </td>
                                                     <td class="text-center">
-                                                        customer-name
+                                                        <table class="table table-white-space table-bordered row-grouping display no-wrap  table-middle">
+                                                            <thead>
+                                                            <tr>
+                                                                <th class="text-center">{{ __('restaurantManager.meal-id') }}
+                                                                </th>
+                                                                <th class="text-center">{{ __('restaurantManager.meal-name') }}
+                                                                </th>
+                                                                <th class="text-center">{{ __('restaurantManager.price') }}
+                                                                </th>
+                                                                <th class="text-center">
+                                                                    {{ __('restaurantManager.count') }}</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @for($i=0; $i<count($order->MealList);$i++)
+                                                                <tr>
+                                                                    <td > {{$order->MealList[$i]['ID']}}</td>
+                                                                    <td> {{$order->MealList[$i]['Name']}}</td>
+                                                                    <td> {{$order->MealList[$i]['Price']}}</td>
+                                                                    <td> {{$order->MealList[$i]['Count']}}</td>
+                                                                </tr>
+                                                            @endfor
+                                                            </tbody>
+                                                        </table>
                                                     </td>
                                                     <td class="text-center">
-                                                        meals-list
+                                                        {{$order->total_price}}
                                                     </td>
                                                     <td class="text-center">
-                                                        total-price
+                                                        {{$order->Governorate}}, {{$order->Neighborhood}}, {{$order->HouseNumber}}, {{$order->NavigationalMark}}
                                                     </td>
                                                     <td class="text-center">
-                                                        location
+                                                        {{$order->Status}}
                                                     </td>
                                                     <td class="text-center">
                                                         <span class="dropdown">
                                                             <button id="SearchDrop2" type="button" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="true"
-                                                                class="btn btn-warning dropdown-toggle  dropdown-menu-right "><i
+                                                                    aria-haspopup="true" aria-expanded="true"
+                                                                    class="btn btn-warning dropdown-toggle  dropdown-menu-right "><i
                                                                     class="ft-settings"></i></button>
                                                             <span aria-labelledby="SearchDrop2"
-                                                                class="dropdown-menu mt-1 dropdown-menu-left">
-                                                                <a href="#" class="dropdown-item primary"><i
-                                                                        class="ft-plus primary"></i>
-                                                                    {{ __('restaurantManager.take-order') }}</a>
-                                                                <a href="#" class="dropdown-item danger"><i
-                                                                        class="ft-x danger"></i>
-                                                                    {{ __('restaurantManager.reject-order') }}</a>
+                                                                  class="dropdown-menu mt-1 dropdown-menu-left">
+                                                                <a class="dropdown-item primary"
+                                                                   href="{{route('RM_delivering_order',$order->OrderID)}}"
+                                                                   onclick="event.preventDefault();
+                                                                    document.getElementById('delivering-order-form').submit();">
+                                                                     <i class="ft-check primary"></i>
+                                                                    {{ __('delivery.order_delivering') }}</a>
+                                                                  <form id="delivering-order-form" action="{{ route('RM_delivering_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>
                                                             </span>
                                                         </span>
                                                     </td>
-                                                </tr>
+                                                @endforeach
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -108,4 +139,28 @@
             </div>
         </div>
     </div>
+@endsection
+@section('search js')
+
+    @if (Session::has('delivering_order_msg'))
+        @if (App::getLocale() == 'ar')
+            <script>
+                toastr.success('{{ Session::get('delivering_order_msg') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 4000,
+                    positionClass: 'toast-top-left',
+                    containerId: 'toast-top-left'
+                });
+            </script>
+        @else
+            <script>
+                toastr.success('{{ Session::get('delivering_order_msg') }}', '{{ Session::get('success_title') }}', {
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut",
+                    timeOut: 4000
+                });
+            </script>
+        @endif
+    @endif
 @endsection

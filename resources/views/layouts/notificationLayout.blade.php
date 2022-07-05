@@ -29,7 +29,9 @@
         <!-- END Page Level CSS-->
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
-
+        {{-- for toastr --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/toastr.css') }}">
         {{--for production--}}
         <!-- BEGIN VENDOR CSS-->
         <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/vendors.css')}}">
@@ -44,6 +46,9 @@
         <!-- END Page Level CSS-->
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ secure_asset('assets/css/style.css')}}">
+        {{-- for toastr--}}
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/extensions/toastr.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/plugins/extensions/toastr.css') }}">
     @else
         <!-- BEGIN VENDOR CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/vendors.css')}}">
@@ -60,10 +65,13 @@
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style-rtl.css')}}">
         <!-- END Custom CSS-->
+        {{-- for toastr --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/toastr.css') }}">
         {{--for production--}}
         <!-- BEGIN VENDOR CSS-->
         <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/vendors.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
         <!-- END VENDOR CSS-->
         <!-- BEGIN MODERN CSS-->
         <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css-rtl/app.css')}}">
@@ -76,6 +84,9 @@
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ secure_asset('assets/css/style-rtl.css')}}">
         <!-- END Custom CSS-->
+        {{-- for toastr --}}
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/extensions/toastr.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/plugins/extensions/toastr.css') }}">
     @endif
 
 </head>
@@ -309,16 +320,16 @@
 {{--for production--}}
 <!-- BEGIN VENDOR JS-->
 <script src="{{secure_asset('app-assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
-<!-- BEGIN VENDOR JS-->
-<!-- BEGIN PAGE VENDOR JS-->
+{{--<!-- BEGIN VENDOR JS-->--}}
+{{--<!-- BEGIN PAGE VENDOR JS-->--}}
 <script src="{{secure_asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}" type="text/javascript"></script>
-<!-- END PAGE VENDOR JS-->
-<!-- BEGIN MODERN JS-->
+{{--<!-- END PAGE VENDOR JS-->--}}
+{{--<!-- BEGIN MODERN JS-->--}}
 <script src="{{secure_asset('app-assets/js/core/app-menu.js')}}" type="text/javascript"></script>
 <script src="{{secure_asset('app-assets/js/core/app.js')}}" type="text/javascript"></script>
 <script src="{{secure_asset('app-assets/js/scripts/customizer.js')}}" type="text/javascript"></script>
-<!-- END MODERN JS-->
-<!-- BEGIN PAGE LEVEL JS-->
+{{--<!-- END MODERN JS-->--}}
+{{--<!-- BEGIN PAGE LEVEL JS-->--}}
 <script src="{{secure_asset('app-assets/js/scripts/forms/select/form-select2.js')}}" type="text/javascript"></script>
 {{-- for toastr --}}
 <script src="{{ secure_asset('app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>

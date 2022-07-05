@@ -13,7 +13,6 @@
                                 <li class="breadcrumb-item active"><a
                                         href="{{ route('RM_orders_history') }}">{{ __('restaurantManager.orders-history') }}</a>
                                 </li>
-                                </li>
                             </ol>
                         </div>
                     </div>
@@ -38,7 +37,7 @@
                                         <div class="col-md-2 pb-1">
                                             <form class="form" action="#">
                                                 <div class="position-relative">
-                                                    <input type="search" id="search-order" class="form-control"
+                                                    <input type="text" id="search" class="form-control"
                                                         name="search-order"
                                                         placeholder="{{ __('restaurantManager.search-order') }}">
                                                     <div class="form-control-position">
@@ -66,29 +65,12 @@
                                                         {{ __('restaurantManager.order-type') }}</th>
                                                     <th class="text-center">{{ __('restaurantManager.order-date') }}
                                                     </th>
+                                                    <th class="text-center">
+                                                        {{ __('restaurantManager.delivery_name') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        order-id
-                                                    </td>
-                                                    <td class="text-center">
-                                                        customer-name
-                                                    </td>
-                                                    <td class="text-center">
-                                                        meals-list
-                                                    </td>
-                                                    <td class="text-center">
-                                                        total-price
-                                                    </td>
-                                                    <td class="text-center">
-                                                        order-type
-                                                    </td>
-                                                    <td class="text-center">
-                                                        date
-                                                    </td>
-                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -104,4 +86,76 @@
             </div>
         </div>
     </div>
+@endsection
+@section('search js')
+    <script>
+        $('#search').on('keyup', function() {
+            search();
+        });
+        search();
+        function search() {
+            var keyword = $('#search').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.post('{{ route('RM_search_orders') }}', {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    keyword: keyword
+                },
+                function(data) {
+                    table_post_row(data);
+                });
+        }
+
+        // table row with ajax
+        function table_post_row(res) {
+            let htmlView = '';
+            if (res.orders.length <= 0) {
+                htmlView += `<tr>
+                <td class = "text-center" colspan = "7" ><h4>{{ __('admins.No Data') }}</h4></td>
+                    </tr>`;
+            }
+            let total_price = 0.0;
+            for (let i = 0; i < res.orders.length; i++) {
+                let mealList = "";
+                for (let j=0; j < res.orders[i].MealList.length; j++){
+                    total_price += parseFloat( res.orders[i].MealList[j]['Price']);
+                        mealList +=`
+                        <tr>
+                        <td>`+res.orders[i].MealList[j]['ID']+`</td>
+                        <td>`+res.orders[i].MealList[j]['Name']+`</td>
+                        <td>`+res.orders[i].MealList[j]['Price']+`</td>
+                        <td>`+res.orders[i].MealList[j]['Count']+`</td>
+                        </tr>`
+                }
+                htmlView += `<tr>
+                    <td class = "text-center"> ` + res.orders[i].OrderID + ` </td>
+                    <td class = "text-center"> ` + res.orders[i].CustomerName + ` </td>
+                    <td class = "text-center">
+                              <table class="table table-white-space table-bordered row-grouping display no-wrap  table-middle">
+                              <thead>
+                                  <tr>
+                                  <th class="text-center">{{ __('restaurantManager.meal-id') }}</th>
+                                  <th class="text-center">{{ __('restaurantManager.meal-name') }}</th>
+                                  <th class="text-center">{{ __('restaurantManager.price') }}</th>
+                                  <th class="text-center">{{ __('restaurantManager.count') }}</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                               `+mealList+`
+                              </tbody>
+                              </table>
+                    </td>
+                    <td class = "text-center"> `+total_price+`</td>
+                    <td class = "text-center"> ` + res.orders[i].OrderType+ `</td>
+                    <td class = "text-center"> ` + res.orders[i].Logs + `</td>
+                    <td class = "text-center"> ` + res.orders[i].NameOfDeliveryOffice + `</td>
+                    </tr>`;
+            }
+            $('tbody').html(htmlView);
+        }
+    </script>
+
 @endsection

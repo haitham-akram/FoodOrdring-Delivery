@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Delivery\DeliveryOrequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Deliveryoffice;
 
@@ -63,14 +64,25 @@ class DeliveryController extends Controller
     /**
      * Display a listing of the resource for delivery manager.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function DM_index()
     {
-        //TODO add count of current and done orders
         $DeliveryManagerID=auth()->user()->user_id;
+
         $deliveryOffice = Deliveryoffice::where('OwnerID','=',$DeliveryManagerID)->first();
-        return view('deliveryManager.deliveryOffice.index')->with('deliveryOffice',$deliveryOffice);
+        $orders_count =  Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
+            ->where('ordermeallist.DeliveryOfficeID','=',$deliveryOffice->DeliveryOfficeID)
+            ->where('orders.Status','=','Not arrived')
+            ->count();
+        $history_count = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
+            ->where('ordermeallist.DeliveryOfficeID','=',$deliveryOffice->DeliveryOfficeID)
+            ->where('orders.Status','!=','Not arrived')
+            ->count();
+        return view('deliveryManager.deliveryOffice.index')
+            ->with('orders_count',$orders_count)
+            ->with('history_count',$history_count)
+            ->with('deliveryOffice',$deliveryOffice);
     }
 
 
