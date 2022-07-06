@@ -133,7 +133,7 @@
                                                                 <a class="dropdown-item primary" href="{{route('RM_Prepare_order',$order->OrderID)}}"  onclick="event.preventDefault();
                                                                     document.getElementById('Prepare-order-form').submit();">
                                                                      <i class="ft-plus primary"></i>
-                                                                    {{ __('restaurantManager.prepare_order') }}</a>
+                                                                    {{ __('restaurantManager.take-order') }}</a>
                                                                     <form id="Prepare-order-form" action="{{ route('RM_Prepare_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>
                                                                 </span>
                                                             </span>
