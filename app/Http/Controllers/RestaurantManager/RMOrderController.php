@@ -153,13 +153,15 @@ class RMOrderController extends Controller
             ->orderBy('orders.Logs', 'DESC')
             ->get(['ordermeallist.*', 'orders.*','deliveryoffice.NameOfDeliveryOffice']);
         $total_price = 0.0;
-        foreach ($orders as $order){
-            $meals = json_decode ($order->MealList , true);
-            foreach ($meals as $meal){
-                $total_price +=$meal['Price'] * $meal['Count'];
+        foreach ($orders as $order) {
+            $meals = json_decode($order->MealList, true);
+            if ($total_price != 0.0)
+            {$total_price = 0.0;}
+            foreach ($meals as $meal) {
+                $total_price += $meal['Price'] * $meal['Count'];
             }
             $order->MealList = $meals;
-            $order['total_price'] = $total_price;
+            $order['total_price'] += $total_price;
         }
 
         if ($request->keyword != '') {
@@ -175,14 +177,18 @@ class RMOrderController extends Controller
                 ->orWhere('orders.OrderID', 'LIKE', '%' . $request->keyword . '%')
                 ->orderBy('orders.Logs', 'DESC')
                 ->get(['ordermeallist.*', 'orders.*','deliveryoffice.NameOfDeliveryOffice']);
-            foreach ($orders as $order){
-                $meals = json_decode ($order->MealList , true);
-                foreach ($meals as $meal){
-                    $total_price +=$meal['Price'] * $meal['Count'];
+
+            foreach ($orders as $order) {
+                $meals = json_decode($order->MealList, true);
+                if ($total_price != 0.0)
+                {$total_price = 0.0;}
+                foreach ($meals as $meal) {
+                    $total_price += $meal['Price'] * $meal['Count'];
                 }
                 $order->MealList = $meals;
-                $order['total_price'] = $total_price;
+                $order['total_price'] += $total_price;
             }
+
         }
         return response()->json([
             'orders' => $orders

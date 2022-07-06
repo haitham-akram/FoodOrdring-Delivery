@@ -57,6 +57,7 @@ class DMOrderController extends Controller
 
     public function history()
     {
+
         return view('deliveryManager.order.history');
     }
 
@@ -70,15 +71,19 @@ class DMOrderController extends Controller
             ->where('orders.Status', '=', 'Arrived')
             ->orderBy('orders.Logs', 'DESC')
             ->get(['ordermeallist.*', 'orders.*', 'customeraccount.*', 'restaurants.RestaurantName']);
+
         $total_price = 0.0;
         foreach ($orders as $order) {
             $meals = json_decode($order->MealList, true);
+            if ($total_price != 0.0)
+            {$total_price = 0.0;}
             foreach ($meals as $meal) {
                 $total_price += $meal['Price'] * $meal['Count'];
             }
             $order->MealList = $meals;
-            $order['total_price'] = $total_price;
+            $order['total_price'] += $total_price;
         }
+
         if ($request->keyword != '') {
             $orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
                 ->join('customeraccount', 'orders.CustomerID', 'customeraccount.CustomerID')
@@ -91,13 +96,16 @@ class DMOrderController extends Controller
                 ->orWhere('orders.OrderID', 'LIKE', '%' . $request->keyword . '%')
                 ->orderBy('orders.Logs', 'DESC')
                 ->get(['ordermeallist.*', 'orders.*','customeraccount.*' , 'restaurants.RestaurantName']);
+
             foreach ($orders as $order) {
                 $meals = json_decode($order->MealList, true);
+                if ($total_price != 0.0)
+                {$total_price = 0.0;}
                 foreach ($meals as $meal) {
                     $total_price += $meal['Price'] * $meal['Count'];
                 }
                 $order->MealList = $meals;
-                $order['total_price'] = $total_price;
+                $order['total_price'] += $total_price;
             }
 
         }

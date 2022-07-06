@@ -143,7 +143,6 @@
             for (let i = 0; i < res.orders.length; i++) {
                 let mealList = "";
                 for (let j=0; j < res.orders[i].MealList.length; j++){
-                    total_price += parseFloat( res.orders[i].MealList[j]['Price']);
                     mealList +=`
                         <tr>
                         <td>`+res.orders[i].MealList[j]['ID']+`</td>
@@ -171,7 +170,7 @@
                               </tbody>
                               </table>
                     </td>
-                    <td class = "text-center"> `+total_price+`</td>
+                    <td class = "text-center"> `+res.orders[i].total_price+`</td>
                     <td class = "text-center"> ` + res.orders[i].Governorate+ ` ,`+res.orders[i].Neighborhood +` ,`+res.orders[i].HouseNumber +` ,`+res.orders[i].NavigationalMark+`</td>
                     <td class = "text-center"> ` + res.orders[i].Logs + `</td>
                     </tr>`;
