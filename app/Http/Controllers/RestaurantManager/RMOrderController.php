@@ -25,15 +25,12 @@ class RMOrderController extends Controller
     public function index()
     {
         $RestaurantID = $this->call_restaurant()->RestaurantID;
+//        this for first three status ['Not arrived', 'In preparation', 'Ready']
         $orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
             ->where('ordermeallist.RestaurantID', $RestaurantID)
             ->where('ordermeallist.DeliveryOfficeID','=',null)
-            ->where('orders.Status','=','Not arrived')
+            ->where('orders.Status','!=','Arrived')
             ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status']);
-
-        $deliveryOffices = Deliveryoffice::select('DeliveryOfficeID','NameOfDeliveryOffice')
-            ->where('OwnerID','!=',null)->get();
-//        dd($deliveryOffices->toArray());
         $total_price = 0.0;
         foreach ($orders as $order){
            $meals = json_decode ($order->MealList , true);
@@ -44,8 +41,25 @@ class RMOrderController extends Controller
             $order['total_price'] = $total_price;
         }
         $order_count = $orders->count();
-//         dd($deliveryOffices->toArray());
-
+//        this is for Delivering state
+        $Delivering_orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
+            ->where('orders.Status','=','Delivering')
+            ->join('deliveryoffice','ordermeallist.DeliveryOfficeID','deliveryoffice.DeliveryOfficeID')
+            ->where('ordermeallist.RestaurantID', $RestaurantID)
+            ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status','deliveryoffice.NameOfDeliveryOffice']);
+        $total_price_ = 0.0;
+        foreach ($Delivering_orders as $delivering_order){
+            $meals = json_decode ($delivering_order->MealList , true);
+            foreach ($meals as $meal){
+                $total_price_ +=$meal['Price'] * $meal['Count'];
+            }
+            $delivering_order->MealList = $meals;
+            $delivering_order['total_price'] = $total_price_;
+        }
+        $delivering_order_count = $Delivering_orders->count();
+//        get delivery offices
+        $deliveryOffices = Deliveryoffice::select('DeliveryOfficeID','NameOfDeliveryOffice')
+            ->where('OwnerID','!=',null)->get();
 //        To Make all orders in one delivery office if  a customer have orders with more than one restaurant,
 //        so I will search in current orders to find Delivery Office
             $on_delivery_orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
@@ -53,7 +67,6 @@ class RMOrderController extends Controller
                 ->where('orders.Status','!=','Arrived')
                 ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status','deliveryoffice.NameOfDeliveryOffice']);
         foreach ($orders as $order){
-
             foreach ($on_delivery_orders as $on_delivery_order){
                 if ($on_delivery_order->CustomerID == $order->CustomerID){
                     $deliveryOffices =
@@ -64,10 +77,11 @@ class RMOrderController extends Controller
                 }
             }
         }
-//    dd($deliveryOffices);
         return view('restaurantManager.order.index')
             ->with('count',$order_count)
             ->with('orders',$orders)
+            ->with('delivering_orders',$Delivering_orders)
+            ->with('delivering_order_count',$delivering_order_count)
             ->with('deliveryOffices',$deliveryOffices);
     }
     public function take_order(Request $request,string $id){
@@ -75,10 +89,9 @@ class RMOrderController extends Controller
     $DeliveryOfficeID = $request->deliveryOffice_id;
     $orderID = $id;
         $order = Order::where('OrderID',$orderID)->first();
-//        TODO remember to check first() and what will happened with get()
         $ordermeal = ordermeallist::where('OrderID',$orderID)->first();
         if ($order->OrderType == 'Receipt'){
-            $ordermeal->update([
+            $order->update([
                 'Status'=>'Arrived'
             ]);
             return redirect()->back()->with(['success_title' => __('admins.success_title'), 'order_Booked_msg' => __('restaurantManager.order_Booked_msg')]);
@@ -86,38 +99,58 @@ class RMOrderController extends Controller
             $ordermeal->update([
                 'DeliveryOfficeID'=>$DeliveryOfficeID
             ]);
-            return redirect()->back()->with(['success_title' => __('admins.success_title'), 'take_order_msg' => __('restaurantManager.take_order_msg')]);
+            $order->update([
+                'Status'=>'Delivering'
+            ]);
+            return redirect()->back()->with(['success_title' => __('admins.success_title'), 'order_Delivering_msg' => __('restaurantManager.order_Delivering_msg')]);
         }
+    }
+    public function prepare (string $id)
+    {
+        $order = Order::where('OrderID',$id)->first();
+        $order->update([
+             'Status'=>'In preparation'
+            ]);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'), 'order_Prepare_msg' => __('restaurantManager.order_Prepare_msg')]);
+    }
+    public function ready (string $id)
+    {
+        $order = Order::where('OrderID',$id)->first();
+        $order->update([
+            'Status'=>'Ready'
+        ]);
+        return redirect()->back()->with(['success_title' => __('admins.success_title'), 'order_Ready_msg' => __('restaurantManager.order_Ready_msg')]);
     }
 
-    public function current_orders(){
-        $RestaurantID = $this->call_restaurant()->RestaurantID;
-        $orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
-            ->join('deliveryoffice','ordermeallist.DeliveryOfficeID','deliveryoffice.DeliveryOfficeID')
-            ->where('ordermeallist.RestaurantID', $RestaurantID)
-            ->where('orders.Status','!=','Arrived')
-            ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status','deliveryoffice.NameOfDeliveryOffice']);
-        $total_price = 0.0;
-        foreach ($orders as $order){
-            $meals = json_decode ($order->MealList , true);
-            foreach ($meals as $meal){
-                $total_price +=$meal['Price'] * $meal['Count'];
-            }
-            $order->MealList = $meals;
-            $order['total_price'] = $total_price;
-        }
-        $order_count = $orders->count();
-        return view('restaurantManager.order.Ongoing')
-            ->with('count',$order_count)
-            ->with('orders',$orders);
-    }
+//    public function current_orders(){
+//        $RestaurantID = $this->call_restaurant()->RestaurantID;
+//        $orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
+//            ->join('deliveryoffice','ordermeallist.DeliveryOfficeID','deliveryoffice.DeliveryOfficeID')
+//            ->where('ordermeallist.RestaurantID', $RestaurantID)
+//            ->where('orders.Status','!=','Arrived')
+//            ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status','deliveryoffice.NameOfDeliveryOffice']);
+//        $total_price = 0.0;
+//        foreach ($orders as $order){
+//            $meals = json_decode ($order->MealList , true);
+//            foreach ($meals as $meal){
+//                $total_price +=$meal['Price'] * $meal['Count'];
+//            }
+//            $order->MealList = $meals;
+//            $order['total_price'] = $total_price;
+//        }
+//        $order_count = $orders->count();
+//        return view('restaurantManager.order.Ongoing')
+//            ->with('count',$order_count)
+//            ->with('orders',$orders);
+//    }
     public function search_Orders(Request $request){
 
         $RestaurantID = $this->call_restaurant()->RestaurantID;
-        $orders = Order::where('orders.Status','!=','Not arrived')
+        $orders = Order::where('orders.Status','=','Arrived')
             ->join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
             ->join('deliveryoffice','ordermeallist.DeliveryOfficeID','deliveryoffice.DeliveryOfficeID')
             ->where('ordermeallist.RestaurantID', $RestaurantID)
+            ->orderBy('orders.Logs', 'DESC')
             ->get(['ordermeallist.*', 'orders.*','deliveryoffice.NameOfDeliveryOffice']);
         $total_price = 0.0;
         foreach ($orders as $order){
@@ -130,7 +163,7 @@ class RMOrderController extends Controller
         }
 
         if ($request->keyword != '') {
-            $orders = Order::where('orders.Status','!=','Not arrived')
+            $orders = Order::where('orders.Status','=','Arrived')
                 ->join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
                 ->join('deliveryoffice','ordermeallist.DeliveryOfficeID','deliveryoffice.DeliveryOfficeID')
                 ->where('ordermeallist.RestaurantID', $RestaurantID)
@@ -140,6 +173,7 @@ class RMOrderController extends Controller
                 ->orWhere('Logs', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('OrderType', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('orders.OrderID', 'LIKE', '%' . $request->keyword . '%')
+                ->orderBy('orders.Logs', 'DESC')
                 ->get(['ordermeallist.*', 'orders.*','deliveryoffice.NameOfDeliveryOffice']);
             foreach ($orders as $order){
                 $meals = json_decode ($order->MealList , true);

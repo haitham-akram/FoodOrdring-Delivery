@@ -25,12 +25,12 @@ class DMOrderController extends Controller
      */
     public function index()
     {
-        $deliveryOfficeID = $this->call_delivery_office()->DeliveryOfficeID;//DO66695869-DO66695869
+        $deliveryOfficeID = $this->call_delivery_office()->DeliveryOfficeID;
         $orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
            ->join('customeraccount','orders.CustomerID','customeraccount.CustomerID')
             ->join('restaurants','ordermeallist.RestaurantID','restaurants.RestaurantID')
             ->where('ordermeallist.DeliveryOfficeID','=',$deliveryOfficeID)
-            ->where('orders.Status','=','Not arrived')
+            ->where('orders.Status','=','Delivering')
             ->get(['ordermeallist.*', 'orders.*','customeraccount.*','restaurants.RestaurantName']);
         $total_price = 0.0;
         foreach ($orders as $order){
@@ -67,7 +67,8 @@ class DMOrderController extends Controller
             ->join('customeraccount', 'orders.CustomerID', 'customeraccount.CustomerID')
             ->join('restaurants', 'ordermeallist.RestaurantID', 'restaurants.RestaurantID')
             ->where('ordermeallist.DeliveryOfficeID', '=', $deliveryOfficeID)
-            ->where('orders.Status', '!=', 'Not arrived')
+            ->where('orders.Status', '=', 'Arrived')
+            ->orderBy('orders.Logs', 'DESC')
             ->get(['ordermeallist.*', 'orders.*', 'customeraccount.*', 'restaurants.RestaurantName']);
         $total_price = 0.0;
         foreach ($orders as $order) {
@@ -83,11 +84,12 @@ class DMOrderController extends Controller
                 ->join('customeraccount', 'orders.CustomerID', 'customeraccount.CustomerID')
                 ->join('restaurants', 'ordermeallist.RestaurantID', 'restaurants.RestaurantID')
                 ->where('ordermeallist.DeliveryOfficeID', '=', $deliveryOfficeID)
-                ->where('orders.Status', '!=', 'Not arrived')
+                ->where('orders.Status', '=', 'Arrived')
                 ->where('CustomerName', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('Logs', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('RestaurantName', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('orders.OrderID', 'LIKE', '%' . $request->keyword . '%')
+                ->orderBy('orders.Logs', 'DESC')
                 ->get(['ordermeallist.*', 'orders.*','customeraccount.*' , 'restaurants.RestaurantName']);
             foreach ($orders as $order) {
                 $meals = json_decode($order->MealList, true);

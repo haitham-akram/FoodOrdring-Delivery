@@ -64,7 +64,7 @@ class RestaurantController extends Controller
         $meal_count = Meal::where('RestId',$restaurant->RestaurantID)->count();
         $categories_count = Menuofmeal::where('RestaurantID',$restaurant->RestaurantID)->count();
         $orders_count = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
-            ->where('orders.Status','=','Not arrived')
+            ->where('orders.Status','!=','Arrived')
             ->where('ordermeallist.RestaurantID', $restaurant->RestaurantID)->count();
 
         return view('restaurantManager.restaurant.index')

@@ -115,6 +115,9 @@ Route::group([
         //Restaurant Orders Routes
         Route::get('/Restaurant-Orders', [RMOrderController::class, 'index'])->name('RM_orders');
         Route::post('/take_order/{id}', [RMOrderController::class, 'take_order'])->name('RM_take_order');
+        Route::post('/prepare_order/{id}', [RMOrderController::class, 'prepare'])->name('RM_Prepare_order');
+        Route::post('/ready_order/{id}', [RMOrderController::class, 'ready'])->name('RM_Ready_order');
+//        Route::post('/delivering_order/{id}', [RMOrderController::class, 'delivering'])->name('RM_delivering_order');
         Route::get('/Current-Restaurant-Orders', [RMOrderController::class, 'current_orders'])->name('RM_current_orders');
         Route::post('/search-Orders', [RMOrderController::class, 'search_Orders'])->name('RM_search_orders');
         Route::get('/Restaurant-Orders-History', [RMOrderController::class, 'history'])->name('RM_orders_history');

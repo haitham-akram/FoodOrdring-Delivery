@@ -107,6 +107,17 @@ return [
     'delivery_name'=>'Delivery Name',
     'take_order_msg'=>'The order has been sent to the specified delivery office, it will be present in the Ongoing orders list.',
     'order_Booked_msg'=>'The order has been booked, To view the order again, it will be present in the orders history',
+    'new'=>'New',
+    'in-preparation'=>'In Preparation',
+    'ready'=>'Ready To Deliver',
+    'delivering'=>'Delivering',
+    'explain'=>'Each tab expresses the status of orders.',
+    'order_Prepare_msg'=>'The Order is being prepared.',
+    'prepare_order'=>'Prepare The Order',
+    'order_Ready_msg'=>'Order ready for delivery',
+    'order_Delivering_msg'=>'The desired delivery office has been selected',
+
+
     //order history
     'orders-history' => 'Orders History',
     'order-date' => 'Order Date',

@@ -38,6 +38,8 @@
 {{-- for toastr--}}
 <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/vendors/css/extensions/toastr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ secure_asset('app-assets/css/plugins/extensions/toastr.css') }}">
+{{--for tabs in order page--}}
+<link rel="stylesheet" type="text/css" href="{{ secure_asset(' app-assets/css/core/menu/menu-types/vertical-overlay-menu.css')}}">
 {{-- maybe we will need it soon--}}
 <link rel="stylesheet" type="text/css"
     href="{{ secure_asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
@@ -86,6 +88,8 @@
 {{-- for toastr --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/toastr.css') }}">
+{{--for tabs in order page--}}
+<link rel="stylesheet" type="text/css" href="{{ asset(' app-assets/css/core/menu/menu-types/vertical-overlay-menu.css')}}">
 {{-- maybe we will need it soon --}}
 {{--<link rel="stylesheet" type="text/css"--}}
 {{--    href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">--}}

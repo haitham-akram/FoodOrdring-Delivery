@@ -87,8 +87,10 @@ class NotificationController extends Controller
      */
     public function edit($id)
     {
-        $RestaurantManagers = RestaurantManager::select('RestManagerID','FirstName','LastName')->get();
-        $DeliveryManagers = Deliveryofficemanager::select('DeliManagerID','FirstName','LastName')->get();
+        $RestaurantManagers = Restaurant::join('restaurantmanager','restaurants.OwnerID','restaurantmanager.RestManagerID')
+            ->get(['restaurantmanager.RestManagerID','restaurantmanager.FirstName','restaurantmanager.LastName']);
+        $DeliveryManagers = Deliveryoffice::join('deliveryofficemanager','deliveryoffice.OwnerID','deliveryofficemanager.DeliManagerID')
+            ->get(['deliveryofficemanager.DeliManagerID','deliveryofficemanager.FirstName','deliveryofficemanager.LastName']);
         $Notification = Adminnotification::find($id);
         $selected_ids = json_decode($Notification->ReceiverID,true);
         $Notification->ReceiverID = $selected_ids;

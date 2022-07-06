@@ -218,10 +218,10 @@
                                         href="{{ route('RM_orders') }}" data-i18n="nav.orders.list">
                                         {{ __('restaurantManager.orders-list') }}</a>
                                 </li>
-                                <li class="@if (Route::currentRouteName() == 'RM_current_orders') active @endif"><a class=" menu-item"
-                                         href="{{ route('RM_current_orders') }}" data-i18n="nav.orders.list">
-                                        {{ __('restaurantManager.Ongoing-orders-list') }}</a>
-                                </li>
+{{--                                <li class="@if (Route::currentRouteName() == 'RM_current_orders') active @endif"><a class=" menu-item"--}}
+{{--                                         href="{{ route('RM_current_orders') }}" data-i18n="nav.orders.list">--}}
+{{--                                        {{ __('restaurantManager.Ongoing-orders-list') }}</a>--}}
+{{--                                </li>--}}
                                 <li class="@if (Route::currentRouteName() == 'RM_orders_history') active @endif"><a class="menu-item"
                                         href="{{ route('RM_orders_history') }}"
                                         data-i18n="nav.order.history">{{ __('restaurantManager.orders-history') }}</a>

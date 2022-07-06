@@ -73,11 +73,11 @@ class DeliveryController extends Controller
         $deliveryOffice = Deliveryoffice::where('OwnerID','=',$DeliveryManagerID)->first();
         $orders_count =  Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
             ->where('ordermeallist.DeliveryOfficeID','=',$deliveryOffice->DeliveryOfficeID)
-            ->where('orders.Status','=','Not arrived')
+            ->where('orders.Status','=','Delivering')
             ->count();
         $history_count = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
             ->where('ordermeallist.DeliveryOfficeID','=',$deliveryOffice->DeliveryOfficeID)
-            ->where('orders.Status','!=','Not arrived')
+            ->where('orders.Status','=','Arrived')
             ->count();
         return view('deliveryManager.deliveryOffice.index')
             ->with('orders_count',$orders_count)
