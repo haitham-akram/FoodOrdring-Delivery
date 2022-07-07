@@ -117,7 +117,7 @@ class OfferController extends Controller
           $disc = (float)$request->DiscountPercentage/100;
 
           $meal->update([
-              'Offer'=> $meal_price * $disc,
+              'Offer'=>  $meal_price-($meal_price * $disc),
           ]);
           Offer::create([
               'RestaurantID'=>$RestaurantID,
@@ -160,11 +160,12 @@ class OfferController extends Controller
     public function update(Offerrequest $request, $id)
     {
         $RestaurantID = $this->call_restaurant()->RestaurantID;
-        $meal = Meal::where('RestId',$RestaurantID)->first();
+        $meal = Meal::where('MealID',$request->MealID)->first();
         $meal_price = $meal->Price;
         $disc = (float)$request->DiscountPercentage/100;
+
         $meal->update([
-            'Offer'=> $meal_price * $disc,
+            'Offer'=> $meal_price-($meal_price * $disc),
         ]);
         $offer = Offer::where('OfferID',$id)->first();
         $offer->update([

@@ -139,7 +139,7 @@
                     <td class = "text-center"> ` + res.offers[i].OfferID + ` </td>
                     <td class = "text-center"> ` + res.offers[i].MealName + ` </td>
                     <td class = "text-center"> ` + res.offers[i].CategoryType + `</td>
-                    <td class = "text-center"> ` + res.offers[i].DiscountPercentage + ` </td>
+                    <td class = "text-center"> ` + res.offers[i].DiscountPercentage*100 + ` </td>
                     <td class = "text-center"> ` + res.offers[i].DateOfStart + `</td>
                     <td class = "text-center"> ` + res.offers[i].DateOfEnd + `</td>
                     <td class = "text-center">
