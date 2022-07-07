@@ -172,6 +172,8 @@ return [
     'meal_estimate_finish_time_max_messages'=>'The Maximum Meal Price Is a 60 Minutes',
     'meal_ingredients_messages'=>'Please Specify The Ingredients Of The Meal',
     'meal_price_numeric_messages' => 'Please Specify The Price Of The Meal In Numbers',
+    'meal_offer_numeric_messages'=>'Please Specify a discount by numbers',
+    'meal_offer_min_messages'=>'The minimum discount is 1 shekel',
     //Menu request
     'menu_resid_messages' => 'Select the restaurant',
     'menu_catid_messages' => 'Select category',

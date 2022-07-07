@@ -87,6 +87,22 @@
                                                             @enderror
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-md-6">
+                                                        {{--Offer Field --}}
+                                                        <div class="form-group">
+                                                            <label for="Offer">{{ __('restaurantManager.offer') }}</label>
+                                                            <input type="text" id="Offer" class="form-control"
+                                                                placeholder="{{ __('restaurantManager.offer') }}"
+                                                                name="Offer" value="{{ floatval($meal->Offer)}}">
+                                                            @error('Offer')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row pl-1 pr-1">
                                                     <div class="col-md-6">
                                                         {{-- estimate-finish-time Field --}}
                                                         <div class="form-group">
@@ -102,23 +118,6 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-{{--                                                    <div class="col-md-6">--}}
-{{--                                                        --}}{{-- Offer Field --}}
-{{--                                                        <div class="form-group">--}}
-{{--                                                            <label--}}
-{{--                                                                for="Offer">{{ __('restaurantManager.offer') }}</label>--}}
-{{--                                                            <input type="text" id="Offer" class="form-control"--}}
-{{--                                                                placeholder="{{ __('restaurantManager.offer') }}"--}}
-{{--                                                                name="Offer" value="{{$meal->Offer}}">--}}
-{{--                                                            @error('Offer')--}}
-{{--                                                            <small--}}
-{{--                                                                class="form-text text-danger">{{ $message }}</small>--}}
-{{--                                                            @enderror--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-                                                </div>
-
-                                                <div class="row pl-1 pr-1">
                                                     <div class="col-md-6">
                                                         {{-- ability-to-order Field --}}
                                                         <div class="form-group">
@@ -135,21 +134,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        {{-- pic Field --}}
-                                                        <label for="photo">{{ __('restaurantManager.photo') }}</label>
-                                                        <fieldset class="form-group">
-                                                            <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="MealLogo"
-                                                                       name="MealLogo" accept="image/*">
-                                                                <label class="custom-file-label"
-                                                                       for="inputGroupFile01">{{ __('restaurantManager.choose-photo') }}</label>
-                                                                @error('MealLogo')
-                                                                <small class="form-text text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </fieldset>
-                                                    </div>
+
                                                 </div>
 
                                                 <div class="row pl-1 pr-1">
@@ -175,6 +160,23 @@
                                                             @enderror
                                                         </fieldset>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="row pl-1 pr-1">
+                                                <div class="col-md-12">
+                                                    {{-- pic Field --}}
+                                                    <label for="photo">{{ __('restaurantManager.photo') }}</label>
+                                                    <fieldset class="form-group">
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="MealLogo"
+                                                                   name="MealLogo" accept="image/*">
+                                                            <label class="custom-file-label"
+                                                                   for="inputGroupFile01">{{ __('restaurantManager.choose-photo') }}</label>
+                                                            @error('MealLogo')
+                                                            <small class="form-text text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </fieldset>
                                                 </div>
                                             </div>
                                             {{-- Edit and Cancel button --}}

@@ -117,7 +117,7 @@
                                                             <input type="text" id="DiscountPercentage"
                                                                    class="form-control"
                                                                    placeholder="{{ __('restaurantManager.discount-precentage') }}"
-                                                                   name="DiscountPercentage" value="{{floatval($offer->DiscountPercentage)}}">
+                                                                   name="DiscountPercentage" value="{{floatval($offer->DiscountPercentage * 100)}}">
                                                             @error('DiscountPercentage')
                                                             <small
                                                                 class="form-text text-danger">{{ $message }}</small>

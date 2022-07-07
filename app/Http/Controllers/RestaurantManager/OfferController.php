@@ -104,16 +104,20 @@ class OfferController extends Controller
     public function store(Offerrequest $request)
     {
         $RestaurantID = $this->call_restaurant()->RestaurantID;
-        $meal = Meal::where('RestId',$RestaurantID)->first();
-
+        $meal = Meal::where('MealID',$request->MealID)->first();
+        $meal_price = $meal->Price;
 //        checker is for checking if the meal has an offer or not
-      $checker = Offer::where('MealID',$meal->MealID )->first();
+
+      $checker = Offer::where('MealID',$meal->MealID)->first();
+
       if($checker){
           return redirect()->back()->with(['error_title' => __('admins.error_title'),
               'isFound_msg_Offer' => __('restaurantManager.isFound_msg_Offer')]);
       }else{
+          $disc = (float)$request->DiscountPercentage/100;
+
           $meal->update([
-              'Offer'=>$request->DiscountPercentage
+              'Offer'=> $meal_price * $disc,
           ]);
           Offer::create([
               'RestaurantID'=>$RestaurantID,
@@ -121,7 +125,7 @@ class OfferController extends Controller
               'MealID'=>$request->MealID,
               'DateOfStart'=>$request->DateOfStart,
               'DateOfEnd'=>$request->DateOfEnd,
-              'DiscountPercentage'=>$request->DiscountPercentage
+              'DiscountPercentage'=>$disc
           ]);
 
           return redirect()->back()->with(['success_title' => __('admins.success_title'),
@@ -157,8 +161,10 @@ class OfferController extends Controller
     {
         $RestaurantID = $this->call_restaurant()->RestaurantID;
         $meal = Meal::where('RestId',$RestaurantID)->first();
+        $meal_price = $meal->Price;
+        $disc = (float)$request->DiscountPercentage/100;
         $meal->update([
-            'Offer'=>$request->DiscountPercentage
+            'Offer'=> $meal_price * $disc,
         ]);
         $offer = Offer::where('OfferID',$id)->first();
         $offer->update([
@@ -166,7 +172,7 @@ class OfferController extends Controller
             'MealID'=>$request->MealID,
             'DateOfStart'=>$request->DateOfStart,
             'DateOfEnd'=>$request->DateOfEnd,
-            'DiscountPercentage'=>$request->DiscountPercentage
+            'DiscountPercentage'=>$disc
         ]);
         return redirect()->back()->with(['success_title' => __('admins.success_title'),
             'update_msg_Offer' => __('restaurantManager.update_msg_Offer')]);
@@ -188,11 +194,10 @@ class OfferController extends Controller
         $RestaurantID = $this->call_restaurant()->RestaurantID;
         $meal = Meal::where('RestId',$RestaurantID)->first();
         $meal->update([
-            'Offer'=>0
+            'Offer'=>1
         ]);
         $offer->delete();
         return redirect()->back()->with(['success_title' => __('admins.success_title'),
             'delete_msg_offer' => __('restaurantManager.delete_msg_offer')]);
-
     }
 }

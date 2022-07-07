@@ -71,8 +71,8 @@
                                                     </th>
                                                     <th class="text-center">
                                                         {{ __('restaurantManager.price') }}</th>
-{{--                                                    <th class="text-center">{{ __('restaurantManager.offer') }}--}}
-{{--                                                    </th>--}}
+                                                    <th class="text-center">{{ __('restaurantManager.offer') }}
+                                                    </th>
                                                     <th class="text-center">
                                                         {{ __('restaurantManager.estimate-finish-time') }}</th>
                                                     <th class="text-center">
@@ -135,7 +135,7 @@
             let htmlView = '';
             if (res.Meals.length <= 0) {
                 htmlView += `<tr>
-                <td class = "text-center" colspan = "12" ><h4>{{ __('admins.No Data') }}</h4></td>
+                <td class = "text-center" colspan = "13" ><h4>{{ __('admins.No Data') }}</h4></td>
                     </tr>`;
             }
             for (let i = 0; i < res.Meals.length; i++) {
@@ -151,6 +151,7 @@
                     <td class = "text-center"> ` + res.Meals[i].MealName + ` </td>
                     <td class = "text-center"> ` + res.Meals[i].CategoryType + `</td>
                     <td class = "text-center"> ` + res.Meals[i].Price + ` </td>
+                    <td class = "text-center"> ` + res.Meals[i].Offer + ` </td>
                     <td class = "text-center"> ` + res.Meals[i].EstimateFinishTime + `</td>
                     <td class = "text-center"> ` + res.Meals[i].AbilityToOrder + `</td>
                     <td class = "text-center"> ` + res.Meals[i].Ingredients + `</td>

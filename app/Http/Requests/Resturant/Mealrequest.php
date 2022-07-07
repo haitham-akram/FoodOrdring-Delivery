@@ -32,7 +32,7 @@ class Mealrequest extends FormRequest
             'Description'=>'required',
             'Ingredients'=>'required',
             'EstimateFinishTime'=>'required|numeric|min:5||max:60',
-            'Offer'=>'nullable|numeric||min:1||max:90',
+            'Offer'=>'nullable|numeric||min:1',
         ];
     }
     public function messages()
@@ -54,7 +54,7 @@ class Mealrequest extends FormRequest
     'Ingredients.required'=>__('restaurantManager.meal_ingredients_messages'),
     'Offer.numeric'=>__('restaurantManager.meal_offer_numeric_messages'),
     'Offer.min'=>__('restaurantManager.meal_offer_min_messages'),
-    'Offer.max'=>__('restaurantManager.meal_offer_max_messages'),
+//    'Offer.max'=>__('restaurantManager.meal_offer_max_messages'),
 
         ];
     }

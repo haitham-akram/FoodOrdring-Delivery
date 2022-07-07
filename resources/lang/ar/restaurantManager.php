@@ -171,6 +171,8 @@ return [
     'meal_price_max_messages'=>'الحد الأقصى لسعر الوجبة هو 100',
     'meal_ingredients_messages'=>'الرجاء تحديد مكونات الوجبة',
     'meal_price_numeric_messages' => 'رجاء تحديد سعر الوجبة بالأرقام',
+    'meal_offer_numeric_messages'=>'الرجاء تحديد خصم بالأرقام',
+    'meal_offer_min_messages'=>'الحد الأدنى للخصم هو 1 شيكل',
     //Menu request
     'menu_resid_messages' => 'حدد المطعم',
     'menu_catid_messages' => 'حدد تصنيف القائمة',
