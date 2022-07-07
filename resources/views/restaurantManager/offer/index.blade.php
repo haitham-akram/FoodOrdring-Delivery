@@ -30,7 +30,7 @@
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                                     <div class="heading-elements">
 
-                                        <a href="{{ route('RM_create_meal') }}"><button type="button"
+                                        <a href="{{ route('RM_add_offer') }}"><button type="button"
                                                 class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#add_form"><i class="ft-plus white"></i>
                                                 {{ __('restaurantManager.Add-new-offer') }}</button></a>
@@ -76,46 +76,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-{{--                                                <tr>--}}
-{{--                                                    <td class="text-center">--}}
-{{--                                                        offer-id--}}
-{{--                                                    </td>--}}
-{{--                                                    <td class="text-center">--}}
-{{--                                                        meal-id--}}
-{{--                                                    </td>--}}
-{{--                                                    <td class="text-center">--}}
-{{--                                                        category-id--}}
-{{--                                                    </td>--}}
-{{--                                                    <td class="text-center">--}}
-{{--                                                        discount-precentage--}}
-{{--                                                    </td>--}}
-
-{{--                                                    <td class="text-center">--}}
-{{--                                                        date-start--}}
-{{--                                                    </td>--}}
-{{--                                                    <td class="text-center">--}}
-{{--                                                        date-end--}}
-{{--                                                    </td>--}}
-
-{{--                                                    <td class="text-center">--}}
-{{--                                                        <span class="dropdown">--}}
-{{--                                                            <button id="SearchDrop2" type="button" data-toggle="dropdown"--}}
-{{--                                                                aria-haspopup="true" aria-expanded="true"--}}
-{{--                                                                class="btn btn-warning dropdown-toggle  dropdown-menu-right "><i--}}
-{{--                                                                    class="ft-settings"></i></button>--}}
-{{--                                                            <span aria-labelledby="SearchDrop2"--}}
-{{--                                                                class="dropdown-menu mt-1 dropdown-menu-left">--}}
-{{--                                                                <a class="dropdown-item primary" data-toggle="modal"--}}
-{{--                                                                    data-target="#edit_form"><i--}}
-{{--                                                                        class="ft-edit-2 primary"></i>--}}
-{{--                                                                    {{ __('admins.edit') }}</a>--}}
-{{--                                                                <a href="#" class="dropdown-item danger"><i--}}
-{{--                                                                        class="ft-trash-2 danger"></i>--}}
-{{--                                                                    {{ __('admins.delete') }}</a>--}}
-{{--                                                            </span>--}}
-{{--                                                        </span>--}}
-{{--                                                    </td>--}}
-{{--                                                </tr>--}}
+{{--
                                             </tbody>
                                         </table>
                                     </div>
