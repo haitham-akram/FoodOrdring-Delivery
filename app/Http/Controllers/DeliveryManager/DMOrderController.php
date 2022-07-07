@@ -34,6 +34,8 @@ class DMOrderController extends Controller
             ->get(['ordermeallist.*', 'orders.*','customeraccount.*','restaurants.RestaurantName']);
         $total_price = 0.0;
         foreach ($orders as $order){
+            if ($total_price != 0.0)
+            {$total_price = 0.0;}
             $meals = json_decode ($order->MealList , true);
             foreach ($meals as $meal){
                 $total_price +=$meal['Price'] * $meal['Count'];
@@ -74,6 +76,7 @@ class DMOrderController extends Controller
 
         $total_price = 0.0;
         foreach ($orders as $order) {
+
             $meals = json_decode($order->MealList, true);
             if ($total_price != 0.0)
             {$total_price = 0.0;}

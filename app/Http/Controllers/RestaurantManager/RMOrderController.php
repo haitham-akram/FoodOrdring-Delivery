@@ -33,6 +33,8 @@ class RMOrderController extends Controller
             ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status']);
         $total_price = 0.0;
         foreach ($orders as $order){
+            if ($total_price != 0.0)
+            {$total_price = 0.0;}
            $meals = json_decode ($order->MealList , true);
            foreach ($meals as $meal){
               $total_price +=$meal['Price'] * $meal['Count'];
@@ -49,6 +51,8 @@ class RMOrderController extends Controller
             ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status','deliveryoffice.NameOfDeliveryOffice']);
         $total_price_ = 0.0;
         foreach ($Delivering_orders as $delivering_order){
+            if ($total_price != 0.0)
+            {$total_price = 0.0;}
             $meals = json_decode ($delivering_order->MealList , true);
             foreach ($meals as $meal){
                 $total_price_ +=$meal['Price'] * $meal['Count'];
