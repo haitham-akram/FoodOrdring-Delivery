@@ -68,7 +68,8 @@ class RMOrderController extends Controller
 //        so I will search in current orders to find Delivery Office
             $on_delivery_orders = Order::join('ordermeallist', 'orders.OrderID', 'ordermeallist.OrderID')
                 ->join('deliveryoffice','ordermeallist.DeliveryOfficeID','deliveryoffice.DeliveryOfficeID')
-                ->where('orders.Status','!=','Arrived')
+//                ->where('orders.Status','!=','Arrived')
+                ->where('orders.Status','=','Delivering')
                 ->get(['ordermeallist.*', 'orders.CustomerID', 'orders.CustomerName', 'orders.OrderType', 'orders.status','deliveryoffice.NameOfDeliveryOffice']);
         foreach ($orders as $order){
             foreach ($on_delivery_orders as $on_delivery_order){

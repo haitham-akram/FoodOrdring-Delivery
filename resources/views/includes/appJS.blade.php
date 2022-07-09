@@ -8,7 +8,7 @@
 {{-- for toastr --}}
 {{--  <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}" type="text/javascript"></script>--}}
 {{--  <script src="{{ asset('app-assets/js/scripts/extensions/toastr.js') }}" type="text/javascript"></script>--}}
-{{--  --}}{{----}}{{----}}{{----}}{{--for tab in order page--}}
+{{--for tab in order page--}}
 {{--<script src="{{ asset('app-assets/js/scripts/navs/navs.js') }}" type="text/javascript"></script>--}}
   {{-- secure_asset --}}
   <script src="{{ secure_asset('app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
