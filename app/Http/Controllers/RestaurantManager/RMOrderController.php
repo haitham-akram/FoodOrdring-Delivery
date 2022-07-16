@@ -112,7 +112,8 @@ class RMOrderController extends Controller
     }
     public function prepare (string $id)
     {
-        $order = Order::where('OrderID',$id)->first();
+//        dd($id);
+        $order = Order::where('OrderID','=',$id)->first();
         $order->update([
              'Status'=>'In preparation'
             ]);
@@ -120,7 +121,7 @@ class RMOrderController extends Controller
     }
     public function ready (string $id)
     {
-        $order = Order::where('OrderID',$id)->first();
+        $order = Order::where('OrderID','=',$id)->first();
         $order->update([
             'Status'=>'Ready'
         ]);

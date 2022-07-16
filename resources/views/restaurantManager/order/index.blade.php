@@ -121,7 +121,6 @@
                                                                 <td class="text-center">
                                                                     {{$order->OrderType}}
                                                                 </td>
-
                                                                 <td class="text-center">
                                                             <span class="dropdown">
                                                             <button id="SearchDrop2" type="button" data-toggle="dropdown"
@@ -130,11 +129,12 @@
                                                                     class="ft-settings"></i></button>
                                                                 <span aria-labelledby="SearchDrop2"
                                                                   class="dropdown-menu mt-1 dropdown-menu-left">
-                                                                <a class="dropdown-item primary" href="{{route('RM_Prepare_order',$order->OrderID)}}"  onclick="event.preventDefault();
-                                                                    document.getElementById('Prepare-order-form').submit();">
+                                                                <a class="dropdown-item primary" href="{{route('RM_Prepare_order',$order->OrderID)}}">
+{{--                                                                     onclick="event.preventDefault();
+                                                                    document.getElementById('Prepare-order-form').submit();"--}}
                                                                      <i class="ft-plus primary"></i>
                                                                     {{ __('restaurantManager.take-order') }}</a>
-                                                                    <form id="Prepare-order-form" action="{{ route('RM_Prepare_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>
+{{--                                                                    <form id="Prepare-order-form" action="{{ route('RM_Prepare_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>--}}
                                                                 </span>
                                                             </span>
                                                                 </td>
@@ -225,11 +225,12 @@
                                                                     class="ft-settings"></i></button>
                                                             <span aria-labelledby="SearchDrop2"
                                                                   class="dropdown-menu mt-1 dropdown-menu-left">
-                                                                <a class="dropdown-item primary" href="{{route('RM_Ready_order',$order->OrderID)}}"  onclick="event.preventDefault();
-                                                                    document.getElementById('Prepare-order-form').submit();">
+                                                                <a class="dropdown-item primary" href="{{route('RM_Ready_order',$order->OrderID)}}"  >
+{{--                                                                    onclick="event.preventDefault();
+                                                                    document.getElementById('Prepare-order-form').submit();"--}}
                                                                      <i class="ft-plus primary"></i>
                                                                     {{ __('restaurantManager.prepare_order') }}</a>
-                                                                    <form id="Prepare-order-form" action="{{ route('RM_Ready_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>
+{{--                                                                    <form id="Prepare-order-form" action="{{ route('RM_Ready_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>--}}
                                                                 </span>
                                                             </span>
                                                                     </td>
@@ -320,11 +321,12 @@
                                                                   class="dropdown-menu mt-1 dropdown-menu-left">
                                                                 <a class="dropdown-item primary"
                                                                    @if($order->OrderType == 'Receipt')
-                                                                       href="{{route('RM_take_order',$order->OrderID)}}"  onclick="event.preventDefault();
-                                                                    document.getElementById('take-order-form').submit();">
+                                                                       href="{{route('RM_take_order',$order->OrderID)}}"  >
+{{--                                                                    onclick="event.preventDefault();
+                                                                    document.getElementById('take-order-form').submit();"--}}
                                                                      <i class="ft-plus primary"></i>
                                                                     {{ __('restaurantManager.take-reservation') }}</a>
-                                                                    <form id="take-order-form" action="{{ route('RM_take_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>
+{{--                                                                    <form id="take-order-form" action="{{ route('RM_take_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>--}}
                                                                     @else
                                                                     data-toggle="modal" data-target="#choose_delivery">
                                                                     <i class="ft-plus primary"></i>{{ __('restaurantManager.take-order') }}</a>
@@ -347,7 +349,7 @@
                                                                                     <span aria-hidden="true">&times;</span>
                                                                                 </button>
                                                                             </div>
-                                                                            <form action="{{route('RM_take_order',$order->OrderID)}}" method="POST">
+                                                                            <form action="{{route('RM_take_order',$order->OrderID)}}" method="get">
                                                                                 @csrf
                                                                                 <div class="modal-body">
                                                                                     <h5><i class="la la-arrow-right"></i>

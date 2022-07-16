@@ -113,12 +113,12 @@
                                                             <span aria-labelledby="SearchDrop2"
                                                                   class="dropdown-menu mt-1 dropdown-menu-left">
                                                                 <a class="dropdown-item primary"
-                                                                   href="{{route('RM_delivering_order',$order->OrderID)}}"
-                                                                   onclick="event.preventDefault();
-                                                                    document.getElementById('delivering-order-form').submit();">
+                                                                   href="{{route('RM_delivering_order',$order->OrderID)}}">
+{{--                                                                    onclick="event.preventDefault();
+                                                                    document.getElementById('delivering-order-form').submit();"--}}
                                                                      <i class="ft-check primary"></i>
                                                                     {{ __('delivery.order_delivering') }}</a>
-                                                                  <form id="delivering-order-form" action="{{ route('RM_delivering_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>
+{{--                                                                  <form id="delivering-order-form" action="{{ route('RM_delivering_order',$order->OrderID)}}" method="POST" class="d-none">@csrf</form>--}}
                                                             </span>
                                                         </span>
                                                     </td>
