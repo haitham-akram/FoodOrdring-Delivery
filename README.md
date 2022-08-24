@@ -14,7 +14,6 @@ Atlub Ealaa Rahatik is a web application built by php Laravel Framework. Atlub E
 - Connect All Restaurants With All Deleviry Offices in Gaza Strip.
 - Organizing the communication processes between restaurant managers and delivery offices 
   completely via the website without the need to call by phone except when needed.
-- Make the meal ordering process easier for customers.{for mobile application.}
 - Show All Customer Orders to Restaurant Manager and let the Manager choose the Delivery Office without Calling the office.
 - Show All Customer Orders that sent from Resturant Manager to Delivery Office Manager and let them deliver the order.
 - Show the status of the Order to Resturant Manager and Delivery Manager.
